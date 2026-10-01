@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -24,7 +25,7 @@ body{
 }
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 
-/* ---------- TOPBAR ---------- */
+/* TOPBAR */
 .topbar{
   background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289);
   color:#fff; padding:16px 20px;
@@ -48,8 +49,13 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 }
 .stat b{display:block;font-size:19px;font-weight:600;line-height:1.2}
 .stat span{font-size:11.5px;color:#b9d0e8}
+.conn-status{
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#10b981;margin-right:6px;vertical-align:middle;
+}
+.conn-status.offline{background:#ef4444}
 
-/* ---------- TABS ---------- */
+/* TABS */
 .tabs{
   background:var(--surface); border-bottom:1px solid var(--line);
   display:flex; gap:4px; padding:0 16px; overflow-x:auto;
@@ -63,7 +69,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .tab:hover{color:var(--brand2);background:#f8fafc}
 .tab.active{color:var(--brand);border-bottom-color:var(--accent);font-weight:600}
 
-/* ---------- LAYOUT ---------- */
+/* LAYOUT */
 main{padding:20px;max-width:1320px;margin:0 auto}
 .panel{
   background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
@@ -78,7 +84,7 @@ main{padding:20px;max-width:1320px;margin:0 auto}
 .panel-head h2 small{display:block;font-size:12px;color:var(--muted);font-weight:400}
 .panel-body{padding:18px}
 
-/* ---------- TABLES ---------- */
+/* TABLES */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
 thead th{
@@ -102,8 +108,12 @@ tbody tr:last-child td{border-bottom:none}
 .badge.badge-apf{background:#dbeafe;color:#1e40af}
 .badge.badge-ex{background:#d1fae5;color:#065f46}
 .badge.badge-family{background:#fed7aa;color:#9a3412}
+.badge.route-badge{
+  background:#fef9c3;color:#854d0e;border:1px solid #fde047;
+  font-weight:600;font-size:12.5px;
+}
 
-/* ---------- BUTTONS ---------- */
+/* BUTTONS */
 .btn{
   border:1px solid var(--line);background:#fff;color:var(--ink);
   padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:500;
@@ -112,13 +122,12 @@ tbody tr:last-child td{border-bottom:none}
 .btn:hover{background:#f8fafc;border-color:#cbd5e1}
 .btn.primary{background:var(--brand2);border-color:var(--brand2);color:#fff}
 .btn.primary:hover{background:#164570}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--brand2)}
 .btn.danger{color:var(--danger);border-color:#fecaca;background:#fff5f5}
 .btn.danger:hover{background:#fee2e2}
 .btn.sm{padding:5px 10px;font-size:13px;border-radius:8px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 
-/* ---------- FORM ---------- */
+/* FORM */
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12.5px;font-weight:600;color:#475569;margin-bottom:5px}
 .field input,.field select,.field textarea{
@@ -131,7 +140,6 @@ tbody tr:last-child td{border-bottom:none}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 
-/* Type radio chips */
 .type-radio{display:flex;gap:8px;flex-wrap:wrap}
 .radio-chip{
   border:1.6px solid #cbd5e1;background:#fff;border-radius:10px;
@@ -142,11 +150,11 @@ tbody tr:last-child td{border-bottom:none}
 .radio-chip:hover{border-color:#94a3b8}
 .radio-chip.active{border-color:var(--brand2);background:#eff6ff;color:var(--brand2);font-weight:600}
 
-/* ---------- BOOKING LAYOUT ---------- */
+/* BOOKING LAYOUT */
 .booking-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
 @media(max-width:960px){.booking-grid{grid-template-columns:1fr}}
 
-/* ---------- BUS SEAT MAP ---------- */
+/* BUS */
 .bus{
   background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;
   max-width:380px;margin:0 auto;
@@ -177,10 +185,7 @@ tbody tr:last-child td{border-bottom:none}
   display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;
   gap:8px;margin-bottom:8px;
 }
-.seat-row.back{
-  grid-template-columns:repeat(5,1fr);
-  margin-top:4px;
-}
+.seat-row.back{grid-template-columns:repeat(5,1fr);margin-top:4px;}
 .aisle{display:flex;align-items:center;justify-content:center}
 .door-icon{font-size:15px;line-height:1;filter:grayscale(.3)}
 
@@ -188,7 +193,7 @@ tbody tr:last-child td{border-bottom:none}
   aspect-ratio:1/1;border-radius:10px;border:1.6px solid #cbd5e1;background:#fff;
   font-size:12.5px;font-weight:600;color:#334155;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:.12s;padding:0;
+  transition:.12s;padding:0;position:relative;
 }
 .seat:hover:not(.booked):not(.selected){
   border-color:var(--brand2);background:#eff6ff;transform:translateY(-2px);
@@ -201,12 +206,20 @@ tbody tr:last-child td{border-bottom:none}
 .seat.selected{background:var(--brand2)!important;border-color:var(--brand2)!important;
   color:#fff!important;box-shadow:0 0 0 3px rgba(27,82,137,.25);transform:none}
 
+.seat-tag{
+  position:absolute;bottom:-1px;right:-1px;
+  background:#0f172a;color:#fff;font-size:8.5px;font-weight:700;
+  padding:0px 3px;border-radius:5px;line-height:1.3;
+  max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  letter-spacing:0;
+}
+
 .back-label{
   text-align:center;font-size:11px;color:var(--muted);
   margin:12px 0 6px;font-weight:600;letter-spacing:.4px;
 }
 
-.legend{display:flex;gap:14px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
 .legend i{width:13px;height:13px;border-radius:4px;display:inline-block;margin-right:5px;vertical-align:-2px;border:1.5px solid #cbd5e1}
 .legend .lg-empty{background:#fff}
 .legend .lg-apf{background:#dbeafe;border-color:#93c5fd}
@@ -215,7 +228,39 @@ tbody tr:last-child td{border-bottom:none}
 .legend .lg-sel{background:#1b5289;border-color:#1b5289}
 .legend .lg-cabin{background:#64748b;border-color:#64748b}
 
-/* ---------- MISC ---------- */
+.place-groups{
+  margin-top:16px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:12px;
+}
+.place-groups h4{
+  font-size:13px;font-weight:700;color:var(--brand);
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;
+}
+.place-groups h4 .mode{
+  font-weight:500;font-size:11.5px;color:var(--muted);
+  background:#f1f5f9;padding:1px 8px;border-radius:99px;
+}
+.place-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 10px;border-radius:8px;margin-bottom:5px;
+  background:#f8fafc;border:1px solid #eef2f7;
+  font-size:13px;
+}
+.place-item:last-child{margin-bottom:0}
+.place-item .place-name{font-weight:500;color:#334155;display:flex;align-items:center;gap:6px}
+.place-item .place-dot{
+  width:8px;height:8px;border-radius:50%;background:var(--brand2);flex:0 0 auto;
+}
+.place-item .place-count{
+  background:var(--brand2);color:#fff;font-size:11.5px;font-weight:700;
+  padding:1px 9px;border-radius:99px;
+}
+.place-item .place-seats{
+  font-size:11px;color:var(--muted);margin-left:8px;
+  font-family:ui-monospace,Menlo,monospace;
+}
+
+/* MISC */
 .empty{padding:38px 20px;text-align:center;color:var(--muted)}
 .empty .big{font-size:34px;margin-bottom:8px;opacity:.5}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
@@ -232,6 +277,7 @@ select.trip-select{
   padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px;
 }
 .note.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
+.note.info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
 .toast{
   position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120%);
   background:#0f172a;color:#fff;padding:11px 20px;border-radius:12px;
@@ -247,8 +293,40 @@ select.trip-select{
   font-family:ui-monospace,Menlo,Consolas,monospace;
   font-weight:600;letter-spacing:.3px;
 }
+.place-big{
+  display:inline-block;background:#fef9c3;color:#854d0e;
+  border:1px solid #fde047;padding:3px 12px;border-radius:8px;
+  font-weight:600;font-size:14px;
+}
 
-/* ---------- PRINT ---------- */
+.trip-detail{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;font-size:13px;
+}
+.trip-detail .td-item{
+  background:#f8fafc;border:1px solid #eef2f7;
+  padding:8px 11px;border-radius:8px;
+}
+.trip-detail .td-item .lbl{
+  display:block;font-size:11px;color:var(--muted);font-weight:600;
+  text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;
+}
+.trip-detail .td-item .val{font-weight:600;color:#1e293b;font-size:13.5px}
+
+/* Loading overlay */
+#loadingOverlay{
+  position:fixed;inset:0;background:rgba(15,23,42,.85);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;color:#fff;gap:16px;
+}
+#loadingOverlay.hidden{display:none}
+.spinner{
+  width:44px;height:44px;border:4px solid rgba(255,255,255,.2);
+  border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PRINT */
 #printRoot{display:none}
 @media print{
   body{background:#fff}
@@ -266,12 +344,17 @@ select.trip-select{
 </head>
 <body>
 
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div>डाटा लोड गर्दै...</div>
+</div>
+
 <header class="topbar">
   <div class="brand">
     <div class="logo">सप्र</div>
     <div>
       <h1>बस आरक्षण तथा व्यवस्थापन प्रणाली</h1>
-      <p>सशस्त्र प्रहरी बल, नेपाल — सञ्चालक एप (Operator)</p>
+      <p><span class="conn-status" id="connDot"></span>सशस्त्र प्रहरी बल, नेपाल — सञ्चालक एप (Operator)</p>
     </div>
   </div>
   <div class="stats" id="stats"></div>
@@ -292,7 +375,26 @@ select.trip-select{
 
 <script>
 /* =====================================================================
-   1. DATA LAYER
+   ⚠️ SUPABASE CONFIG — यहाँ आफ्नो details राख्नुहोस्
+   =====================================================================
+   Supabase Dashboard → Settings → API बाट लिनुहोस्:
+   - Project URL  → SUPABASE_URL
+   - anon public  → SUPABASE_ANON_KEY
+   ===================================================================== */
+const SUPABASE_URL = 'https://kwygidpzthsmyeqtctqr.supabase.co/rest/v1/';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eWdpZHB6dGhzbXllcXRjdHFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4MjkyMjIsImV4cCI6MjEwNjQwNTIyMn0.-aeptvC97gPdHkW-yj7NDO1W-zI_GPl-lkiNEN-wQ0c';
+
+/* =====================================================================
+   1. SUPABASE CLIENT
+   ===================================================================== */
+
+if (!window.supabase) {
+  alert('Supabase library load भएन। इन्टरनेट जाँच्नुहोस्।');
+}
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* =====================================================================
+   2. DATA LAYER
    ===================================================================== */
 
 const PLACES = {
@@ -316,13 +418,13 @@ const RANKS = [
   { code: 'सप्रनाउ',     full: 'सशस्त्र प्रहरी नायव उपरीक्षक' },
   { code: 'सप्रनि',        full: 'सशस्त्र प्रहरी निरीक्षक' },
   { code: 'सप्रबनानि',    full: 'सशस्त्र प्रहरी बरिष्ठ नायव निरीक्षक' },
-    { code: 'सप्रनानि',    full: 'सशस्त्र प्रहरी नायव निरीक्षक' },
+  { code: 'सप्रनानि',    full: 'सशस्त्र प्रहरी नायव निरीक्षक' },
   { code: 'सप्रसनि',      full: 'सशस्त्र प्रहरी सहायक निरीक्षक' },
-  { code: 'सप्रबह',         full: 'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },  
+  { code: 'सप्रबह',         full: 'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },
   { code: 'सप्रह',         full: 'सशस्त्र प्रहरी हवल्दार' },
-   { code: 'सप्रसह',         full: 'सशस्त्र प्रहरी सहायक हवल्दार' }, 
-    { code: 'सप्रज',         full: 'सशस्त्र प्रहरी जवान' },
-  { code: 'सप्रप',         full: 'सशस्त्र प्रहरी परिचर' },
+  { code: 'सप्रसह',         full: 'सशस्त्र प्रहरी सहायक हवल्दार' },
+  { code: 'सप्रज',         full: 'सशस्त्र प्रहरी जवान' },
+  { code: 'सप्रप',         full: 'सशस्त्र प्रहरी परिचर' }
 ];
 
 const ROUTES = {
@@ -382,7 +484,6 @@ const RELATIONS = [
   'दाजु', 'भाई', 'दिदी', 'बहिनी', 'अन्य'
 ];
 
-/* Seat layout (from sit layout.docx) */
 const SEAT_LAYOUT = {
   frontCabin: [
     { label: 'सहचालक',            cls: '' },
@@ -414,6 +515,25 @@ function seatLabel(n) {
   if (n >= 17 && n <= 32) return 'B' + (n - 16);
   const b = SEAT_LAYOUT.backRow.find(s => s.num === n);
   return b ? b.label : String(n);
+}
+
+function shortPlaceLabel(label) {
+  if (!label) return '?';
+  const map = {
+    'काँकडभिट्टा': 'काँक',
+    'गड्डाचौकी': 'गड्डा',
+    'नारायणघाट': 'नारा',
+    'बर्दिबास': 'बर्दी',
+    'सप्तरी': 'सप्त',
+    'ईटहरी': 'ईट',
+    'कोहलपुर': 'कोह',
+    'भालुवाङ्ग': 'भालु',
+    'बुटवल': 'बुट',
+    'कर्णाली पश्चिमका स्थानहरू': 'कर्णा',
+    'ईटहरी देखी पूर्वका स्थानहरू': 'ईट+'
+  };
+  if (map[label]) return map[label];
+  return label.slice(0, 3);
 }
 
 const TRIP_RAW = [
@@ -475,13 +595,13 @@ const COORD_UNITS = [
 ];
 
 /* =====================================================================
-   2. STATE
+   3. STATE + CACHE
    ===================================================================== */
 
-const STORE_KEY = 'apf-bus-bookings-v4';
+let BOOKINGS_CACHE = {};       // { tripId: { seatNum: bookingObj } }
+let REALTIME_CHANNEL = null;
 
 const state = {
-  bookings: {},
   activeTrip: TRIPS[0].id,
   selectedSeat: null,
   newBookingType: 'apf',
@@ -490,18 +610,8 @@ const state = {
   search: ''
 };
 
-function loadStore() {
-  try {
-    const raw = localStorage.getItem(STORE_KEY);
-    if (raw) state.bookings = JSON.parse(raw);
-  } catch (e) { state.bookings = {}; }
-}
-function saveStore() {
-  try { localStorage.setItem(STORE_KEY, JSON.stringify(state.bookings)); } catch (e) {}
-}
-
 /* =====================================================================
-   3. HELPERS
+   4. HELPERS
    ===================================================================== */
 
 const $  = sel => document.querySelector(sel);
@@ -510,11 +620,10 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
   ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 
 const getTrip = id => TRIPS.find(t => t.id === id) || TRIPS[0];
-const tripBookings = id => state.bookings[id] || {};
+const tripBookings = id => BOOKINGS_CACHE[id] || {};
 const bookedCount = id => Object.keys(tripBookings(id)).length;
 const quotaOf = (route, key) => route.quotas.find(q => q.key === key);
 
-/* Lookup rank by code (for display) */
 function rankFull(code) {
   const r = RANKS.find(x => x.code === code);
   return r ? r.full : code;
@@ -529,7 +638,7 @@ function toast(msg, type = '') {
   el.textContent = msg;
   el.className = 'toast show ' + type;
   clearTimeout(el._t);
-  el._t = setTimeout(() => { el.className = 'toast ' + type; }, 2600);
+  el._t = setTimeout(() => { el.className = 'toast ' + type; }, 2800);
 }
 
 function fmtTime(t) {
@@ -556,8 +665,130 @@ function familyMembersOf(trip, headSeat) {
     .sort((a, c) => a.seat - c.seat);
 }
 
+function placeModeLabel(trip) {
+  return trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
+}
+
+function setConnectionStatus(online) {
+  const dot = $('#connDot');
+  if (!dot) return;
+  dot.classList.toggle('offline', !online);
+}
+
 /* =====================================================================
-   4. HEADER STATS
+   5. SUPABASE — DATA OPERATIONS
+   ===================================================================== */
+
+/* Convert DB row → booking object */
+function rowToBooking(row) {
+  return {
+    seat: row.seat,
+    type: row.type,
+    name: row.name,
+    rank: row.rank,
+    idNo: row.id_no,
+    unit: row.unit,
+    phone: row.phone,
+    quota: row.quota,
+    gender: row.gender,
+    age: row.age,
+    note: row.note,
+    headSeat: row.head_seat,
+    relation: row.relation,
+    at: row.created_at,
+    dbId: row.id
+  };
+}
+
+/* Fetch all bookings → cache */
+async function fetchAllBookings() {
+  const { data, error } = await sb.from('bookings').select('*');
+  if (error) {
+    console.error('Fetch error:', error);
+    setConnectionStatus(false);
+    toast('डाटा लोड गर्न सकिएन: ' + error.message, 'err');
+    return false;
+  }
+  setConnectionStatus(true);
+  BOOKINGS_CACHE = {};
+  data.forEach(row => {
+    if (!BOOKINGS_CACHE[row.trip_id]) BOOKINGS_CACHE[row.trip_id] = {};
+    BOOKINGS_CACHE[row.trip_id][row.seat] = rowToBooking(row);
+  });
+  return true;
+}
+
+/* Insert booking */
+async function insertBooking(tripId, b) {
+  const { error } = await sb.from('bookings').insert([{
+    trip_id: tripId,
+    seat: b.seat,
+    type: b.type,
+    name: b.name,
+    rank: b.rank || null,
+    id_no: b.idNo || null,
+    unit: b.unit || null,
+    phone: b.phone || null,
+    quota: b.quota,
+    gender: b.gender || null,
+    age: b.age || null,
+    note: b.note || null,
+    head_seat: b.headSeat || null,
+    relation: b.relation || null
+  }]);
+
+  if (error) {
+    console.error('Insert error:', error);
+    if (error.code === '23505') {
+      toast('यो सिट भर्खरै अरूले आरक्षण गरिसके। पुनः प्रयास गर्नुहोस्।', 'err');
+    } else if (error.code === '23514') {
+      toast('डाटा ढाँचा मिलेन।', 'err');
+    } else {
+      toast('सेभ गर्न सकिएन: ' + error.message, 'err');
+    }
+    return false;
+  }
+  return true;
+}
+
+/* Delete by seats */
+async function deleteBookings(tripId, seats) {
+  if (!seats.length) return true;
+  const { error } = await sb.from('bookings')
+    .delete()
+    .eq('trip_id', tripId)
+    .in('seat', seats);
+
+  if (error) {
+    console.error('Delete error:', error);
+    toast('मेटाउन सकिएन: ' + error.message, 'err');
+    return false;
+  }
+  return true;
+}
+
+/* Realtime subscription */
+function setupRealtime() {
+  if (REALTIME_CHANNEL) sb.removeChannel(REALTIME_CHANNEL);
+
+  REALTIME_CHANNEL = sb
+    .channel('bookings-realtime')
+    .on(
+      'postgres_changes',
+      { event: '*', schema: 'public', table: 'bookings' },
+      async () => {
+        // Simple approach: re-fetch everything
+        const ok = await fetchAllBookings();
+        if (ok) render();
+      }
+    )
+    .subscribe(status => {
+      setConnectionStatus(status === 'SUBSCRIBED');
+    });
+}
+
+/* =====================================================================
+   6. HEADER STATS
    ===================================================================== */
 
 function renderStats() {
@@ -580,7 +811,7 @@ function renderStats() {
 }
 
 /* =====================================================================
-   5. VIEW ROUTER
+   7. VIEW ROUTER
    ===================================================================== */
 
 function render() {
@@ -601,7 +832,7 @@ function render() {
 }
 
 /* =====================================================================
-   6. TAB: SCHEDULE
+   8. SCHEDULE
    ===================================================================== */
 
 function viewSchedule() {
@@ -649,7 +880,7 @@ function viewSchedule() {
   return `
     <div class="note">
       📌 सबै मितिहरू <b>विक्रम संवत् (वि.सं.)</b> मा छन्। प्रत्येक बसमा जम्मा <b>${TOTAL_SEATS} सिट</b>
-      (साईड A = A1–A16, साईड B = B1–B16, पछाडि = क–ङ)।
+      (A = A1–A16, B = B1–B16, पछाडि = क–ङ)। डाटा Supabase मा रियल-टाइम सेभ हुन्छ।
     </div>
     ${groups}`;
 }
@@ -668,10 +899,10 @@ function bindSchedule() {
 }
 
 /* =====================================================================
-   7. TAB: BOOKING
+   9. BOOKING
    ===================================================================== */
 
-function seatBtn(num, bookings) {
+function seatBtn(num, bookings, trip) {
   const p = bookings[num];
   const sel = state.selectedSeat === num;
   const cls = ['seat'];
@@ -682,20 +913,33 @@ function seatBtn(num, bookings) {
   if (sel) cls.push('selected');
 
   const label = seatLabel(num);
+  const mode = placeModeLabel(trip);
+
   let title = `सिट ${label} — खाली`;
+  let tag = '';
   if (p) {
-    const typeShort = PASSENGER_TYPES[p.type]?.short || '';
+    const q = quotaOf(trip.route, p.quota);
+    const placeName = q ? q.label : '—';
+
     if (p.type === 'family') {
       const head = bookings[p.headSeat];
-      title = `सिट ${label} — ${p.name} (${p.relation}) — प्रमुख: ${head ? head.name : '—'}`;
+      title = `सिट ${label} — ${p.name} (${p.relation})\n` +
+              `प्रमुख: ${head ? head.name : '—'} · सिट ${seatLabel(p.headSeat)}\n` +
+              `${mode}: ${placeName}`;
     } else {
-      title = `सिट ${label} — ${p.name} (${p.rank || '—'}${p.idNo ? ' / ' + p.idNo : ''}) — ${typeShort}`;
+      title = `सिट ${label} — ${p.name} (${p.rank || '—'}${p.idNo ? ' / ID ' + p.idNo : ''})\n` +
+              `${mode}: ${placeName}`;
     }
+    tag = shortPlaceLabel(placeName);
   }
-  return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">${label}</button>`;
+
+  return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">
+    ${label}
+    ${tag ? `<span class="seat-tag">${esc(tag)}</span>` : ''}
+  </button>`;
 }
 
-function renderBusMap(bookings) {
+function renderBusMap(bookings, trip) {
   let html = '';
 
   html += '<div class="bus-cabin">';
@@ -712,18 +956,56 @@ function renderBusMap(bookings) {
 
   SEAT_LAYOUT.rows.forEach(row => {
     html += '<div class="seat-row">';
-    row.a.forEach(n => { html += seatBtn(n, bookings); });
+    row.a.forEach(n => { html += seatBtn(n, bookings, trip); });
     html += `<div class="aisle">${row.door ? '<span class="door-icon" title="ढोका">🚪</span>' : ''}</div>`;
-    row.b.forEach(n => { html += seatBtn(n, bookings); });
+    row.b.forEach(n => { html += seatBtn(n, bookings, trip); });
     html += '</div>';
   });
 
   html += '<div class="back-label">पछाडिको लाइन — क · ख · ग · घ · ङ</div>';
   html += '<div class="seat-row back">';
-  SEAT_LAYOUT.backRow.forEach(s => { html += seatBtn(s.num, bookings); });
+  SEAT_LAYOUT.backRow.forEach(s => { html += seatBtn(s.num, bookings, trip); });
   html += '</div>';
 
   return html;
+}
+
+function renderPlaceGroups(trip, bookings) {
+  const mode = trip.route.mode;
+  const modeText = mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
+
+  const groups = {};
+  trip.route.quotas.forEach(q => {
+    groups[q.key] = { label: q.label, seats: [], total: q.seats };
+  });
+  Object.values(bookings).forEach(p => {
+    if (groups[p.quota]) groups[p.quota].seats.push(p.seat);
+  });
+
+  const items = Object.values(groups).map(g => {
+    const count = g.seats.length;
+    const seatList = g.seats.sort((a, b) => a - b).map(seatLabel).join(', ');
+    const empty = count === 0;
+    return `<div class="place-item">
+      <span class="place-name">
+        <span class="place-dot" style="background:${empty ? '#cbd5e1' : '#1b5289'}"></span>
+        ${esc(g.label)}
+        ${seatList ? `<span class="place-seats">${esc(seatList)}</span>` : ''}
+      </span>
+      <span class="place-count" style="background:${empty ? '#cbd5e1' : '#1b5289'}">
+        ${count}/${g.total}
+      </span>
+    </div>`;
+  }).join('');
+
+  return `
+    <div class="place-groups">
+      <h4>
+        🗺️ ${esc(modeText)} अनुसार
+        <span class="mode">${mode === 'pickup' ? 'चढ्ने' : 'झर्ने'}</span>
+      </h4>
+      ${items}
+    </div>`;
 }
 
 function viewBooking() {
@@ -744,6 +1026,8 @@ function viewBooking() {
     else if (p.type === 'family') famC++;
   });
 
+  const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
+
   return `
     <div class="panel">
       <div class="panel-head">
@@ -755,34 +1039,37 @@ function viewBooking() {
 
           <div>
             <div class="bus">
-              ${renderBusMap(b)}
+              ${renderBusMap(b, trip)}
             </div>
             <div class="legend">
               <span><i class="lg-empty"></i>खाली</span>
-              <span><i class="lg-apf"></i>सप्र कर्मचारी</span>
+              <span><i class="lg-apf"></i>सप्र</span>
               <span><i class="lg-ex"></i>भूतपूर्व</span>
               <span><i class="lg-family"></i>परिवार</span>
               <span><i class="lg-sel"></i>चयनित</span>
-              <span><i class="lg-cabin"></i>चालक/सहचालक</span>
+              <span><i class="lg-cabin"></i>चालक</span>
             </div>
-            <div class="hint" style="text-align:center;margin-top:10px">
+            <div class="hint" style="text-align:center;margin-top:8px">
               कुल ${TOTAL_SEATS} · सप्र <b>${apfC}</b> · भूतपूर्व <b>${exC}</b> · परिवार <b>${famC}</b>
             </div>
+
+            ${renderPlaceGroups(trip, b)}
           </div>
 
           <div>
             <div class="panel" style="margin-bottom:16px">
               <div class="panel-head"><h2>यात्रा विवरण</h2></div>
               <div class="panel-body" style="padding:14px 18px">
-                <table style="font-size:13.5px">
-                  <tbody>
-                    <tr><td style="color:#64748b;width:130px">मिति</td><td><b>${trip.date}</b> (वि.सं.)</td></tr>
-                    <tr><td style="color:#64748b">रुट</td><td><b>${esc(trip.route.from)} → ${esc(trip.route.to)}</b></td></tr>
-                    <tr><td style="color:#64748b">छुट्ने स्थान</td><td>${esc(trip.place)}</td></tr>
-                    <tr><td style="color:#64748b">छुट्ने समय</td><td><b>${fmtTime(trip.time)}</b></td></tr>
-                    <tr><td style="color:#64748b">कुल सिट</td><td><b>${TOTAL_SEATS}</b> (A = A1–A16, B = B1–B16, पछाडि = क–ङ)</td></tr>
-                  </tbody>
-                </table>
+                <div class="trip-detail">
+                  <div class="td-item"><span class="lbl">मिति</span><span class="val">${trip.date} (वि.सं.)</span></div>
+                  <div class="td-item"><span class="lbl">रुट</span><span class="val">${esc(trip.route.from)} → ${esc(trip.route.to)}</span></div>
+                  <div class="td-item"><span class="lbl">बस छुट्ने स्थान</span><span class="val">${esc(trip.place)}</span></div>
+                  <div class="td-item"><span class="lbl">छुट्ने समय</span><span class="val">${fmtTime(trip.time)}</span></div>
+                  <div class="td-item" style="grid-column:1/-1;background:#fef9c3;border-color:#fde047">
+                    <span class="lbl">यस यात्राको ${esc(modeText)}</span>
+                    <span class="val" style="font-size:12.5px">${trip.route.quotas.map(q => esc(q.label)).join(' · ')}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -802,14 +1089,15 @@ function emptySeatPrompt() {
     <div class="empty">
       <div class="big">🪑</div>
       <b>सिट छान्नुहोस्</b>
-      <p class="hint">माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
-      साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
-      प्रत्येक कर्मचारीले बढीमा <b>३ जना</b> परिवारको सदस्यको आरक्षण गर्न सक्नुहुनेछ।</p>
+      <p class="hint">
+        माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
+        साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
+        प्रत्येक कर्मचारीले बढीमा <b>३ जना</b> परिवारको सदस्यको आरक्षण गर्न सक्नुहुनेछ।<br>
+        <b>आरोहण / गन्तव्य स्थान</b> सिट नक्साको तल <b>समूहबद्ध</b> रूपमा देख्न सकिन्छ।
+      </p>
     </div>
   </div>`;
 }
-
-/* ---------- Form dispatch ---------- */
 
 function seatFormHTML(trip, seat) {
   const existing = tripBookings(trip.id)[seat];
@@ -821,11 +1109,13 @@ function existingBookingView(trip, seat, p) {
   const label = seatLabel(seat);
   const pt = PASSENGER_TYPES[p.type];
   const q = quotaOf(trip.route, p.quota);
+  const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   let headBlock = '';
   if (p.type === 'family') {
     const head = tripBookings(trip.id)[p.headSeat];
     const fc = familyCountOf(trip, p.headSeat);
+    const headQ = head ? quotaOf(trip.route, head.quota) : null;
     headBlock = `
       <tr><td style="color:#64748b">प्रमुख कर्मचारी</td>
           <td><b>${head ? esc(head.name) : '—'}</b> · सिट ${seatLabel(p.headSeat)}</td></tr>
@@ -833,7 +1123,9 @@ function existingBookingView(trip, seat, p) {
           <td>${head && head.idNo ? `<span class="id-tag">${esc(head.idNo)}</span>` : '—'}</td></tr>
       <tr><td style="color:#64748b">सम्बन्ध</td><td><b>${esc(p.relation || '—')}</b></td></tr>
       <tr><td style="color:#64748b">प्रमुखको परिवार संख्या</td>
-          <td>${fc} / ${MAX_FAMILY_PER_HEAD}</td></tr>`;
+          <td>${fc} / ${MAX_FAMILY_PER_HEAD}</td></tr>
+      <tr><td style="color:#64748b">प्रमुखको ${esc(modeText)}</td>
+          <td><span class="place-big">${esc(headQ ? headQ.label : '—')}</span></td></tr>`;
   }
 
   return `
@@ -842,6 +1134,12 @@ function existingBookingView(trip, seat, p) {
       <span class="badge ${pt.cls}">${pt.label}</span>
     </div>
     <div class="panel-body">
+
+      <div class="note info" style="margin-bottom:14px">
+        📍 <b>${esc(modeText)}:</b>
+        <span class="place-big">${esc(q ? q.label : '—')}</span>
+      </div>
+
       <table style="font-size:13.5px">
         <tbody>
           <tr><td style="color:#64748b;width:150px">नाम थर</td><td><b>${esc(p.name)}</b></td></tr>
@@ -854,8 +1152,6 @@ function existingBookingView(trip, seat, p) {
             <tr><td style="color:#64748b">कार्यालय/युनिट</td><td>${esc(p.unit || '—')}</td></tr>
             <tr><td style="color:#64748b">सम्पर्क नं.</td><td>${esc(p.phone || '—')}</td></tr>
           ` : headBlock}
-          <tr><td style="color:#64748b">${trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य'}</td>
-              <td><b>${esc(q ? q.label : '—')}</b></td></tr>
           <tr><td style="color:#64748b">लिङ्ग / उमेर</td>
               <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
           ${p.note ? `<tr><td style="color:#64748b">कैफियत</td><td>${esc(p.note)}</td></tr>` : ''}
@@ -892,10 +1188,10 @@ function newBookingForm(trip, seat) {
   return personnelFormFields(trip, seat, label, type, typeRadio);
 }
 
-/* --- APF / Ex-service form with rank dropdown + ID --- */
 function personnelFormFields(trip, seat, label, type, typeRadio) {
   const b = tripBookings(trip.id);
   const isPickup = trip.route.mode === 'pickup';
+  const modeText = isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)';
   const pt = PASSENGER_TYPES[type];
 
   const quotaOptions = trip.route.quotas.map(q => {
@@ -948,11 +1244,16 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
         </div>
 
         <div class="field">
-          <label>${isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)'} *</label>
+          <label>${esc(modeText)} *</label>
           <select id="fQuota" required>
             <option value="">— छान्नुहोस् —</option>
             ${quotaOptions}
           </select>
+          <div class="hint">
+            ${isPickup
+              ? 'यात्रुले कहाँबाट बसमा चढ्ने हो — त्यो स्थान छान्नुहोस्।'
+              : 'यात्रु कहाँ झर्ने हो — त्यो स्थान छान्नुहोस्।'}
+          </div>
         </div>
 
         <div class="grid2">
@@ -983,7 +1284,6 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
     </div>`;
 }
 
-/* --- Family member form --- */
 function familyFormFields(trip, seat, label, typeRadio) {
   const b = tripBookings(trip.id);
   const heads = headsOf(trip);
@@ -1018,8 +1318,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
       const ptH = PASSENGER_TYPES[h.type];
       const disabled = left <= 0 ? 'disabled' : '';
       const idPart = h.idNo ? ` · ID: ${h.idNo}` : '';
+      const hq = quotaOf(trip.route, h.quota);
+      const place = hq ? ` → ${hq.label}` : '';
       return `<option value="${h.seat}" ${disabled}>
-        सिट ${seatLabel(h.seat)} — ${esc(h.name)} (${ptH.short}${h.rank ? ' / ' + h.rank : ''}${idPart}) — परिवार ${fc}/${MAX_FAMILY_PER_HEAD}${left <= 0 ? ' — भरिएको' : ''}
+        सिट ${seatLabel(h.seat)} — ${esc(h.name)} (${ptH.short}${h.rank ? ' / ' + h.rank : ''}${idPart})${esc(place)} — परिवार ${fc}/${MAX_FAMILY_PER_HEAD}${left <= 0 ? ' — भरिएको' : ''}
       </option>`;
     })
   ).join('');
@@ -1035,7 +1337,7 @@ function familyFormFields(trip, seat, label, typeRadio) {
         <div class="field">
           <label>प्रमुख कर्मचारी छान्नुहोस् *</label>
           <select id="fHead" required>${headOpts}</select>
-          <div class="hint">परिवारको सदस्यले प्रमुख कर्मचारीको गन्तव्य/आरोहण स्थान नै पाउँछन्।</div>
+          <div class="hint">परिवारको सदस्यले प्रमुख कर्मचारीको <b>${trip.route.mode === 'pickup' ? 'आरोहण' : 'गन्तव्य'} स्थान</b> नै पाउँछन्।</div>
         </div>
 
         <div class="field">
@@ -1044,7 +1346,6 @@ function familyFormFields(trip, seat, label, typeRadio) {
             <option value="">— सम्बन्ध छान्नुहोस् —</option>
             ${relOpts}
           </select>
-          <div class="hint">सम्बन्ध अनिवार्य छ — आरक्षण गर्नुअघि छान्नुहोस्।</div>
         </div>
 
         <div class="field">
@@ -1105,7 +1406,7 @@ function bindBooking() {
   if (close) close.addEventListener('click', () => { state.selectedSeat = null; render(); });
 
   const cancel = $('#cancelBooking');
-  if (cancel) cancel.addEventListener('click', () => {
+  if (cancel) cancel.addEventListener('click', async () => {
     const seat = state.selectedSeat;
     const b = tripBookings(trip.id);
     const p = b[seat];
@@ -1118,16 +1419,18 @@ function bindBooking() {
       msg += `\n\n⚠️ यससँग जोडिएका ${family.length} जना परिवारको सदस्य पनि रद्द हुनेछन्:\n` +
         family.map(f => `• सिट ${seatLabel(f.seat)} — ${f.name} (${f.relation})`).join('\n');
     }
-
     if (!confirm(msg)) return;
 
-    delete b[seat];
-    family.forEach(f => delete b[f.seat]);
-    saveStore();
+    const seatsToDelete = [seat, ...family.map(f => f.seat)];
+    const ok = await deleteBookings(trip.id, seatsToDelete);
+    if (!ok) return;
+
     state.selectedSeat = null;
     toast(family.length
       ? `आरक्षण र ${family.length} परिवारको सदस्य रद्द गरियो।`
       : 'आरक्षण रद्द गरियो।', 'ok');
+
+    await fetchAllBookings();
     render();
   });
 
@@ -1147,7 +1450,7 @@ function bindBooking() {
 
 /* ---------- SUBMIT ---------- */
 
-function submitBooking(trip) {
+async function submitBooking(trip) {
   const seat = Number($('#fSeat').value);
   const typeEl = document.querySelector('input[name="fType"]:checked');
   if (!typeEl) return toast('यात्रुको प्रकार छान्नुहोस्।', 'err');
@@ -1159,7 +1462,8 @@ function submitBooking(trip) {
   const b = tripBookings(trip.id);
   if (b[seat]) return toast('यो सिट पहिले नै आरक्षित छ।', 'err');
 
-  /* ---- FAMILY MEMBER ---- */
+  let bookingData;
+
   if (type === 'family') {
     const headSeat = Number($('#fHead').value);
     const relation = $('#fRelation').value;
@@ -1182,8 +1486,7 @@ function submitBooking(trip) {
       return toast(`"${q.label}" कोटा भरिएको छ (${q.seats} सिट)।`, 'err');
     }
 
-    if (!state.bookings[trip.id]) state.bookings[trip.id] = {};
-    state.bookings[trip.id][seat] = {
+    bookingData = {
       seat, type: 'family',
       name,
       headSeat,
@@ -1191,61 +1494,60 @@ function submitBooking(trip) {
       quota: head.quota,
       gender: $('#fGender').value,
       age:    $('#fAge').value.trim(),
-      note:   $('#fNote').value.trim(),
-      at:     new Date().toISOString()
+      note:   $('#fNote').value.trim()
     };
-    saveStore();
-    state.selectedSeat = null;
-    state.newBookingType = 'apf';
-    toast(`सिट ${seatLabel(seat)} — ${name} (${relation}) आरक्षित भयो।`, 'ok');
-    render();
+  } else {
+    const rank  = $('#fRank').value;
+    const idNo  = $('#fId').value.trim();
+    const phone = $('#fPhone').value.trim();
+    const quota = $('#fQuota').value;
+
+    if (!rank)  return toast('दर्जा छान्नुहोस्।', 'err');
+    if (!idNo)  return toast('ID नं. अनिवार्य छ।', 'err');
+    if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
+    if (!quota) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
+
+    const dupId = Object.values(b).find(p => p.idNo && p.idNo.toLowerCase() === idNo.toLowerCase());
+    if (dupId) return toast(`ID नं. "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा दर्ता छ।`, 'err');
+
+    const q = quotaOf(trip.route, quota);
+    const used = Object.values(b).filter(p => p.quota === quota).length;
+    if (used >= q.seats) {
+      return toast(`"${q.label}" कोटा भरिएको छ (${q.seats} सिट)।`, 'err');
+    }
+
+    bookingData = {
+      seat, type,
+      name, rank, idNo,
+      unit:  $('#fUnit').value.trim(),
+      phone,
+      quota,
+      gender: $('#fGender').value,
+      age:    $('#fAge').value.trim(),
+      note:   $('#fNote').value.trim()
+    };
+  }
+
+  // Disable button while saving
+  const submitBtn = $('#bookingForm button[type="submit"]');
+  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ सेभ गर्दै...'; }
+
+  const ok = await insertBooking(trip.id, bookingData);
+  if (!ok) {
+    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '✔ आरक्षण पुष्टि गर्ने'; }
     return;
   }
 
-  /* ---- APF / EX-SERVICE ---- */
-  const rank  = $('#fRank').value;
-  const idNo  = $('#fId').value.trim();
-  const phone = $('#fPhone').value.trim();
-  const quota = $('#fQuota').value;
-
-  if (!rank)  return toast('दर्जा छान्नुहोस्।', 'err');
-  if (!idNo)  return toast('ID नं. अनिवार्य छ।', 'err');
-  if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
-  if (!quota) return toast('गन्तव्य / आरोहण स्थान छान्नुहोस्।', 'err');
-
-  /* Duplicate ID check (any type) on this trip */
-  const dupId = Object.values(b).find(p => p.idNo && p.idNo.toLowerCase() === idNo.toLowerCase());
-  if (dupId) return toast(`ID नं. "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा दर्ता छ।`, 'err');
-
-  const q = quotaOf(trip.route, quota);
-  const used = Object.values(b).filter(p => p.quota === quota).length;
-  if (used >= q.seats) {
-    return toast(`"${q.label}" कोटा भरिएको छ (${q.seats} सिट)।`, 'err');
-  }
-
-  if (!state.bookings[trip.id]) state.bookings[trip.id] = {};
-  state.bookings[trip.id][seat] = {
-    seat, type,
-    name,
-    rank,
-    idNo,
-    unit:  $('#fUnit').value.trim(),
-    phone,
-    quota,
-    gender: $('#fGender').value,
-    age:    $('#fAge').value.trim(),
-    note:   $('#fNote').value.trim(),
-    at:     new Date().toISOString()
-  };
-  saveStore();
+  toast(`सिट ${seatLabel(seat)} — ${name} आरक्षित भयो।`, 'ok');
   state.selectedSeat = null;
   state.newBookingType = 'apf';
-  toast(`सिट ${seatLabel(seat)} — ${name} आरक्षित भयो।`, 'ok');
+
+  await fetchAllBookings();
   render();
 }
 
 /* =====================================================================
-   8. TAB: MANIFEST
+   10. MANIFEST
    ===================================================================== */
 
 function viewManifest() {
@@ -1257,7 +1559,9 @@ function viewManifest() {
   const filtered = q
     ? list.filter(p => {
         const head = p.type === 'family' ? b[p.headSeat] : null;
-        return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation, head?.name, head?.idNo]
+        const qq = quotaOf(trip.route, p.quota);
+        return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation,
+                head?.name, head?.idNo, qq?.label]
           .join(' ').toLowerCase().includes(q);
       })
     : list;
@@ -1268,6 +1572,10 @@ function viewManifest() {
       .join('');
     return `<optgroup label="${FESTIVALS[f].name}">${opts}</optgroup>`;
   }).join('');
+
+  const modeHeader = trip.route.mode === 'pickup'
+    ? 'आरोहण स्थान (चढ्ने)'
+    : 'गन्तव्य (झर्ने)';
 
   const rows = filtered.length ? filtered.map(p => {
     const qq = quotaOf(trip.route, p.quota);
@@ -1299,7 +1607,7 @@ function viewManifest() {
       <td>${idCell}</td>
       <td>${unitCell}</td>
       <td>${phoneCell}</td>
-      <td>${esc(qq ? qq.label : '—')}</td>
+      <td><span class="badge route-badge">${esc(qq ? qq.label : '—')}</span></td>
       <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td>
       <td><button class="btn sm danger" data-del="${p.seat}">हटाउने</button></td>
     </tr>`;
@@ -1315,10 +1623,10 @@ function viewManifest() {
   return `
     <div class="panel">
       <div class="panel-head">
-        <h2>यात्री सूची (Manifest) <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date}</small></h2>
+        <h2>यात्री सूची (Manifest) <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date} · ${fmtTime(trip.time)}</small></h2>
         <div class="toolbar">
           <select class="trip-select" id="manifestSelect">${tripOptions}</select>
-          <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / दर्जा / फोन" value="${esc(state.search)}">
+          <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / स्थान / फोन" value="${esc(state.search)}">
           <button class="btn" id="printBtn">🖨 प्रिन्ट</button>
           <button class="btn" id="csvBtn">⬇ CSV</button>
         </div>
@@ -1330,7 +1638,7 @@ function viewManifest() {
               <th class="num">सिट</th><th>नाम थर</th><th>प्रकार</th>
               <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय/प्रमुख</th>
               <th>सम्पर्क</th>
-              <th>${trip.route.mode === 'pickup' ? 'आरोहण' : 'गन्तव्य'}</th>
+              <th>${esc(modeHeader)}</th>
               <th>लिङ्ग/उमेर</th><th></th>
             </tr></thead>
             <tbody>${rows}</tbody>
@@ -1367,7 +1675,7 @@ function bindManifest() {
   }
 
   $$('[data-del]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const seat = Number(btn.dataset.del);
       const trip = getTrip(state.manifestTrip);
       const b = tripBookings(trip.id);
@@ -1382,10 +1690,12 @@ function bindManifest() {
       }
       if (!confirm(msg)) return;
 
-      delete b[seat];
-      family.forEach(f => delete b[f.seat]);
-      saveStore();
+      const seatsToDelete = [seat, ...family.map(f => f.seat)];
+      const ok = await deleteBookings(trip.id, seatsToDelete);
+      if (!ok) return;
+
       toast('आरक्षण हटाइयो।', 'ok');
+      await fetchAllBookings();
       render();
     });
   });
@@ -1398,6 +1708,7 @@ function printManifest() {
   const trip = getTrip(state.manifestTrip);
   const b = tripBookings(trip.id);
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
+  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   const rows = list.map((p, i) => {
     const q = quotaOf(trip.route, p.quota);
@@ -1438,7 +1749,7 @@ function printManifest() {
       <thead><tr>
         <th>क्र.</th><th>सिट</th><th>नाम</th><th>प्रकार</th>
         <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय</th>
-        <th>सम्पर्क</th><th>${trip.route.mode === 'pickup' ? 'आरोहण' : 'गन्तव्य'}</th>
+        <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
         <th>दस्तखत</th>
       </tr></thead>
       <tbody>${rows || '<tr><td colspan="10" style="text-align:center">कुनै आरक्षण छैन</td></tr>'}</tbody>
@@ -1462,9 +1773,10 @@ function exportCSV() {
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
   if (!list.length) return toast('निर्यात गर्न कुनै डाटा छैन।', 'err');
 
+  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य';
   const head = ['सिट','नाम थर','प्रकार','दर्जा','ID नं.','सम्बन्ध',
                 'प्रमुख (सिट/नाम)','प्रमुख ID','कार्यालय/युनिट','सम्पर्क',
-                'सेगमेन्ट','लिङ्ग','उमेर','कैफियत'];
+                modeHeader,'लिङ्ग','उमेर','कैफियत'];
   const rows = list.map(p => {
     const q = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
@@ -1501,7 +1813,7 @@ function exportCSV() {
 }
 
 /* =====================================================================
-   9. TAB: QUOTA
+   11. QUOTA
    ===================================================================== */
 
 function viewQuota() {
@@ -1522,7 +1834,7 @@ function viewQuota() {
       const cap = capacity[q.key];
       const pct = cap ? Math.round(used / cap * 100) : 0;
       return `<tr>
-        <td>${esc(q.label)}</td>
+        <td><b>${esc(q.label)}</b></td>
         <td><b>${q.seats}</b></td>
         <td>${trips.length}</td>
         <td>${cap}</td>
@@ -1539,12 +1851,13 @@ function viewQuota() {
         <div class="panel-head">
           <h2>${esc(r.from)} → ${esc(r.to)}
             <small>प्रति बस ${total} सिट · कुल ${trips.length} यात्रा</small></h2>
-          <span class="badge">${r.mode === 'pickup' ? 'आरोहण कोटा' : 'गन्तव्य कोटा'}</span>
+          <span class="badge">${r.mode === 'pickup' ? 'चढ्ने स्थान (आरोहण)' : 'झर्ने स्थान (गन्तव्य)'}</span>
         </div>
         <div class="tbl-wrap">
           <table>
             <thead><tr>
-              <th>सेगमेन्ट</th><th>सिट/बस</th><th>यात्रा</th>
+              <th>${r.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य स्थान'}</th>
+              <th>सिट/बस</th><th>यात्रा</th>
               <th>कुल क्षमता</th><th>आरक्षित</th><th>प्रगति</th><th>%</th>
             </tr></thead>
             <tbody>${rows}</tbody>
@@ -1554,13 +1867,13 @@ function viewQuota() {
   }).join('');
 
   return `<div class="note">
-    📊 कोटा बाँडफाँट — गन्तव्य / आरोहण स्थानको आधारमा। परिवारको सदस्यले प्रमुख कर्मचारीकै कोटा प्रयोग गर्छन्।
-    प्रत्येक बसमा जम्मा <b>${TOTAL_SEATS} सिट</b>।
+    📊 <b>चढ्ने/झर्ने स्थान अनुसार कोटा</b> — प्रत्येक यात्रुको आरोहण/गन्तव्य स्थानको आधारमा।
+    परिवारको सदस्यले प्रमुख कर्मचारीकै स्थान प्रयोग गर्छन्। प्रत्येक बसमा जम्मा <b>${TOTAL_SEATS} सिट</b>।
   </div>${blocks}`;
 }
 
 /* =====================================================================
-   10. TAB: COORDINATION
+   12. COORDINATION
    ===================================================================== */
 
 function viewCoordination() {
@@ -1612,7 +1925,7 @@ function viewCoordination() {
 }
 
 /* =====================================================================
-   11. INIT
+   13. INIT
    ===================================================================== */
 
 $$('.tab').forEach(btn => {
@@ -1624,8 +1937,25 @@ $$('.tab').forEach(btn => {
   });
 });
 
-loadStore();
-render();
+async function init() {
+  const overlay = $('#loadingOverlay');
+  const ok = await fetchAllBookings();
+  overlay.classList.add('hidden');
+
+  if (!ok) {
+    alert('Supabase बाट डाटा लोड गर्न सकिएन।\n\n' +
+          'कृपया जाँच्नुहोस्:\n' +
+          '1. SUPABASE_URL र SUPABASE_ANON_KEY ठीक छ?\n' +
+          '2. इन्टरनेट चलिरहेको छ?\n' +
+          '3. Supabase मा "bookings" टेबल बनाइएको छ?');
+    return;
+  }
+
+  render();
+  setupRealtime();
+}
+
+init();
 </script>
 </body>
 </html>
