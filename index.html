@@ -25,30 +25,91 @@ body{
 }
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 
+/* SETUP + LOGIN SCREENS */
+#setupScreen, #loginScreen{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:linear-gradient(135deg,#08203a 0%,#1b5289 100%);
+}
+.setup-card, .login-card{
+  background:#fff; border-radius:20px; padding:36px 32px;
+  max-width:460px; width:100%; box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
+}
+.setup-logo, .login-logo{
+  width:72px; height:72px; border-radius:20px;
+  background:linear-gradient(160deg,#e8a33d,#c47f1a);
+  display:grid; place-items:center; font-weight:700; font-size:20px; color:#0d2b4a;
+  margin:0 auto 20px; box-shadow:inset 0 0 0 3px rgba(255,255,255,.35);
+}
+.setup-card h1, .login-card h1{font-size:22px; font-weight:700; text-align:center; color:#0d2b4a; margin-bottom:6px}
+.setup-card p.sub, .login-card p.sub{text-align:center; color:#64748b; font-size:13.5px; margin-bottom:22px}
+.setup-card .field, .login-card .field{margin-bottom:16px}
+.setup-card .field label, .login-card .field label{font-size:13px}
+.setup-card .field input, .login-card .field input{padding:12px 14px; font-size:15px}
+.setup-card .btn.primary, .login-card .btn.primary{width:100%; justify-content:center; padding:13px; font-size:15px; font-weight:600}
+.setup-error, .login-error{
+  background:#fef2f2; border:1px solid #fecaca; color:#991b1b;
+  padding:10px 14px; border-radius:10px; font-size:13px;
+  margin-bottom:16px; display:none;
+}
+.setup-error.show, .login-error.show{display:block}
+.setup-note{
+  background:#f0f9ff; border:1px solid #bae6fd; color:#075985;
+  padding:10px 14px; border-radius:10px; font-size:12.5px;
+  margin-top:18px;
+}
+.setup-note code{background:#fff; padding:1px 6px; border-radius:4px; font-family:ui-monospace,monospace; font-size:12px; color:#0c4a6e}
+.login-hint{
+  background:#f0f9ff; border:1px solid #bae6fd; color:#075985;
+  padding:10px 14px; border-radius:10px; font-size:12.5px;
+  margin-top:18px;
+}
+.login-hint code{background:#fff; padding:1px 6px; border-radius:4px; font-family:ui-monospace,monospace; font-size:12px; color:#0c4a6e}
+
 /* TOPBAR */
 .topbar{
   background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289);
-  color:#fff; padding:16px 20px;
-  display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between;
+  color:#fff; padding:14px 20px;
+  display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between;
   box-shadow:0 10px 30px -14px rgba(8,32,58,.9);
 }
-.brand{display:flex;align-items:center;gap:14px;min-width:260px}
+.brand{display:flex; align-items:center; gap:14px; min-width:240px}
 .logo{
-  width:52px;height:52px;border-radius:14px;flex:0 0 auto;
+  width:48px;height:48px;border-radius:13px;flex:0 0 auto;
   background:linear-gradient(160deg,#e8a33d,#c47f1a);
-  display:grid;place-items:center;font-weight:700;font-size:15px;color:#0d2b4a;
+  display:grid;place-items:center;font-weight:700;font-size:14px;color:#0d2b4a;
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.35);
 }
-.brand h1{font-size:18px;font-weight:600;letter-spacing:.2px}
-.brand p{font-size:12.5px;color:#a9c4e0}
-.stats{display:flex;gap:10px;flex-wrap:wrap}
+.brand h1{font-size:17px;font-weight:600;letter-spacing:.2px}
+.brand p{font-size:12px;color:#a9c4e0}
+.topbar-right{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
 .stat{
   background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
-  border-radius:12px; padding:7px 14px; min-width:96px; text-align:center;
-  backdrop-filter:blur(4px);
+  border-radius:11px; padding:6px 12px; min-width:76px; text-align:center;
 }
-.stat b{display:block;font-size:19px;font-weight:600;line-height:1.2}
-.stat span{font-size:11.5px;color:#b9d0e8}
+.stat b{display:block;font-size:17px;font-weight:600;line-height:1.2}
+.stat span{font-size:10.5px;color:#b9d0e8}
+.user-chip{
+  display:flex; align-items:center; gap:9px;
+  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
+  border-radius:12px; padding:5px 12px 5px 5px;
+}
+.user-chip .avatar{
+  width:32px; height:32px; border-radius:50%;
+  background:linear-gradient(160deg,#e8a33d,#c47f1a);
+  color:#0d2b4a; display:grid; place-items:center;
+  font-weight:700; font-size:12px;
+}
+.user-chip .u-meta{display:flex; flex-direction:column; line-height:1.2}
+.user-chip .u-name{color:#fff; font-weight:600; font-size:13px}
+.user-chip .u-role{font-size:10.5px; color:#cbd5e1; font-weight:500}
+.user-chip .u-role.admin{color:#fde047; font-weight:700}
+.btn-logout{
+  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+  color:#fff; padding:8px 14px; border-radius:10px; cursor:pointer;
+  font-weight:500; font-size:13px; transition:.15s;
+}
+.btn-logout:hover{background:rgba(239,68,68,.25); border-color:#ef4444}
 .conn-status{
   display:inline-block;width:8px;height:8px;border-radius:50%;
   background:#10b981;margin-right:6px;vertical-align:middle;
@@ -68,6 +129,8 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 }
 .tab:hover{color:var(--brand2);background:#f8fafc}
 .tab.active{color:var(--brand);border-bottom-color:var(--accent);font-weight:600}
+.tab.admin-tab{color:#9a3412}
+.tab.admin-tab.active{color:#9a3412;border-bottom-color:#f97316}
 
 /* LAYOUT */
 main{padding:20px;max-width:1320px;margin:0 auto}
@@ -108,6 +171,8 @@ tbody tr:last-child td{border-bottom:none}
 .badge.badge-apf{background:#dbeafe;color:#1e40af}
 .badge.badge-ex{background:#d1fae5;color:#065f46}
 .badge.badge-family{background:#fed7aa;color:#9a3412}
+.badge.badge-admin{background:#fed7aa;color:#9a3412;border:1px solid #fdba74}
+.badge.badge-operator{background:#dbeafe;color:#1e40af}
 .badge.route-badge{
   background:#fef9c3;color:#854d0e;border:1px solid #fde047;
   font-weight:600;font-size:12.5px;
@@ -150,7 +215,7 @@ tbody tr:last-child td{border-bottom:none}
 .radio-chip:hover{border-color:#94a3b8}
 .radio-chip.active{border-color:var(--brand2);background:#eff6ff;color:var(--brand2);font-weight:600}
 
-/* BOOKING LAYOUT */
+/* BOOKING */
 .booking-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
 @media(max-width:960px){.booking-grid{grid-template-columns:1fr}}
 
@@ -211,7 +276,6 @@ tbody tr:last-child td{border-bottom:none}
   background:#0f172a;color:#fff;font-size:8.5px;font-weight:700;
   padding:0px 3px;border-radius:5px;line-height:1.3;
   max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  letter-spacing:0;
 }
 
 .back-label{
@@ -313,7 +377,7 @@ select.trip-select{
 }
 .trip-detail .td-item .val{font-weight:600;color:#1e293b;font-size:13.5px}
 
-/* Loading overlay */
+/* Loading */
 #loadingOverlay{
   position:fixed;inset:0;background:rgba(15,23,42,.85);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -325,6 +389,32 @@ select.trip-select{
   border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;
 }
 @keyframes spin{to{transform:rotate(360deg)}}
+
+/* MODAL */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(15,23,42,.6);
+  display:flex;align-items:center;justify-content:center;z-index:500;padding:20px;
+}
+.modal-backdrop.hidden{display:none}
+.modal{
+  background:#fff;border-radius:16px;max-width:480px;width:100%;
+  box-shadow:0 25px 60px -20px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;
+}
+.modal-head{
+  padding:16px 20px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.modal-head h3{font-size:16px;font-weight:600;color:var(--brand)}
+.modal-close{
+  background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);
+  width:32px;height:32px;border-radius:8px;
+}
+.modal-close:hover{background:#f1f5f9;color:#0f172a}
+.modal-body{padding:20px}
+.modal-foot{
+  padding:14px 20px;border-top:1px solid var(--line);
+  display:flex;justify-content:flex-end;gap:10px;
+}
 
 /* PRINT */
 #printRoot{display:none}
@@ -344,57 +434,143 @@ select.trip-select{
 </head>
 <body>
 
+<!-- ============ LOADING ============ -->
 <div id="loadingOverlay">
   <div class="spinner"></div>
-  <div>डाटा लोड गर्दै...</div>
+  <div>लोड हुँदै...</div>
 </div>
 
-<header class="topbar">
-  <div class="brand">
-    <div class="logo">सप्र</div>
-    <div>
-      <h1>बस आरक्षण तथा व्यवस्थापन प्रणाली</h1>
-      <p><span class="conn-status" id="connDot"></span>सशस्त्र प्रहरी बल, नेपाल — सञ्चालक एप (Operator)</p>
+<!-- ============ SETUP SCREEN (first time only) ============ -->
+<div id="setupScreen" style="display:none">
+  <div class="setup-card">
+    <div class="setup-logo">सप्र</div>
+    <h1>पहिलो पटक सेटअप</h1>
+    <p class="sub">प्रशासक (Admin) खाता बनाउनुहोस्</p>
+
+    <div class="setup-error" id="setupError"></div>
+
+    <form id="setupForm" autocomplete="off">
+      <div class="field">
+        <label>प्रशासकको पूरा नाम *</label>
+        <input type="text" id="setupFullname" required autofocus
+               placeholder="जस्तै: राम बहादुर थापा">
+      </div>
+      <div class="field">
+        <label>प्रयोगकर्ता नाम (Username) *</label>
+        <input type="text" id="setupUsername" required
+               placeholder="जस्तै: admin" pattern="[a-zA-Z0-9_.-]{3,30}">
+        <div class="hint">अंग्रेजी अक्षर, अंक वा _ . - मात्र (३–३० अक्षर)</div>
+      </div>
+      <div class="field">
+        <label>पासवर्ड *</label>
+        <input type="password" id="setupPassword" required minlength="6"
+               placeholder="कम्तीमा ६ अक्षर">
+      </div>
+      <div class="field">
+        <label>पासवर्ड फेरि लेख्नुहोस् *</label>
+        <input type="password" id="setupPassword2" required minlength="6"
+               placeholder="पुनः लेख्नुहोस्">
+      </div>
+      <button type="submit" class="btn primary" id="setupBtn">
+        ✔ प्रशासक खाता बनाउने
+      </button>
+    </form>
+
+    <div class="setup-note">
+      📌 यो स्क्रिन <b>केवल एक पटक</b> देखिन्छ।<br>
+      खाता बनाएपछि लगइन स्क्रिनमा जानुहुनेछ।<br>
+      पछि अरू operator थप्न: लगइन गरेर <b>👥 प्रयोगकर्ता</b> tab।
     </div>
   </div>
-  <div class="stats" id="stats"></div>
-</header>
+</div>
 
-<nav class="tabs" id="tabs">
-  <button class="tab active" data-tab="schedule">📅 तालिका</button>
-  <button class="tab" data-tab="booking">🎫 आरक्षण</button>
-  <button class="tab" data-tab="manifest">📋 यात्री सूची</button>
-  <button class="tab" data-tab="quota">📊 कोटा विवरण</button>
-  <button class="tab" data-tab="coordination">☎️ समन्वय अधिकृत</button>
-</nav>
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen" style="display:none">
+  <div class="login-card">
+    <div class="login-logo">सप्र</div>
+    <h1>बस आरक्षण प्रणाली</h1>
+    <p class="sub">सशस्त्र प्रहरी बल, नेपाल</p>
 
-<main id="view"></main>
+    <div class="login-error" id="loginError"></div>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label>प्रयोगकर्ता नाम</label>
+        <input type="text" id="loginUsername" required autofocus
+               placeholder="जस्तै: admin वा operator1">
+      </div>
+      <div class="field">
+        <label>पासवर्ड</label>
+        <input type="password" id="loginPassword" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn primary" id="loginBtn">🔐 लगइन गर्नुहोस्</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ MAIN APP ============ -->
+<div id="mainApp" style="display:none">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">सप्र</div>
+      <div>
+        <h1>बस आरक्षण प्रणाली</h1>
+        <p><span class="conn-status" id="connDot"></span>सञ्चालक एप — रियल-टाइम</p>
+      </div>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="topbar-right">
+      <div class="user-chip">
+        <div class="avatar" id="userAvatar">—</div>
+        <div class="u-meta">
+          <span class="u-name" id="userName">—</span>
+          <span class="u-role" id="userRole">—</span>
+        </div>
+      </div>
+      <button class="btn-logout" id="logoutBtn">लगआउट</button>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="schedule">📅 तालिका</button>
+    <button class="tab" data-tab="booking">🎫 आरक्षण</button>
+    <button class="tab" data-tab="manifest">📋 यात्री सूची</button>
+    <button class="tab" data-tab="quota">📊 कोटा विवरण</button>
+    <button class="tab" data-tab="coordination">☎️ समन्वय</button>
+    <button class="tab admin-tab" data-tab="users" id="usersTab" style="display:none">👥 प्रयोगकर्ता</button>
+  </nav>
+
+  <main id="view"></main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-backdrop hidden" id="modalBackdrop">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="modalTitle">—</h3>
+      <button class="modal-close" id="modalClose">×</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-foot" id="modalFoot"></div>
+  </div>
+</div>
 
 <div id="printRoot"></div>
 <div class="toast" id="toast"></div>
 
 <script>
 /* =====================================================================
-   ⚠️ SUPABASE CONFIG — यहाँ आफ्नो details राख्नुहोस्
-   =====================================================================
-   Supabase Dashboard → Settings → API बाट लिनुहोस्:
-   - Project URL  → SUPABASE_URL
-   - anon public  → SUPABASE_ANON_KEY
+   ⚠️ SUPABASE CONFIG — आफ्नो details यहाँ राख्नुहोस्
    ===================================================================== */
 const SUPABASE_URL = 'https://kwygidpzthsmyeqtctqr.supabase.co/rest/v1/';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eWdpZHB6dGhzbXllcXRjdHFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4MjkyMjIsImV4cCI6MjEwNjQwNTIyMn0.-aeptvC97gPdHkW-yj7NDO1W-zI_GPl-lkiNEN-wQ0c';
 
-/* =====================================================================
-   1. SUPABASE CLIENT
-   ===================================================================== */
-
-if (!window.supabase) {
-  alert('Supabase library load भएन। इन्टरनेट जाँच्नुहोस्।');
-}
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 /* =====================================================================
-   2. DATA LAYER
+   DATA
    ===================================================================== */
 
 const PLACES = {
@@ -408,7 +584,6 @@ const FESTIVALS = {
   tihar:   { name: 'तिहार र छठ',   cls: 'f-tihar'   }
 };
 
-/* ---- APF Nepal rank list (for dropdown) ---- */
 const RANKS = [
   { code: 'सप्रमनि',      full: 'सशस्त्र प्रहरी महानिरीक्षक' },
   { code: 'सप्रअमनि',    full: 'सशस्त्र प्रहरी अतिरिक्त महानिरीक्षक' },
@@ -428,46 +603,34 @@ const RANKS = [
 ];
 
 const ROUTES = {
-  'KTM-KAK': {
-    from: 'काठमाडौँ', to: 'काँकडभिट्टा', mode: 'dropoff',
-    quotas: [
-      { key:'east',        label:'ईटहरी देखी पूर्वका स्थानहरू', seats:16 },
-      { key:'itahari',     label:'ईटहरी',                      seats:7  },
-      { key:'saptari',     label:'सप्तरी',                     seats:6  },
-      { key:'bardibas',    label:'बर्दिबास',                   seats:6  },
-      { key:'narayanghat', label:'नारायणघाट',                  seats:2  }
-    ]
-  },
-  'KTM-GAD': {
-    from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff',
-    quotas: [
-      { key:'karnali',     label:'कर्णाली पश्चिमका स्थानहरू',   seats:16 },
-      { key:'kohalpur',    label:'कोहलपुर',                    seats:8  },
-      { key:'bhalubang',   label:'भालुवाङ्ग',                  seats:3  },
-      { key:'butwal',      label:'बुटवल',                      seats:8  },
-      { key:'narayanghat', label:'नारायणघाट',                  seats:2  }
-    ]
-  },
-  'KAK-KTM': {
-    from: 'काँकडभिट्टा', to: 'काठमाडौँ', mode: 'pickup',
-    quotas: [
-      { key:'kakarbhitta', label:'काँकडभिट्टा',   seats:20 },
-      { key:'narayanghat', label:'नारायणघाट',     seats:7  },
-      { key:'bardibas',    label:'बर्दिबास',      seats:5  },
-      { key:'saptari',     label:'सप्तरी',        seats:3  },
-      { key:'itahari',     label:'ईटहरी',         seats:2  }
-    ]
-  },
-  'GAD-KTM': {
-    from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup',
-    quotas: [
-      { key:'gaddachowki', label:'गड्डाचौकी',   seats:16 },
-      { key:'narayanghat', label:'नारायणघाट',   seats:8  },
-      { key:'butwal',      label:'बुटवल',       seats:8  },
-      { key:'bhalubang',   label:'भालुवाङ्ग',   seats:3  },
-      { key:'kohalpur',    label:'कोहलपुर',     seats:2  }
-    ]
-  }
+  'KTM-KAK': { from: 'काठमाडौँ', to: 'काँकडभिट्टा', mode: 'dropoff', quotas: [
+    { key:'east', label:'ईटहरी देखी पूर्वका स्थानहरू', seats:16 },
+    { key:'itahari', label:'ईटहरी', seats:7 },
+    { key:'saptari', label:'सप्तरी', seats:6 },
+    { key:'bardibas', label:'बर्दिबास', seats:6 },
+    { key:'narayanghat', label:'नारायणघाट', seats:2 }
+  ]},
+  'KTM-GAD': { from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff', quotas: [
+    { key:'karnali', label:'कर्णाली पश्चिमका स्थानहरू', seats:16 },
+    { key:'kohalpur', label:'कोहलपुर', seats:8 },
+    { key:'bhalubang', label:'भालुवाङ्ग', seats:3 },
+    { key:'butwal', label:'बुटवल', seats:8 },
+    { key:'narayanghat', label:'नारायणघाट', seats:2 }
+  ]},
+  'KAK-KTM': { from: 'काँकडभिट्टा', to: 'काठमाडौँ', mode: 'pickup', quotas: [
+    { key:'kakarbhitta', label:'काँकडभिट्टा', seats:20 },
+    { key:'narayanghat', label:'नारायणघाट', seats:7 },
+    { key:'bardibas', label:'बर्दिबास', seats:5 },
+    { key:'saptari', label:'सप्तरी', seats:3 },
+    { key:'itahari', label:'ईटहरी', seats:2 }
+  ]},
+  'GAD-KTM': { from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup', quotas: [
+    { key:'gaddachowki', label:'गड्डाचौकी', seats:16 },
+    { key:'narayanghat', label:'नारायणघाट', seats:8 },
+    { key:'butwal', label:'बुटवल', seats:8 },
+    { key:'bhalubang', label:'भालुवाङ्ग', seats:3 },
+    { key:'kohalpur', label:'कोहलपुर', seats:2 }
+  ]}
 };
 
 const TOTAL_SEATS = 37;
@@ -479,16 +642,13 @@ const PASSENGER_TYPES = {
   family: { label: 'परिवारको सदस्य',          short: 'परिवार',  cls: 'badge-family', seatCls: 'type-family' }
 };
 
-const RELATIONS = [
-  'पत्नी', 'पति', 'छोरा', 'छोरी', 'बुबा', 'आमा',
-  'दाजु', 'भाई', 'दिदी', 'बहिनी', 'अन्य'
-];
+const RELATIONS = ['पत्नी','पति','छोरा','छोरी','बुबा','आमा','दाजु','भाई','दिदी','बहिनी','अन्य'];
 
 const SEAT_LAYOUT = {
   frontCabin: [
-    { label: 'सहचालक',            cls: '' },
+    { label: 'सहचालक', cls: '' },
     { label: 'चालक (स्ट्याण्डबाई)', cls: 'standby' },
-    { label: 'चालक',              cls: 'driver' }
+    { label: 'चालक', cls: 'driver' }
   ],
   rows: [
     { a: [1, 2],   b: [17, 18] },
@@ -501,11 +661,8 @@ const SEAT_LAYOUT = {
     { a: [15, 16], b: [31, 32] }
   ],
   backRow: [
-    { num: 33, label: 'क' },
-    { num: 34, label: 'ख' },
-    { num: 35, label: 'ग' },
-    { num: 36, label: 'घ' },
-    { num: 37, label: 'ङ' }
+    { num: 33, label: 'क' }, { num: 34, label: 'ख' }, { num: 35, label: 'ग' },
+    { num: 36, label: 'घ' }, { num: 37, label: 'ङ' }
   ]
 };
 
@@ -520,20 +677,12 @@ function seatLabel(n) {
 function shortPlaceLabel(label) {
   if (!label) return '?';
   const map = {
-    'काँकडभिट्टा': 'काँक',
-    'गड्डाचौकी': 'गड्डा',
-    'नारायणघाट': 'नारा',
-    'बर्दिबास': 'बर्दी',
-    'सप्तरी': 'सप्त',
-    'ईटहरी': 'ईट',
-    'कोहलपुर': 'कोह',
-    'भालुवाङ्ग': 'भालु',
-    'बुटवल': 'बुट',
-    'कर्णाली पश्चिमका स्थानहरू': 'कर्णा',
-    'ईटहरी देखी पूर्वका स्थानहरू': 'ईट+'
+    'काँकडभिट्टा': 'काँक', 'गड्डाचौकी': 'गड्डा', 'नारायणघाट': 'नारा',
+    'बर्दिबास': 'बर्दी', 'सप्तरी': 'सप्त', 'ईटहरी': 'ईट', 'कोहलपुर': 'कोह',
+    'भालुवाङ्ग': 'भालु', 'बुटवल': 'बुट',
+    'कर्णाली पश्चिमका स्थानहरू': 'कर्णा', 'ईटहरी देखी पूर्वका स्थानहरू': 'ईट+'
   };
-  if (map[label]) return map[label];
-  return label.slice(0, 3);
+  return map[label] || label.slice(0, 3);
 }
 
 const TRIP_RAW = [
@@ -568,15 +717,9 @@ const TRIP_RAW = [
 ];
 
 const TRIPS = TRIP_RAW.map((r, i) => ({
-  id: 'T' + (i + 1),
-  festival: r[0],
-  date: r[1],
-  routeId: r[2],
-  placeKey: r[3],
-  place: PLACES[r[3]],
-  time: r[4],
-  route: ROUTES[r[2]],
-  seats: TOTAL_SEATS
+  id: 'T' + (i + 1), festival: r[0], date: r[1],
+  routeId: r[2], placeKey: r[3], place: PLACES[r[3]],
+  time: r[4], route: ROUTES[r[2]], seats: TOTAL_SEATS
 }));
 
 const COORD_HQ = [
@@ -595,13 +738,15 @@ const COORD_UNITS = [
 ];
 
 /* =====================================================================
-   3. STATE + CACHE
+   STATE
    ===================================================================== */
 
-let BOOKINGS_CACHE = {};       // { tripId: { seatNum: bookingObj } }
+let BOOKINGS_CACHE = {};
 let REALTIME_CHANNEL = null;
+const SESSION_KEY = 'apf_bus_session_v1';
 
 const state = {
+  user: null,
   activeTrip: TRIPS[0].id,
   selectedSeat: null,
   newBookingType: 'apf',
@@ -611,7 +756,7 @@ const state = {
 };
 
 /* =====================================================================
-   4. HELPERS
+   HELPERS
    ===================================================================== */
 
 const $  = sel => document.querySelector(sel);
@@ -655,8 +800,7 @@ function headsOf(trip) {
 
 function familyCountOf(trip, headSeat) {
   return Object.values(tripBookings(trip.id))
-    .filter(p => p.type === 'family' && p.headSeat === Number(headSeat))
-    .length;
+    .filter(p => p.type === 'family' && p.headSeat === Number(headSeat)).length;
 }
 
 function familyMembersOf(trip, headSeat) {
@@ -671,44 +815,216 @@ function placeModeLabel(trip) {
 
 function setConnectionStatus(online) {
   const dot = $('#connDot');
-  if (!dot) return;
-  dot.classList.toggle('offline', !online);
+  if (dot) dot.classList.toggle('offline', !online);
+}
+
+function hideAllScreens() {
+  $('#setupScreen').style.display = 'none';
+  $('#loginScreen').style.display = 'none';
+  $('#mainApp').style.display = 'none';
 }
 
 /* =====================================================================
-   5. SUPABASE — DATA OPERATIONS
+   SETUP
    ===================================================================== */
 
-/* Convert DB row → booking object */
+async function checkNeedsSetup() {
+  const { data, error } = await sb.rpc('needs_setup');
+  if (error) {
+    console.error('needs_setup error:', error);
+    // If function doesn't exist, treat as needing setup
+    return null;
+  }
+  return data === true;
+}
+
+function showSetupScreen() {
+  hideAllScreens();
+  $('#setupScreen').style.display = 'flex';
+  setTimeout(() => $('#setupFullname')?.focus(), 100);
+}
+
+function bindSetup() {
+  const form = $('#setupForm');
+  const errEl = $('#setupError');
+  const btn = $('#setupBtn');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errEl.classList.remove('show');
+
+    const fullname = $('#setupFullname').value.trim();
+    const username = $('#setupUsername').value.trim().toLowerCase();
+    const pw = $('#setupPassword').value;
+    const pw2 = $('#setupPassword2').value;
+
+    if (!fullname) { errEl.textContent = 'पूरा नाम भर्नुहोस्।'; errEl.classList.add('show'); return; }
+    if (!username || username.length < 3) { errEl.textContent = 'प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।'; errEl.classList.add('show'); return; }
+    if (pw.length < 6) { errEl.textContent = 'पासवर्ड कम्तीमा ६ अक्षर।'; errEl.classList.add('show'); return; }
+    if (pw !== pw2) { errEl.textContent = 'दुई पासवर्ड मिलेनन्।'; errEl.classList.add('show'); return; }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ बनाउँदै...';
+
+    const { error } = await sb.rpc('setup_first_admin', {
+      p_username: username,
+      p_password: pw,
+      p_full_name: fullname
+    });
+
+    btn.disabled = false;
+    btn.textContent = '✔ प्रशासक खाता बनाउने';
+
+    if (error) {
+      if (error.message.includes('already completed')) {
+        errEl.textContent = 'सेटअप पहिले नै सम्पन्न भइसकेको छ। लगइन गर्नुहोस्।';
+      } else {
+        errEl.textContent = 'बनाउन सकिएन: ' + error.message;
+      }
+      errEl.classList.add('show');
+      return;
+    }
+
+    toast('प्रशासक खाता बनाइयो! अब लगइन गर्नुहोस्।', 'ok');
+    $('#loginUsername').value = username;
+    showLoginScreen();
+  });
+}
+
+/* =====================================================================
+   AUTH
+   ===================================================================== */
+
+async function doLogin(username, password) {
+  const { data, error } = await sb.rpc('login_user', {
+    p_username: username, p_password: password
+  });
+  if (error) {
+    console.error(error);
+    return { ok: false, msg: 'लगइन गर्न सकिएन: ' + error.message };
+  }
+  if (!data || !data.length) {
+    return { ok: false, msg: 'प्रयोगकर्ता नाम वा पासवर्ड मिलेन।' };
+  }
+  const row = data[0];
+  return { ok: true, user: {
+    id: row.id, username: row.username, full_name: row.full_name,
+    role: row.role, token: row.token
+  }};
+}
+
+async function doLogout() {
+  if (state.user?.token) {
+    try { await sb.rpc('logout_user', { p_token: state.user.token }); } catch (e) {}
+  }
+  sessionStorage.removeItem(SESSION_KEY);
+  state.user = null;
+  BOOKINGS_CACHE = {};
+  if (REALTIME_CHANNEL) { sb.removeChannel(REALTIME_CHANNEL); REALTIME_CHANNEL = null; }
+}
+
+async function restoreSession() {
+  const saved = sessionStorage.getItem(SESSION_KEY);
+  if (!saved) return false;
+  let parsed;
+  try { parsed = JSON.parse(saved); } catch (e) { return false; }
+  if (!parsed?.token) return false;
+
+  const { data, error } = await sb.rpc('verify_session', { p_token: parsed.token });
+  if (error || !data || !data.length) {
+    sessionStorage.removeItem(SESSION_KEY);
+    return false;
+  }
+  const row = data[0];
+  state.user = {
+    id: row.id, username: row.username, full_name: row.full_name,
+    role: row.role, token: parsed.token
+  };
+  return true;
+}
+
+function saveSession() {
+  if (state.user) {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
+      token: state.user.token, username: state.user.username
+    }));
+  }
+}
+
+function showLoginScreen() {
+  hideAllScreens();
+  $('#loginScreen').style.display = 'flex';
+  setTimeout(() => $('#loginUsername')?.focus(), 100);
+}
+
+function showMainApp() {
+  hideAllScreens();
+  $('#mainApp').style.display = 'block';
+
+  const initials = (state.user.full_name || state.user.username || '?')
+    .split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
+
+  $('#userAvatar').textContent = initials;
+  $('#userName').textContent = state.user.full_name || state.user.username;
+  const roleEl = $('#userRole');
+  roleEl.textContent = state.user.role === 'admin' ? 'प्रशासक' : 'सञ्चालक';
+  roleEl.className = 'u-role' + (state.user.role === 'admin' ? ' admin' : '');
+  $('#usersTab').style.display = state.user.role === 'admin' ? '' : 'none';
+}
+
+function bindLogin() {
+  const form = $('#loginForm');
+  const errEl = $('#loginError');
+  const btn = $('#loginBtn');
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    errEl.classList.remove('show');
+
+    const username = $('#loginUsername').value.trim();
+    const password = $('#loginPassword').value;
+    if (!username || !password) {
+      errEl.textContent = 'दुवै फाँट भर्नुहोस्।';
+      errEl.classList.add('show');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ लगइन हुँदै...';
+    const res = await doLogin(username, password);
+    btn.disabled = false;
+    btn.textContent = '🔐 लगइन गर्नुहोस्';
+
+    if (!res.ok) {
+      errEl.textContent = res.msg;
+      errEl.classList.add('show');
+      return;
+    }
+
+    state.user = res.user;
+    saveSession();
+    $('#loginPassword').value = '';
+    await startApp();
+  });
+}
+
+/* =====================================================================
+   SUPABASE DATA
+   ===================================================================== */
+
 function rowToBooking(row) {
   return {
-    seat: row.seat,
-    type: row.type,
-    name: row.name,
-    rank: row.rank,
-    idNo: row.id_no,
-    unit: row.unit,
-    phone: row.phone,
-    quota: row.quota,
-    gender: row.gender,
-    age: row.age,
-    note: row.note,
-    headSeat: row.head_seat,
-    relation: row.relation,
-    at: row.created_at,
-    dbId: row.id
+    seat: row.seat, type: row.type, name: row.name,
+    rank: row.rank, idNo: row.id_no, unit: row.unit, phone: row.phone,
+    quota: row.quota, gender: row.gender, age: row.age, note: row.note,
+    headSeat: row.head_seat, relation: row.relation,
+    at: row.created_at, dbId: row.id, createdBy: row.created_by
   };
 }
 
-/* Fetch all bookings → cache */
 async function fetchAllBookings() {
   const { data, error } = await sb.from('bookings').select('*');
-  if (error) {
-    console.error('Fetch error:', error);
-    setConnectionStatus(false);
-    toast('डाटा लोड गर्न सकिएन: ' + error.message, 'err');
-    return false;
-  }
+  if (error) { console.error(error); setConnectionStatus(false); return false; }
   setConnectionStatus(true);
   BOOKINGS_CACHE = {};
   data.forEach(row => {
@@ -718,77 +1034,46 @@ async function fetchAllBookings() {
   return true;
 }
 
-/* Insert booking */
 async function insertBooking(tripId, b) {
   const { error } = await sb.from('bookings').insert([{
-    trip_id: tripId,
-    seat: b.seat,
-    type: b.type,
-    name: b.name,
-    rank: b.rank || null,
-    id_no: b.idNo || null,
-    unit: b.unit || null,
-    phone: b.phone || null,
-    quota: b.quota,
-    gender: b.gender || null,
-    age: b.age || null,
-    note: b.note || null,
-    head_seat: b.headSeat || null,
-    relation: b.relation || null
+    trip_id: tripId, seat: b.seat, type: b.type, name: b.name,
+    rank: b.rank || null, id_no: b.idNo || null, unit: b.unit || null,
+    phone: b.phone || null, quota: b.quota, gender: b.gender || null,
+    age: b.age || null, note: b.note || null,
+    head_seat: b.headSeat || null, relation: b.relation || null,
+    created_by: state.user?.username || null
   }]);
-
   if (error) {
-    console.error('Insert error:', error);
-    if (error.code === '23505') {
-      toast('यो सिट भर्खरै अरूले आरक्षण गरिसके। पुनः प्रयास गर्नुहोस्।', 'err');
-    } else if (error.code === '23514') {
-      toast('डाटा ढाँचा मिलेन।', 'err');
-    } else {
-      toast('सेभ गर्न सकिएन: ' + error.message, 'err');
-    }
+    console.error(error);
+    if (error.code === '23505') toast('यो सिट भर्खरै अरूले आरक्षण गरिसके।', 'err');
+    else toast('सेभ गर्न सकिएन: ' + error.message, 'err');
     return false;
   }
   return true;
 }
 
-/* Delete by seats */
 async function deleteBookings(tripId, seats) {
   if (!seats.length) return true;
   const { error } = await sb.from('bookings')
-    .delete()
-    .eq('trip_id', tripId)
-    .in('seat', seats);
-
-  if (error) {
-    console.error('Delete error:', error);
-    toast('मेटाउन सकिएन: ' + error.message, 'err');
-    return false;
-  }
+    .delete().eq('trip_id', tripId).in('seat', seats);
+  if (error) { toast('मेटाउन सकिएन।', 'err'); console.error(error); return false; }
   return true;
 }
 
-/* Realtime subscription */
 function setupRealtime() {
   if (REALTIME_CHANNEL) sb.removeChannel(REALTIME_CHANNEL);
-
-  REALTIME_CHANNEL = sb
-    .channel('bookings-realtime')
-    .on(
-      'postgres_changes',
+  REALTIME_CHANNEL = sb.channel('bookings-realtime')
+    .on('postgres_changes',
       { event: '*', schema: 'public', table: 'bookings' },
       async () => {
-        // Simple approach: re-fetch everything
         const ok = await fetchAllBookings();
         if (ok) render();
-      }
-    )
-    .subscribe(status => {
-      setConnectionStatus(status === 'SUBSCRIBED');
-    });
+      })
+    .subscribe(status => setConnectionStatus(status === 'SUBSCRIBED'));
 }
 
 /* =====================================================================
-   6. HEADER STATS
+   HEADER STATS
    ===================================================================== */
 
 function renderStats() {
@@ -803,15 +1088,15 @@ function renderStats() {
   const pct = totalSeats ? Math.round(booked / totalSeats * 100) : 0;
 
   $('#stats').innerHTML = `
-    <div class="stat"><b>${TRIPS.length}</b><span>कुल यात्रा</span></div>
-    <div class="stat"><b>${apf}</b><span>सप्र कर्मचारी</span></div>
+    <div class="stat"><b>${TRIPS.length}</b><span>यात्रा</span></div>
+    <div class="stat"><b>${apf}</b><span>सप्र</span></div>
     <div class="stat"><b>${ex}</b><span>भूतपूर्व</span></div>
     <div class="stat"><b>${family}</b><span>परिवार</span></div>
     <div class="stat"><b>${pct}%</b><span>अकुपेन्सी</span></div>`;
 }
 
 /* =====================================================================
-   7. VIEW ROUTER
+   ROUTER
    ===================================================================== */
 
 function render() {
@@ -825,14 +1110,16 @@ function render() {
   if (state.tab === 'manifest')     view.innerHTML = viewManifest();
   if (state.tab === 'quota')        view.innerHTML = viewQuota();
   if (state.tab === 'coordination') view.innerHTML = viewCoordination();
+  if (state.tab === 'users')        view.innerHTML = viewUsers();
 
   if (state.tab === 'booking') bindBooking();
   if (state.tab === 'manifest') bindManifest();
   if (state.tab === 'schedule') bindSchedule();
+  if (state.tab === 'users') bindUsers();
 }
 
 /* =====================================================================
-   8. SCHEDULE
+   SCHEDULE
    ===================================================================== */
 
 function viewSchedule() {
@@ -869,7 +1156,7 @@ function viewSchedule() {
           <table>
             <thead><tr>
               <th class="num">सि.नं.</th><th>मिति (वि.सं.)</th><th>रुट</th>
-              <th>बस छुट्ने स्थान</th><th>बस छुट्ने समय</th><th>अवस्था</th><th></th>
+              <th>बस छुट्ने स्थान</th><th>छुट्ने समय</th><th>अवस्था</th><th></th>
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>
@@ -879,10 +1166,9 @@ function viewSchedule() {
 
   return `
     <div class="note">
-      📌 सबै मितिहरू <b>विक्रम संवत् (वि.सं.)</b> मा छन्। प्रत्येक बसमा जम्मा <b>${TOTAL_SEATS} सिट</b>
-      (A = A1–A16, B = B1–B16, पछाडि = क–ङ)। डाटा Supabase मा रियल-टाइम सेभ हुन्छ।
-    </div>
-    ${groups}`;
+      📌 सबै मिति <b>वि.सं.</b> मा छन्। प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>
+      (A1–A16, B1–B16, क–ङ)। लगइन: <b>${esc(state.user?.full_name || '')}</b>
+    </div>${groups}`;
 }
 
 function bindSchedule() {
@@ -899,28 +1185,23 @@ function bindSchedule() {
 }
 
 /* =====================================================================
-   9. BOOKING
+   BOOKING
    ===================================================================== */
 
 function seatBtn(num, bookings, trip) {
   const p = bookings[num];
   const sel = state.selectedSeat === num;
   const cls = ['seat'];
-  if (p) {
-    cls.push('booked');
-    cls.push(PASSENGER_TYPES[p.type]?.seatCls || 'type-apf');
-  }
+  if (p) { cls.push('booked'); cls.push(PASSENGER_TYPES[p.type]?.seatCls || 'type-apf'); }
   if (sel) cls.push('selected');
 
   const label = seatLabel(num);
   const mode = placeModeLabel(trip);
-
   let title = `सिट ${label} — खाली`;
   let tag = '';
   if (p) {
     const q = quotaOf(trip.route, p.quota);
     const placeName = q ? q.label : '—';
-
     if (p.type === 'family') {
       const head = bookings[p.headSeat];
       title = `सिट ${label} — ${p.name} (${p.relation})\n` +
@@ -934,25 +1215,20 @@ function seatBtn(num, bookings, trip) {
   }
 
   return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">
-    ${label}
-    ${tag ? `<span class="seat-tag">${esc(tag)}</span>` : ''}
+    ${label}${tag ? `<span class="seat-tag">${esc(tag)}</span>` : ''}
   </button>`;
 }
 
 function renderBusMap(bookings, trip) {
-  let html = '';
-
-  html += '<div class="bus-cabin">';
+  let html = '<div class="bus-cabin">';
   SEAT_LAYOUT.frontCabin.forEach(s => {
     html += `<div class="cabin-seat ${s.cls}">${esc(s.label)}</div>`;
   });
   html += '</div>';
 
-  html += `
-    <div class="side-headers">
-      <span class="label-a">साईड A</span>
-      <span class="label-b">साईड B</span>
-    </div>`;
+  html += `<div class="side-headers">
+    <span class="label-a">साईड A</span><span class="label-b">साईड B</span>
+  </div>`;
 
   SEAT_LAYOUT.rows.forEach(row => {
     html += '<div class="seat-row">';
@@ -966,21 +1242,15 @@ function renderBusMap(bookings, trip) {
   html += '<div class="seat-row back">';
   SEAT_LAYOUT.backRow.forEach(s => { html += seatBtn(s.num, bookings, trip); });
   html += '</div>';
-
   return html;
 }
 
 function renderPlaceGroups(trip, bookings) {
   const mode = trip.route.mode;
   const modeText = mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-
   const groups = {};
-  trip.route.quotas.forEach(q => {
-    groups[q.key] = { label: q.label, seats: [], total: q.seats };
-  });
-  Object.values(bookings).forEach(p => {
-    if (groups[p.quota]) groups[p.quota].seats.push(p.seat);
-  });
+  trip.route.quotas.forEach(q => { groups[q.key] = { label: q.label, seats: [], total: q.seats }; });
+  Object.values(bookings).forEach(p => { if (groups[p.quota]) groups[p.quota].seats.push(p.seat); });
 
   const items = Object.values(groups).map(g => {
     const count = g.seats.length;
@@ -992,20 +1262,14 @@ function renderPlaceGroups(trip, bookings) {
         ${esc(g.label)}
         ${seatList ? `<span class="place-seats">${esc(seatList)}</span>` : ''}
       </span>
-      <span class="place-count" style="background:${empty ? '#cbd5e1' : '#1b5289'}">
-        ${count}/${g.total}
-      </span>
+      <span class="place-count" style="background:${empty ? '#cbd5e1' : '#1b5289'}">${count}/${g.total}</span>
     </div>`;
   }).join('');
 
-  return `
-    <div class="place-groups">
-      <h4>
-        🗺️ ${esc(modeText)} अनुसार
-        <span class="mode">${mode === 'pickup' ? 'चढ्ने' : 'झर्ने'}</span>
-      </h4>
-      ${items}
-    </div>`;
+  return `<div class="place-groups">
+    <h4>🗺️ ${esc(modeText)} अनुसार <span class="mode">${mode === 'pickup' ? 'चढ्ने' : 'झर्ने'}</span></h4>
+    ${items}
+  </div>`;
 }
 
 function viewBooking() {
@@ -1036,11 +1300,8 @@ function viewBooking() {
       </div>
       <div class="panel-body">
         <div class="booking-grid">
-
           <div>
-            <div class="bus">
-              ${renderBusMap(b, trip)}
-            </div>
+            <div class="bus">${renderBusMap(b, trip)}</div>
             <div class="legend">
               <span><i class="lg-empty"></i>खाली</span>
               <span><i class="lg-apf"></i>सप्र</span>
@@ -1052,7 +1313,6 @@ function viewBooking() {
             <div class="hint" style="text-align:center;margin-top:8px">
               कुल ${TOTAL_SEATS} · सप्र <b>${apfC}</b> · भूतपूर्व <b>${exC}</b> · परिवार <b>${famC}</b>
             </div>
-
             ${renderPlaceGroups(trip, b)}
           </div>
 
@@ -1072,11 +1332,8 @@ function viewBooking() {
                 </div>
               </div>
             </div>
-
             <div class="panel" id="formPanel">
-              ${state.selectedSeat
-                ? seatFormHTML(trip, state.selectedSeat)
-                : emptySeatPrompt()}
+              ${state.selectedSeat ? seatFormHTML(trip, state.selectedSeat) : emptySeatPrompt()}
             </div>
           </div>
         </div>
@@ -1092,8 +1349,7 @@ function emptySeatPrompt() {
       <p class="hint">
         माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
         साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
-        प्रत्येक कर्मचारीले बढीमा <b>३ जना</b> परिवारको सदस्यको आरक्षण गर्न सक्नुहुनेछ।<br>
-        <b>आरोहण / गन्तव्य स्थान</b> सिट नक्साको तल <b>समूहबद्ध</b> रूपमा देख्न सकिन्छ।
+        प्रत्येक कर्मचारीले बढीमा <b>३ जना</b> परिवारको सदस्यको आरक्षण गर्न सक्नुहुनेछ।
       </p>
     </div>
   </div>`;
@@ -1122,8 +1378,7 @@ function existingBookingView(trip, seat, p) {
       <tr><td style="color:#64748b">प्रमुखको ID</td>
           <td>${head && head.idNo ? `<span class="id-tag">${esc(head.idNo)}</span>` : '—'}</td></tr>
       <tr><td style="color:#64748b">सम्बन्ध</td><td><b>${esc(p.relation || '—')}</b></td></tr>
-      <tr><td style="color:#64748b">प्रमुखको परिवार संख्या</td>
-          <td>${fc} / ${MAX_FAMILY_PER_HEAD}</td></tr>
+      <tr><td style="color:#64748b">प्रमुखको परिवार संख्या</td><td>${fc} / ${MAX_FAMILY_PER_HEAD}</td></tr>
       <tr><td style="color:#64748b">प्रमुखको ${esc(modeText)}</td>
           <td><span class="place-big">${esc(headQ ? headQ.label : '—')}</span></td></tr>`;
   }
@@ -1134,12 +1389,10 @@ function existingBookingView(trip, seat, p) {
       <span class="badge ${pt.cls}">${pt.label}</span>
     </div>
     <div class="panel-body">
-
       <div class="note info" style="margin-bottom:14px">
         📍 <b>${esc(modeText)}:</b>
         <span class="place-big">${esc(q ? q.label : '—')}</span>
       </div>
-
       <table style="font-size:13.5px">
         <tbody>
           <tr><td style="color:#64748b;width:150px">नाम थर</td><td><b>${esc(p.name)}</b></td></tr>
@@ -1154,6 +1407,7 @@ function existingBookingView(trip, seat, p) {
           ` : headBlock}
           <tr><td style="color:#64748b">लिङ्ग / उमेर</td>
               <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
+          ${p.createdBy ? `<tr><td style="color:#64748b">दर्ता गर्ने</td><td>${esc(p.createdBy)}</td></tr>` : ''}
           ${p.note ? `<tr><td style="color:#64748b">कैफियत</td><td>${esc(p.note)}</td></tr>` : ''}
         </tbody>
       </table>
@@ -1179,12 +1433,10 @@ function newBookingForm(trip, seat) {
           </label>
         `).join('')}
       </div>
-      <div class="hint">कर्मचारी वा भूतपूर्व कर्मचारीको बढीमा ${MAX_FAMILY_PER_HEAD} जना परिवारको सदस्य आरक्षण गर्न सकिन्छ।</div>
+      <div class="hint">बढीमा ${MAX_FAMILY_PER_HEAD} जना परिवारको सदस्य।</div>
     </div>`;
 
-  if (type === 'family') {
-    return familyFormFields(trip, seat, label, typeRadio);
-  }
+  if (type === 'family') return familyFormFields(trip, seat, label, typeRadio);
   return personnelFormFields(trip, seat, label, type, typeRadio);
 }
 
@@ -1215,12 +1467,10 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
       <form id="bookingForm" autocomplete="off">
         <input type="hidden" id="fSeat" value="${seat}">
         ${typeRadio}
-
         <div class="field">
           <label>नाम थर *</label>
           <input type="text" id="fName" required placeholder="जस्तै: राम बहादुर थापा">
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>दर्जा *</label>
@@ -1231,7 +1481,6 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
             <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace">
           </div>
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>सम्पर्क नं. *</label>
@@ -1242,20 +1491,13 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
             <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन">
           </div>
         </div>
-
         <div class="field">
           <label>${esc(modeText)} *</label>
           <select id="fQuota" required>
             <option value="">— छान्नुहोस् —</option>
             ${quotaOptions}
           </select>
-          <div class="hint">
-            ${isPickup
-              ? 'यात्रुले कहाँबाट बसमा चढ्ने हो — त्यो स्थान छान्नुहोस्।'
-              : 'यात्रु कहाँ झर्ने हो — त्यो स्थान छान्नुहोस्।'}
-          </div>
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>लिङ्ग</label>
@@ -1270,12 +1512,10 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
             <input type="number" id="fAge" min="1" max="120" placeholder="३५">
           </div>
         </div>
-
         <div class="field">
           <label>कैफियत</label>
           <input type="text" id="fNote" placeholder="वैकल्पिक">
         </div>
-
         <div style="display:flex;gap:10px;margin-top:6px">
           <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
           <button type="button" class="btn" id="closeSeat">रद्द</button>
@@ -1304,7 +1544,7 @@ function familyFormFields(trip, seat, label, typeRadio) {
           <div class="note danger">
             ⚠️ यो यात्रामा अझै कुनै <b>सशस्त्र प्रहरी कर्मचारी</b> वा
             <b>भूतपूर्व कर्मचारी</b>को आरक्षण गरिएको छैन।<br>
-            परिवारको सदस्यको सिट कर्मचारीसँग जोडिनुपर्ने हुनाले पहिले कर्मचारीको सिट आरक्षण गर्नुहोस्।
+            पहिले कर्मचारीको सिट आरक्षण गर्नुहोस्।
           </div>
           <button type="button" class="btn" id="closeSeat">बन्द गर्ने</button>
         </form>
@@ -1333,13 +1573,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
       <form id="bookingForm" autocomplete="off">
         <input type="hidden" id="fSeat" value="${seat}">
         ${typeRadio}
-
         <div class="field">
           <label>प्रमुख कर्मचारी छान्नुहोस् *</label>
           <select id="fHead" required>${headOpts}</select>
-          <div class="hint">परिवारको सदस्यले प्रमुख कर्मचारीको <b>${trip.route.mode === 'pickup' ? 'आरोहण' : 'गन्तव्य'} स्थान</b> नै पाउँछन्।</div>
         </div>
-
         <div class="field">
           <label>सम्बन्ध *</label>
           <select id="fRelation" required>
@@ -1347,12 +1584,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
             ${relOpts}
           </select>
         </div>
-
         <div class="field">
           <label>परिवारको सदस्यको नाम थर *</label>
           <input type="text" id="fName" required placeholder="जस्तै: सीता थापा">
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>लिङ्ग</label>
@@ -1367,12 +1602,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
             <input type="number" id="fAge" min="1" max="120">
           </div>
         </div>
-
         <div class="field">
           <label>कैफियत</label>
           <input type="text" id="fNote" placeholder="वैकल्पिक">
         </div>
-
         <div style="display:flex;gap:10px;margin-top:6px">
           <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
           <button type="button" class="btn" id="closeSeat">रद्द</button>
@@ -1381,13 +1614,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
     </div>`;
 }
 
-/* ---------- BINDING ---------- */
-
 function bindBooking() {
   const trip = getTrip(state.activeTrip);
 
-  const sel = $('#tripSelect');
-  if (sel) sel.addEventListener('change', e => {
+  $('#tripSelect')?.addEventListener('change', e => {
     state.activeTrip = e.target.value;
     state.selectedSeat = null;
     state.newBookingType = 'apf';
@@ -1402,34 +1632,21 @@ function bindBooking() {
     });
   });
 
-  const close = $('#closeSeat');
-  if (close) close.addEventListener('click', () => { state.selectedSeat = null; render(); });
+  $('#closeSeat')?.addEventListener('click', () => { state.selectedSeat = null; render(); });
 
-  const cancel = $('#cancelBooking');
-  if (cancel) cancel.addEventListener('click', async () => {
+  $('#cancelBooking')?.addEventListener('click', async () => {
     const seat = state.selectedSeat;
     const b = tripBookings(trip.id);
     const p = b[seat];
     if (!p) return;
-
     const family = p.type !== 'family' ? familyMembersOf(trip, seat) : [];
-
     let msg = `सिट ${seatLabel(seat)} (${p.name}) को आरक्षण रद्द गर्ने?`;
-    if (family.length) {
-      msg += `\n\n⚠️ यससँग जोडिएका ${family.length} जना परिवारको सदस्य पनि रद्द हुनेछन्:\n` +
-        family.map(f => `• सिट ${seatLabel(f.seat)} — ${f.name} (${f.relation})`).join('\n');
-    }
+    if (family.length) msg += `\n\n⚠️ ${family.length} जना परिवारको सदस्य पनि रद्द हुनेछन्।`;
     if (!confirm(msg)) return;
-
-    const seatsToDelete = [seat, ...family.map(f => f.seat)];
-    const ok = await deleteBookings(trip.id, seatsToDelete);
-    if (!ok) return;
-
+    const seats = [seat, ...family.map(f => f.seat)];
+    if (!await deleteBookings(trip.id, seats)) return;
     state.selectedSeat = null;
-    toast(family.length
-      ? `आरक्षण र ${family.length} परिवारको सदस्य रद्द गरियो।`
-      : 'आरक्षण रद्द गरियो।', 'ok');
-
+    toast('आरक्षण रद्द गरियो।', 'ok');
     await fetchAllBookings();
     render();
   });
@@ -1441,21 +1658,17 @@ function bindBooking() {
     });
   });
 
-  const form = $('#bookingForm');
-  if (form) form.addEventListener('submit', e => {
+  $('#bookingForm')?.addEventListener('submit', e => {
     e.preventDefault();
     submitBooking(trip);
   });
 }
-
-/* ---------- SUBMIT ---------- */
 
 async function submitBooking(trip) {
   const seat = Number($('#fSeat').value);
   const typeEl = document.querySelector('input[name="fType"]:checked');
   if (!typeEl) return toast('यात्रुको प्रकार छान्नुहोस्।', 'err');
   const type = typeEl.value;
-
   const name = $('#fName').value.trim();
   if (!name) return toast('नाम थर अनिवार्य छ।', 'err');
 
@@ -1467,87 +1680,60 @@ async function submitBooking(trip) {
   if (type === 'family') {
     const headSeat = Number($('#fHead').value);
     const relation = $('#fRelation').value;
-
     if (!headSeat) return toast('प्रमुख कर्मचारी छान्नुहोस्।', 'err');
     if (!relation) return toast('सम्बन्ध अनिवार्य छ।', 'err');
-
     const head = b[headSeat];
     if (!head) return toast('प्रमुख कर्मचारी भेटिएन।', 'err');
     if (head.type === 'family') return toast('प्रमुख कर्मचारी मान्य छैन।', 'err');
-
     const fc = familyCountOf(trip, headSeat);
-    if (fc >= MAX_FAMILY_PER_HEAD) {
-      return toast(`यो कर्मचारीको ${MAX_FAMILY_PER_HEAD} जना परिवारको सीमा भरिएको छ।`, 'err');
-    }
-
+    if (fc >= MAX_FAMILY_PER_HEAD) return toast(`यो कर्मचारीको ${MAX_FAMILY_PER_HEAD} जना सीमा भरिएको छ।`, 'err');
     const q = quotaOf(trip.route, head.quota);
     const usedInQuota = Object.values(b).filter(p => p.quota === head.quota).length;
-    if (usedInQuota >= q.seats) {
-      return toast(`"${q.label}" कोटा भरिएको छ (${q.seats} सिट)।`, 'err');
-    }
-
+    if (usedInQuota >= q.seats) return toast(`"${q.label}" कोटा भरिएको छ।`, 'err');
     bookingData = {
-      seat, type: 'family',
-      name,
-      headSeat,
-      relation,
-      quota: head.quota,
-      gender: $('#fGender').value,
-      age:    $('#fAge').value.trim(),
-      note:   $('#fNote').value.trim()
+      seat, type: 'family', name, headSeat, relation,
+      quota: head.quota, gender: $('#fGender').value,
+      age: $('#fAge').value.trim(), note: $('#fNote').value.trim()
     };
   } else {
-    const rank  = $('#fRank').value;
-    const idNo  = $('#fId').value.trim();
+    const rank = $('#fRank').value;
+    const idNo = $('#fId').value.trim();
     const phone = $('#fPhone').value.trim();
     const quota = $('#fQuota').value;
-
-    if (!rank)  return toast('दर्जा छान्नुहोस्।', 'err');
-    if (!idNo)  return toast('ID नं. अनिवार्य छ।', 'err');
+    if (!rank) return toast('दर्जा छान्नुहोस्।', 'err');
+    if (!idNo) return toast('ID नं. अनिवार्य छ।', 'err');
     if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
     if (!quota) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
-
     const dupId = Object.values(b).find(p => p.idNo && p.idNo.toLowerCase() === idNo.toLowerCase());
-    if (dupId) return toast(`ID नं. "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा दर्ता छ।`, 'err');
-
+    if (dupId) return toast(`ID "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा छ।`, 'err');
     const q = quotaOf(trip.route, quota);
     const used = Object.values(b).filter(p => p.quota === quota).length;
-    if (used >= q.seats) {
-      return toast(`"${q.label}" कोटा भरिएको छ (${q.seats} सिट)।`, 'err');
-    }
-
+    if (used >= q.seats) return toast(`"${q.label}" कोटा भरिएको छ।`, 'err');
     bookingData = {
-      seat, type,
-      name, rank, idNo,
-      unit:  $('#fUnit').value.trim(),
-      phone,
-      quota,
-      gender: $('#fGender').value,
-      age:    $('#fAge').value.trim(),
-      note:   $('#fNote').value.trim()
+      seat, type, name, rank, idNo,
+      unit: $('#fUnit').value.trim(), phone, quota,
+      gender: $('#fGender').value, age: $('#fAge').value.trim(),
+      note: $('#fNote').value.trim()
     };
   }
 
-  // Disable button while saving
-  const submitBtn = $('#bookingForm button[type="submit"]');
-  if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ सेभ गर्दै...'; }
+  const btn = $('#bookingForm button[type="submit"]');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ सेभ गर्दै...'; }
 
-  const ok = await insertBooking(trip.id, bookingData);
-  if (!ok) {
-    if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '✔ आरक्षण पुष्टि गर्ने'; }
+  if (!await insertBooking(trip.id, bookingData)) {
+    if (btn) { btn.disabled = false; btn.textContent = '✔ आरक्षण पुष्टि गर्ने'; }
     return;
   }
 
   toast(`सिट ${seatLabel(seat)} — ${name} आरक्षित भयो।`, 'ok');
   state.selectedSeat = null;
   state.newBookingType = 'apf';
-
   await fetchAllBookings();
   render();
 }
 
 /* =====================================================================
-   10. MANIFEST
+   MANIFEST
    ===================================================================== */
 
 function viewManifest() {
@@ -1556,26 +1742,20 @@ function viewManifest() {
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
 
   const q = state.search.trim().toLowerCase();
-  const filtered = q
-    ? list.filter(p => {
-        const head = p.type === 'family' ? b[p.headSeat] : null;
-        const qq = quotaOf(trip.route, p.quota);
-        return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation,
-                head?.name, head?.idNo, qq?.label]
-          .join(' ').toLowerCase().includes(q);
-      })
-    : list;
+  const filtered = q ? list.filter(p => {
+    const head = p.type === 'family' ? b[p.headSeat] : null;
+    const qq = quotaOf(trip.route, p.quota);
+    return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation,
+            head?.name, head?.idNo, qq?.label].join(' ').toLowerCase().includes(q);
+  }) : list;
 
   const tripOptions = ['dashain','tihar'].map(f => {
     const opts = TRIPS.filter(t => t.festival === f)
-      .map(t => `<option value="${t.id}" ${t.id === trip.id ? 'selected' : ''}>${tripLabel(t)}</option>`)
-      .join('');
+      .map(t => `<option value="${t.id}" ${t.id === trip.id ? 'selected' : ''}>${tripLabel(t)}</option>`).join('');
     return `<optgroup label="${FESTIVALS[f].name}">${opts}</optgroup>`;
   }).join('');
 
-  const modeHeader = trip.route.mode === 'pickup'
-    ? 'आरोहण स्थान (चढ्ने)'
-    : 'गन्तव्य (झर्ने)';
+  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   const rows = filtered.length ? filtered.map(p => {
     const qq = quotaOf(trip.route, p.quota);
@@ -1586,18 +1766,11 @@ function viewManifest() {
       ? `<b>${esc(p.relation || '—')}</b>
          <div class="hint" style="margin:0">प्रमुख: ${esc(head ? head.name : '—')} · सिट ${seatLabel(p.headSeat)}</div>`
       : esc(p.rank || '—');
-
     const idCell = p.type === 'family'
       ? (head && head.idNo ? `<span class="id-tag">${esc(head.idNo)}</span>` : '—')
       : (p.idNo ? `<span class="id-tag">${esc(p.idNo)}</span>` : '—');
-
-    const unitCell = p.type === 'family'
-      ? (head ? esc(head.unit || '—') : '—')
-      : esc(p.unit || '—');
-
-    const phoneCell = p.type === 'family'
-      ? (head ? esc(head.phone || '—') : '—')
-      : esc(p.phone || '—');
+    const unitCell = p.type === 'family' ? (head ? esc(head.unit || '—') : '—') : esc(p.unit || '—');
+    const phoneCell = p.type === 'family' ? (head ? esc(head.phone || '—') : '—') : esc(p.phone || '—');
 
     return `<tr>
       <td class="num"><b>${seatLabel(p.seat)}</b></td>
@@ -1623,7 +1796,7 @@ function viewManifest() {
   return `
     <div class="panel">
       <div class="panel-head">
-        <h2>यात्री सूची (Manifest) <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date} · ${fmtTime(trip.time)}</small></h2>
+        <h2>यात्री सूची <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date} · ${fmtTime(trip.time)}</small></h2>
         <div class="toolbar">
           <select class="trip-select" id="manifestSelect">${tripOptions}</select>
           <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / स्थान / फोन" value="${esc(state.search)}">
@@ -1637,8 +1810,7 @@ function viewManifest() {
             <thead><tr>
               <th class="num">सिट</th><th>नाम थर</th><th>प्रकार</th>
               <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय/प्रमुख</th>
-              <th>सम्पर्क</th>
-              <th>${esc(modeHeader)}</th>
+              <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
               <th>लिङ्ग/उमेर</th><th></th>
             </tr></thead>
             <tbody>${rows}</tbody>
@@ -1656,8 +1828,7 @@ function viewManifest() {
 }
 
 function bindManifest() {
-  const sel = $('#manifestSelect');
-  if (sel) sel.addEventListener('change', e => {
+  $('#manifestSelect')?.addEventListener('change', e => {
     state.manifestTrip = e.target.value;
     state.search = '';
     render();
@@ -1681,27 +1852,20 @@ function bindManifest() {
       const b = tripBookings(trip.id);
       const p = b[seat];
       if (!p) return;
-
       const family = p.type !== 'family' ? familyMembersOf(trip, seat) : [];
-
       let msg = `सिट ${seatLabel(seat)} (${p.name}) को आरक्षण हटाउने?`;
-      if (family.length) {
-        msg += `\n\n⚠️ यससँग जोडिएका ${family.length} जना परिवारको सदस्य पनि हट्नेछन्।`;
-      }
+      if (family.length) msg += `\n\n⚠️ ${family.length} जना परिवार पनि हट्नेछन्।`;
       if (!confirm(msg)) return;
-
-      const seatsToDelete = [seat, ...family.map(f => f.seat)];
-      const ok = await deleteBookings(trip.id, seatsToDelete);
-      if (!ok) return;
-
+      const seats = [seat, ...family.map(f => f.seat)];
+      if (!await deleteBookings(trip.id, seats)) return;
       toast('आरक्षण हटाइयो।', 'ok');
       await fetchAllBookings();
       render();
     });
   });
 
-  const p = $('#printBtn'); if (p) p.addEventListener('click', printManifest);
-  const c = $('#csvBtn');   if (c) c.addEventListener('click', exportCSV);
+  $('#printBtn')?.addEventListener('click', printManifest);
+  $('#csvBtn')?.addEventListener('click', exportCSV);
 }
 
 function printManifest() {
@@ -1714,43 +1878,33 @@ function printManifest() {
     const q = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
     const head = p.type === 'family' ? b[p.headSeat] : null;
-
     const rankCell = p.type === 'family'
       ? `${p.relation || ''} / ${head ? head.name : ''}`
       : (p.rank || '');
-    const idCell = p.type === 'family'
-      ? (head ? (head.idNo || '') : '')
-      : (p.idNo || '');
-
+    const idCell = p.type === 'family' ? (head ? (head.idNo || '') : '') : (p.idNo || '');
     return `<tr>
-      <td>${i + 1}</td>
-      <td>${seatLabel(p.seat)}</td>
-      <td>${esc(p.name)}</td>
-      <td>${esc(pt.short)}</td>
-      <td>${esc(rankCell)}</td>
-      <td>${esc(idCell)}</td>
+      <td>${i + 1}</td><td>${seatLabel(p.seat)}</td><td>${esc(p.name)}</td>
+      <td>${esc(pt.short)}</td><td>${esc(rankCell)}</td><td>${esc(idCell)}</td>
       <td>${esc((head ? head.unit : p.unit) || '')}</td>
       <td>${esc((head ? head.phone : p.phone) || '')}</td>
-      <td>${esc(q ? q.label : '')}</td>
-      <td></td>
+      <td>${esc(q ? q.label : '')}</td><td></td>
     </tr>`;
   }).join('');
 
   $('#printRoot').innerHTML = `
     <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
-    <h2>बस यात्री सूची (Manifest) — ${FESTIVALS[trip.festival].name}</h2>
+    <h2>बस यात्री सूची — ${FESTIVALS[trip.festival].name}</h2>
     <div class="meta">
-      <b>मिति:</b> ${trip.date} (वि.सं.) &nbsp;&nbsp;
-      <b>रुट:</b> ${esc(trip.route.from)} → ${esc(trip.route.to)} &nbsp;&nbsp;
-      <b>छुट्ने स्थान:</b> ${esc(trip.place)} &nbsp;&nbsp;
+      <b>मिति:</b> ${trip.date} (वि.सं.) &nbsp;
+      <b>रुट:</b> ${esc(trip.route.from)} → ${esc(trip.route.to)} &nbsp;
+      <b>छुट्ने स्थान:</b> ${esc(trip.place)} &nbsp;
       <b>समय:</b> ${fmtTime(trip.time)}
     </div>
     <table>
       <thead><tr>
         <th>क्र.</th><th>सिट</th><th>नाम</th><th>प्रकार</th>
         <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय</th>
-        <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
-        <th>दस्तखत</th>
+        <th>सम्पर्क</th><th>${esc(modeHeader)}</th><th>दस्तखत</th>
       </tr></thead>
       <tbody>${rows || '<tr><td colspan="10" style="text-align:center">कुनै आरक्षण छैन</td></tr>'}</tbody>
     </table>
@@ -1782,9 +1936,7 @@ function exportCSV() {
     const pt = PASSENGER_TYPES[p.type];
     const hd = p.type === 'family' ? b[p.headSeat] : null;
     return [
-      seatLabel(p.seat),
-      p.name,
-      pt.label,
+      seatLabel(p.seat), p.name, pt.label,
       p.type === 'family' ? '' : (p.rank || ''),
       p.type === 'family' ? '' : (p.idNo || ''),
       p.type === 'family' ? (p.relation || '') : '',
@@ -1792,10 +1944,7 @@ function exportCSV() {
       hd ? (hd.idNo || '') : '',
       hd ? (hd.unit || '') : (p.unit || ''),
       hd ? (hd.phone || '') : (p.phone || ''),
-      q ? q.label : '',
-      p.gender || '',
-      p.age || '',
-      p.note || ''
+      q ? q.label : '', p.gender || '', p.age || '', p.note || ''
     ];
   });
 
@@ -1813,20 +1962,18 @@ function exportCSV() {
 }
 
 /* =====================================================================
-   11. QUOTA
+   QUOTA
    ===================================================================== */
 
 function viewQuota() {
   const blocks = ['KTM-KAK','KTM-GAD','KAK-KTM','GAD-KTM'].map(rid => {
     const r = ROUTES[rid];
     const total = r.quotas.reduce((s, q) => s + q.seats, 0);
-
     const trips = TRIPS.filter(t => t.routeId === rid);
     const usage = {};
     r.quotas.forEach(q => usage[q.key] = 0);
     trips.forEach(t => Object.values(tripBookings(t.id))
       .forEach(p => { if (usage[p.quota] !== undefined) usage[p.quota]++; }));
-
     const capacity = r.quotas.reduce((acc, q) => { acc[q.key] = q.seats * trips.length; return acc; }, {});
 
     const rows = r.quotas.map(q => {
@@ -1851,7 +1998,7 @@ function viewQuota() {
         <div class="panel-head">
           <h2>${esc(r.from)} → ${esc(r.to)}
             <small>प्रति बस ${total} सिट · कुल ${trips.length} यात्रा</small></h2>
-          <span class="badge">${r.mode === 'pickup' ? 'चढ्ने स्थान (आरोहण)' : 'झर्ने स्थान (गन्तव्य)'}</span>
+          <span class="badge">${r.mode === 'pickup' ? 'चढ्ने स्थान' : 'झर्ने स्थान'}</span>
         </div>
         <div class="tbl-wrap">
           <table>
@@ -1867,13 +2014,13 @@ function viewQuota() {
   }).join('');
 
   return `<div class="note">
-    📊 <b>चढ्ने/झर्ने स्थान अनुसार कोटा</b> — प्रत्येक यात्रुको आरोहण/गन्तव्य स्थानको आधारमा।
-    परिवारको सदस्यले प्रमुख कर्मचारीकै स्थान प्रयोग गर्छन्। प्रत्येक बसमा जम्मा <b>${TOTAL_SEATS} सिट</b>।
+    📊 <b>चढ्ने/झर्ने स्थान अनुसार कोटा</b> — परिवारको सदस्यले प्रमुख कर्मचारीकै स्थान प्रयोग गर्छन्।
+    प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
   </div>${blocks}`;
 }
 
 /* =====================================================================
-   12. COORDINATION
+   COORDINATION
    ===================================================================== */
 
 function viewCoordination() {
@@ -1896,8 +2043,7 @@ function viewCoordination() {
   return `
     <div class="panel">
       <div class="panel-head">
-        <h2>समन्वय अधिकृत — सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय
-          <small>काठमाडौँ — केन्द्रीय समन्वय टोली</small></h2>
+        <h2>समन्वय अधिकृत — सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय</h2>
       </div>
       <div class="tbl-wrap">
         <table>
@@ -1925,7 +2071,202 @@ function viewCoordination() {
 }
 
 /* =====================================================================
-   13. INIT
+   USERS
+   ===================================================================== */
+
+function viewUsers() {
+  return `
+    <div class="panel">
+      <div class="panel-head">
+        <h2>प्रयोगकर्ता व्यवस्थापन <small>एडमिनले मात्र हेर्न सकिने</small></h2>
+        <button class="btn primary" id="newUserBtn">➕ नयाँ प्रयोगकर्ता</button>
+      </div>
+      <div class="panel-body" style="padding:0">
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr>
+              <th class="num">क्र.</th><th>प्रयोगकर्ता नाम</th><th>पूरा नाम</th>
+              <th>भूमिका</th><th>अवस्था</th><th>बनाइएको</th><th></th>
+            </tr></thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="7"><div class="empty">लोड हुँदै...</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
+      <div class="panel-body">
+        <form id="changePwForm" style="max-width:400px">
+          <div class="field">
+            <label>पुरानो पासवर्ड</label>
+            <input type="password" id="oldPw" required>
+          </div>
+          <div class="field">
+            <label>नयाँ पासवर्ड</label>
+            <input type="password" id="newPw" required minlength="4">
+          </div>
+          <button type="submit" class="btn primary">पासवर्ड परिवर्तन</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function bindUsers() {
+  loadUsersTable();
+
+  $('#newUserBtn')?.addEventListener('click', openNewUserModal);
+
+  $('#changePwForm')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const oldPw = $('#oldPw').value;
+    const newPw = $('#newPw').value;
+
+    const { error } = await sb.rpc('change_password', {
+      p_token: state.user.token, p_old: oldPw, p_new: newPw
+    });
+
+    if (error) {
+      toast(error.message.includes('Wrong password')
+        ? 'पुरानो पासवर्ड मिलेन।'
+        : 'परिवर्तन गर्न सकिएन: ' + error.message, 'err');
+      return;
+    }
+    toast('पासवर्ड परिवर्तन भयो।', 'ok');
+    e.target.reset();
+  });
+}
+
+async function loadUsersTable() {
+  const tbody = $('#usersTableBody');
+  const { data, error } = await sb.rpc('admin_list_users', { p_token: state.user.token });
+  if (error) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">लोड गर्न सकिएन: ${esc(error.message)}</div></td></tr>`;
+    return;
+  }
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map((u, i) => {
+    const isMe = u.id === state.user.id;
+    return `<tr>
+      <td class="num">${i + 1}</td>
+      <td><b>${esc(u.username)}</b>${isMe ? ' <span class="badge ok">तपाईं</span>' : ''}</td>
+      <td>${esc(u.full_name)}</td>
+      <td>
+        <span class="badge ${u.role === 'admin' ? 'badge-admin' : 'badge-operator'}">
+          ${u.role === 'admin' ? 'प्रशासक' : 'सञ्चालक'}
+        </span>
+      </td>
+      <td>${u.active ? '<span class="badge ok">सक्रिय</span>' : '<span class="badge danger">निष्क्रिय</span>'}</td>
+      <td>${new Date(u.created_at).toLocaleDateString('ne-NP')}</td>
+      <td>
+        ${!isMe ? `<button class="btn sm danger" data-del-user="${u.id}" data-name="${esc(u.username)}">हटाउने</button>` : '—'}
+      </td>
+    </tr>`;
+  }).join('');
+
+  $$('[data-del-user]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const uid = Number(btn.dataset.delUser);
+      const uname = btn.dataset.name;
+      if (!confirm(`प्रयोगकर्ता "${uname}" हटाउने?`)) return;
+      const { error } = await sb.rpc('admin_delete_user', {
+        p_token: state.user.token, p_user_id: uid
+      });
+      if (error) { toast('हटाउन सकिएन: ' + error.message, 'err'); return; }
+      toast('प्रयोगकर्ता हटाइयो।', 'ok');
+      loadUsersTable();
+    });
+  });
+}
+
+function openNewUserModal() {
+  $('#modalTitle').textContent = 'नयाँ प्रयोगकर्ता थप्नुहोस्';
+  $('#modalBody').innerHTML = `
+    <form id="newUserForm">
+      <div class="field">
+        <label>प्रयोगकर्ता नाम *</label>
+        <input type="text" id="nu_username" required placeholder="जस्तै: operator1">
+      </div>
+      <div class="field">
+        <label>पूरा नाम *</label>
+        <input type="text" id="nu_fullname" required placeholder="जस्तै: राम बहादुर थापा">
+      </div>
+      <div class="field">
+        <label>भूमिका *</label>
+        <select id="nu_role" required>
+          <option value="operator">सञ्चालक (Operator)</option>
+          <option value="admin">प्रशासक (Admin)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>पासवर्ड * (कम्तीमा ४ अक्षर)</label>
+        <input type="password" id="nu_password" required minlength="4">
+      </div>
+    </form>`;
+  $('#modalFoot').innerHTML = `
+    <button class="btn" id="modalCancel">रद्द</button>
+    <button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
+
+  $('#modalBackdrop').classList.remove('hidden');
+  setTimeout(() => $('#nu_username')?.focus(), 100);
+
+  $('#modalCancel').addEventListener('click', closeModal);
+  $('#modalCreate').addEventListener('click', async () => {
+    const username = $('#nu_username').value.trim().toLowerCase();
+    const fullname = $('#nu_fullname').value.trim();
+    const role = $('#nu_role').value;
+    const password = $('#nu_password').value;
+
+    if (!username || !fullname || !password) {
+      toast('सबै फाँट भर्नुहोस्।', 'err');
+      return;
+    }
+    if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
+    if (password.length < 4) {
+      toast('पासवर्ड कम्तीमा ४ अक्षरको हुनुपर्छ।', 'err');
+      return;
+    }
+
+    const btn = $('#modalCreate');
+    btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
+
+    const { error } = await sb.rpc('admin_create_user', {
+      p_token: state.user.token,
+      p_username: username,
+      p_password: password,
+      p_full_name: fullname,
+      p_role: role
+    });
+
+    btn.disabled = false; btn.textContent = 'सिर्जना गर्ने';
+
+    if (error) {
+      if (error.message.includes('duplicate')) {
+        toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
+      } else {
+        toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
+      }
+      return;
+    }
+
+    toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`, 'ok');
+    closeModal();
+    loadUsersTable();
+  });
+}
+
+function closeModal() {
+  $('#modalBackdrop').classList.add('hidden');
+}
+
+/* =====================================================================
+   INIT
    ===================================================================== */
 
 $$('.tab').forEach(btn => {
@@ -1937,22 +2278,48 @@ $$('.tab').forEach(btn => {
   });
 });
 
-async function init() {
-  const overlay = $('#loadingOverlay');
-  const ok = await fetchAllBookings();
-  overlay.classList.add('hidden');
+$('#logoutBtn')?.addEventListener('click', async () => {
+  if (!confirm('लगआउट गर्ने?')) return;
+  await doLogout();
+  showLoginScreen();
+});
 
-  if (!ok) {
-    alert('Supabase बाट डाटा लोड गर्न सकिएन।\n\n' +
-          'कृपया जाँच्नुहोस्:\n' +
-          '1. SUPABASE_URL र SUPABASE_ANON_KEY ठीक छ?\n' +
-          '2. इन्टरनेट चलिरहेको छ?\n' +
-          '3. Supabase मा "bookings" टेबल बनाइएको छ?');
+$('#modalClose')?.addEventListener('click', closeModal);
+$('#modalBackdrop')?.addEventListener('click', e => {
+  if (e.target === $('#modalBackdrop')) closeModal();
+});
+
+async function startApp() {
+  showMainApp();
+  const ok = await fetchAllBookings();
+  if (!ok) toast('डाटा लोड गर्न सकिएन।', 'err');
+  render();
+  setupRealtime();
+}
+
+async function init() {
+  bindLogin();
+  bindSetup();
+
+  // 1. Check if setup is needed
+  const needsSetup = await checkNeedsSetup();
+  if (needsSetup === true) {
+    $('#loadingOverlay').classList.add('hidden');
+    showSetupScreen();
     return;
   }
 
-  render();
-  setupRealtime();
+  // 2. Try to restore previous session
+  const restored = await restoreSession();
+  if (restored) {
+    $('#loadingOverlay').classList.add('hidden');
+    await startApp();
+    return;
+  }
+
+  // 3. Show login
+  $('#loadingOverlay').classList.add('hidden');
+  showLoginScreen();
 }
 
 init();
