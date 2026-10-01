@@ -18,115 +18,70 @@
   --shadow:0 1px 2px rgba(16,24,40,.06), 0 8px 24px -12px rgba(16,24,40,.25);
 }
 html,body{height:100%}
-body{
-  font-family:'Mukta','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
-  background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased;
-  font-size:15px; line-height:1.5;
-}
+body{font-family:'Mukta','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; font-size:15px; line-height:1.5}
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
 
-/* SETUP + LOGIN SCREENS */
-#setupScreen, #loginScreen{
-  min-height:100vh; display:flex; align-items:center; justify-content:center;
-  padding:20px; background:linear-gradient(135deg,#08203a 0%,#1b5289 100%);
-}
-.setup-card, .login-card{
-  background:#fff; border-radius:20px; padding:36px 32px;
-  max-width:460px; width:100%; box-shadow:0 30px 60px -20px rgba(0,0,0,.5);
-}
-.setup-logo, .login-logo{
-  width:72px; height:72px; border-radius:20px;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a);
-  display:grid; place-items:center; font-weight:700; font-size:20px; color:#0d2b4a;
-  margin:0 auto 20px; box-shadow:inset 0 0 0 3px rgba(255,255,255,.35);
-}
-.setup-card h1, .login-card h1{font-size:22px; font-weight:700; text-align:center; color:#0d2b4a; margin-bottom:6px}
-.setup-card p.sub, .login-card p.sub{text-align:center; color:#64748b; font-size:13.5px; margin-bottom:22px}
-.setup-card .field, .login-card .field{margin-bottom:16px}
-.setup-card .field label, .login-card .field label{font-size:13px}
-.setup-card .field input, .login-card .field input{padding:12px 14px; font-size:15px}
-.setup-card .btn.primary, .login-card .btn.primary{width:100%; justify-content:center; padding:13px; font-size:15px; font-weight:600}
-.setup-error, .login-error{
-  background:#fef2f2; border:1px solid #fecaca; color:#991b1b;
-  padding:10px 14px; border-radius:10px; font-size:13px;
-  margin-bottom:16px; display:none;
-}
-.setup-error.show, .login-error.show{display:block}
-.setup-note{
-  background:#f0f9ff; border:1px solid #bae6fd; color:#075985;
-  padding:10px 14px; border-radius:10px; font-size:12.5px;
-  margin-top:18px;
-}
-.setup-note code{background:#fff; padding:1px 6px; border-radius:4px; font-family:ui-monospace,monospace; font-size:12px; color:#0c4a6e}
-.login-hint{
-  background:#f0f9ff; border:1px solid #bae6fd; color:#075985;
-  padding:10px 14px; border-radius:10px; font-size:12.5px;
-  margin-top:18px;
-}
-.login-hint code{background:#fff; padding:1px 6px; border-radius:4px; font-family:ui-monospace,monospace; font-size:12px; color:#0c4a6e}
+/* LOGIN */
+#loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center;
+  padding:20px; background:linear-gradient(135deg,#08203a 0%,#1b5289 100%)}
+.login-card{background:#fff; border-radius:20px; padding:36px 32px; max-width:420px; width:100%;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.login-logo{width:72px; height:72px; border-radius:20px;
+  background:linear-gradient(160deg,#e8a33d,#c47f1a); display:grid; place-items:center;
+  font-weight:700; font-size:20px; color:#0d2b4a; margin:0 auto 20px;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.login-card h1{font-size:22px; font-weight:700; text-align:center; color:#0d2b4a; margin-bottom:6px}
+.login-card p.sub{text-align:center; color:#64748b; font-size:13.5px; margin-bottom:28px}
+.login-card .field{margin-bottom:16px}
+.login-card .field label{font-size:13px}
+.login-card .field input{padding:12px 14px; font-size:15px}
+.login-card .btn.primary{width:100%; justify-content:center; padding:13px; font-size:15px; font-weight:600}
+.login-error{background:#fef2f2; border:1px solid #fecaca; color:#991b1b;
+  padding:10px 14px; border-radius:10px; font-size:13px; margin-bottom:16px; display:none}
+.login-error.show{display:block}
 
 /* TOPBAR */
-.topbar{
-  background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289);
-  color:#fff; padding:14px 20px;
-  display:flex; flex-wrap:wrap; gap:14px; align-items:center; justify-content:space-between;
-  box-shadow:0 10px 30px -14px rgba(8,32,58,.9);
-}
+.topbar{background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289); color:#fff;
+  padding:14px 20px; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
+  justify-content:space-between; box-shadow:0 10px 30px -14px rgba(8,32,58,.9)}
 .brand{display:flex; align-items:center; gap:14px; min-width:240px}
-.logo{
-  width:48px;height:48px;border-radius:13px;flex:0 0 auto;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a);
-  display:grid;place-items:center;font-weight:700;font-size:14px;color:#0d2b4a;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35);
-}
-.brand h1{font-size:17px;font-weight:600;letter-spacing:.2px}
+.logo{width:48px;height:48px;border-radius:13px;flex:0 0 auto;
+  background:linear-gradient(160deg,#e8a33d,#c47f1a); display:grid;place-items:center;
+  font-weight:700;font-size:14px;color:#0d2b4a; box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.brand h1{font-size:17px;font-weight:600}
 .brand p{font-size:12px;color:#a9c4e0}
 .topbar-right{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 .stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat{
-  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
-  border-radius:11px; padding:6px 12px; min-width:76px; text-align:center;
-}
+.stat{background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
+  border-radius:11px; padding:6px 12px; min-width:76px; text-align:center}
 .stat b{display:block;font-size:17px;font-weight:600;line-height:1.2}
 .stat span{font-size:10.5px;color:#b9d0e8}
-.user-chip{
-  display:flex; align-items:center; gap:9px;
+.user-chip{display:flex; align-items:center; gap:9px;
   background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
-  border-radius:12px; padding:5px 12px 5px 5px;
-}
-.user-chip .avatar{
-  width:32px; height:32px; border-radius:50%;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a);
-  color:#0d2b4a; display:grid; place-items:center;
-  font-weight:700; font-size:12px;
-}
+  border-radius:12px; padding:5px 12px 5px 5px}
+.user-chip .avatar{width:32px; height:32px; border-radius:50%;
+  background:linear-gradient(160deg,#e8a33d,#c47f1a); color:#0d2b4a;
+  display:grid; place-items:center; font-weight:700; font-size:12px}
 .user-chip .u-meta{display:flex; flex-direction:column; line-height:1.2}
 .user-chip .u-name{color:#fff; font-weight:600; font-size:13px}
 .user-chip .u-role{font-size:10.5px; color:#cbd5e1; font-weight:500}
 .user-chip .u-role.admin{color:#fde047; font-weight:700}
-.btn-logout{
-  background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+.btn-logout{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
   color:#fff; padding:8px 14px; border-radius:10px; cursor:pointer;
-  font-weight:500; font-size:13px; transition:.15s;
-}
+  font-weight:500; font-size:13px}
 .btn-logout:hover{background:rgba(239,68,68,.25); border-color:#ef4444}
-.conn-status{
-  display:inline-block;width:8px;height:8px;border-radius:50%;
-  background:#10b981;margin-right:6px;vertical-align:middle;
-}
+.conn-status{display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#10b981;margin-right:6px;vertical-align:middle}
 .conn-status.offline{background:#ef4444}
 
 /* TABS */
-.tabs{
-  background:var(--surface); border-bottom:1px solid var(--line);
+.tabs{background:var(--surface); border-bottom:1px solid var(--line);
   display:flex; gap:4px; padding:0 16px; overflow-x:auto;
-  position:sticky; top:0; z-index:40; box-shadow:0 2px 10px -8px rgba(0,0,0,.3);
-}
-.tab{
-  background:none;border:none;cursor:pointer;padding:14px 16px;
+  position:sticky; top:0; z-index:40; box-shadow:0 2px 10px -8px rgba(0,0,0,.3)}
+.tab{background:none;border:none;cursor:pointer;padding:14px 16px;
   font-weight:500;color:var(--muted);white-space:nowrap;
-  border-bottom:3px solid transparent;transition:.15s;
-}
+  border-bottom:3px solid transparent;transition:.15s}
 .tab:hover{color:var(--brand2);background:#f8fafc}
 .tab.active{color:var(--brand);border-bottom-color:var(--accent);font-weight:600}
 .tab.admin-tab{color:#9a3412}
@@ -134,15 +89,11 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 
 /* LAYOUT */
 main{padding:20px;max-width:1320px;margin:0 auto}
-.panel{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px;
-}
-.panel-head{
-  padding:14px 18px;border-bottom:1px solid var(--line);
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--line);
   display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,#fbfcfe,#f5f7fb);
-}
+  background:linear-gradient(180deg,#fbfcfe,#f5f7fb)}
 .panel-head h2{font-size:16px;font-weight:600;color:var(--brand)}
 .panel-head h2 small{display:block;font-size:12px;color:var(--muted);font-weight:400}
 .panel-body{padding:18px}
@@ -150,19 +101,15 @@ main{padding:20px;max-width:1320px;margin:0 auto}
 /* TABLES */
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
-thead th{
-  background:#f1f5f9;text-align:left;padding:10px 12px;font-weight:600;
-  color:#334155;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap;
-}
+thead th{background:#f1f5f9;text-align:left;padding:10px 12px;font-weight:600;
+  color:#334155;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
 tbody td{padding:10px 12px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 tbody tr:hover{background:#f8fafc}
 tbody tr:last-child td{border-bottom:none}
 .num{width:44px;color:var(--muted);font-variant-numeric:tabular-nums}
 
-.badge{
-  display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;
-  background:#e0e7ff;color:#3730a3;white-space:nowrap;
-}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;
+  font-weight:600;background:#e0e7ff;color:#3730a3;white-space:nowrap}
 .badge.f-dashain{background:#ffe8d6;color:#9a3412}
 .badge.f-tihar{background:#ede9fe;color:#5b21b6}
 .badge.ok{background:#d1fae5;color:#065f46}
@@ -173,17 +120,13 @@ tbody tr:last-child td{border-bottom:none}
 .badge.badge-family{background:#fed7aa;color:#9a3412}
 .badge.badge-admin{background:#fed7aa;color:#9a3412;border:1px solid #fdba74}
 .badge.badge-operator{background:#dbeafe;color:#1e40af}
-.badge.route-badge{
-  background:#fef9c3;color:#854d0e;border:1px solid #fde047;
-  font-weight:600;font-size:12.5px;
-}
+.badge.route-badge{background:#fef9c3;color:#854d0e;border:1px solid #fde047;
+  font-weight:600;font-size:12.5px}
 
 /* BUTTONS */
-.btn{
-  border:1px solid var(--line);background:#fff;color:var(--ink);
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);
   padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:500;
-  transition:.15s;display:inline-flex;align-items:center;gap:6px;
-}
+  transition:.15s;display:inline-flex;align-items:center;gap:6px}
 .btn:hover{background:#f8fafc;border-color:#cbd5e1}
 .btn.primary{background:var(--brand2);border-color:var(--brand2);color:#fff}
 .btn.primary:hover{background:#164570}
@@ -195,22 +138,17 @@ tbody tr:last-child td{border-bottom:none}
 /* FORM */
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12.5px;font-weight:600;color:#475569;margin-bottom:5px}
-.field input,.field select,.field textarea{
-  width:100%;padding:9px 11px;border:1px solid #cbd5e1;border-radius:9px;
-  background:#fff;outline:none;transition:.15s;
-}
+.field input,.field select,.field textarea{width:100%;padding:9px 11px;
+  border:1px solid #cbd5e1;border-radius:9px;background:#fff;outline:none;transition:.15s}
 .field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12);
-}
+  border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 
 .type-radio{display:flex;gap:8px;flex-wrap:wrap}
-.radio-chip{
-  border:1.6px solid #cbd5e1;background:#fff;border-radius:10px;
+.radio-chip{border:1.6px solid #cbd5e1;background:#fff;border-radius:10px;
   padding:7px 12px;cursor:pointer;font-weight:500;font-size:13px;
-  display:flex;align-items:center;gap:6px;transition:.15s;
-}
+  display:flex;align-items:center;gap:6px;transition:.15s}
 .radio-chip input{margin:0;accent-color:var(--brand2)}
 .radio-chip:hover{border-color:#94a3b8}
 .radio-chip.active{border-color:var(--brand2);background:#eff6ff;color:var(--brand2);font-weight:600}
@@ -219,50 +157,32 @@ tbody tr:last-child td{border-bottom:none}
 .booking-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
 @media(max-width:960px){.booking-grid{grid-template-columns:1fr}}
 
-/* BUS */
-.bus{
-  background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;
-  max-width:380px;margin:0 auto;
-}
-.bus-cabin{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
+.bus{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;
+  max-width:380px;margin:0 auto}
+.bus-cabin{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
   padding:10px;background:linear-gradient(180deg,#e2e8f0,#cbd5e1);
-  border-radius:10px;margin-bottom:14px;
-  border-bottom:2px dashed #94a3b8;
-}
-.cabin-seat{
-  background:#64748b;color:#fff;border-radius:7px;
-  padding:9px 4px;text-align:center;font-size:11.5px;font-weight:600;line-height:1.25;
-}
+  border-radius:10px;margin-bottom:14px;border-bottom:2px dashed #94a3b8}
+.cabin-seat{background:#64748b;color:#fff;border-radius:7px;padding:9px 4px;
+  text-align:center;font-size:11.5px;font-weight:600;line-height:1.25}
 .cabin-seat.driver{background:#1e293b}
 .cabin-seat.standby{background:#7c8798}
 
-.side-headers{
-  display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;
-  gap:8px;margin-bottom:6px;
-  font-size:11px;font-weight:700;color:#475569;
-  text-align:center;letter-spacing:.4px;
-}
+.side-headers{display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;
+  gap:8px;margin-bottom:6px;font-size:11px;font-weight:700;color:#475569;
+  text-align:center;letter-spacing:.4px}
 .side-headers .label-a{grid-column:1/3}
 .side-headers .label-b{grid-column:4/6}
 
-.seat-row{
-  display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;
-  gap:8px;margin-bottom:8px;
-}
-.seat-row.back{grid-template-columns:repeat(5,1fr);margin-top:4px;}
+.seat-row{display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;gap:8px;margin-bottom:8px}
+.seat-row.back{grid-template-columns:repeat(5,1fr);margin-top:4px}
 .aisle{display:flex;align-items:center;justify-content:center}
 .door-icon{font-size:15px;line-height:1;filter:grayscale(.3)}
 
-.seat{
-  aspect-ratio:1/1;border-radius:10px;border:1.6px solid #cbd5e1;background:#fff;
+.seat{aspect-ratio:1/1;border-radius:10px;border:1.6px solid #cbd5e1;background:#fff;
   font-size:12.5px;font-weight:600;color:#334155;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  transition:.12s;padding:0;position:relative;
-}
-.seat:hover:not(.booked):not(.selected){
-  border-color:var(--brand2);background:#eff6ff;transform:translateY(-2px);
-}
+  transition:.12s;padding:0;position:relative}
+.seat:hover:not(.booked):not(.selected){border-color:var(--brand2);background:#eff6ff;transform:translateY(-2px)}
 .seat.booked{cursor:pointer}
 .seat.booked.type-apf{background:#dbeafe;border-color:#93c5fd;color:#1e40af}
 .seat.booked.type-ex{background:#d1fae5;border-color:#6ee7b7;color:#065f46}
@@ -271,20 +191,17 @@ tbody tr:last-child td{border-bottom:none}
 .seat.selected{background:var(--brand2)!important;border-color:var(--brand2)!important;
   color:#fff!important;box-shadow:0 0 0 3px rgba(27,82,137,.25);transform:none}
 
-.seat-tag{
-  position:absolute;bottom:-1px;right:-1px;
-  background:#0f172a;color:#fff;font-size:8.5px;font-weight:700;
-  padding:0px 3px;border-radius:5px;line-height:1.3;
-  max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
+.seat-tag{position:absolute;bottom:-1px;right:-1px;background:#0f172a;color:#fff;
+  font-size:8.5px;font-weight:700;padding:0px 3px;border-radius:5px;line-height:1.3;
+  max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-.back-label{
-  text-align:center;font-size:11px;color:var(--muted);
-  margin:12px 0 6px;font-weight:600;letter-spacing:.4px;
-}
+.back-label{text-align:center;font-size:11px;color:var(--muted);
+  margin:12px 0 6px;font-weight:600;letter-spacing:.4px}
 
-.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
-.legend i{width:13px;height:13px;border-radius:4px;display:inline-block;margin-right:5px;vertical-align:-2px;border:1.5px solid #cbd5e1}
+.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;
+  font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend i{width:13px;height:13px;border-radius:4px;display:inline-block;
+  margin-right:5px;vertical-align:-2px;border:1.5px solid #cbd5e1}
 .legend .lg-empty{background:#fff}
 .legend .lg-apf{background:#dbeafe;border-color:#93c5fd}
 .legend .lg-ex{background:#d1fae5;border-color:#6ee7b7}
@@ -292,131 +209,82 @@ tbody tr:last-child td{border-bottom:none}
 .legend .lg-sel{background:#1b5289;border-color:#1b5289}
 .legend .lg-cabin{background:#64748b;border-color:#64748b}
 
-.place-groups{
-  margin-top:16px;background:#fff;border:1px solid var(--line);
-  border-radius:12px;padding:12px;
-}
-.place-groups h4{
-  font-size:13px;font-weight:700;color:var(--brand);
-  margin-bottom:10px;display:flex;align-items:center;gap:6px;
-}
-.place-groups h4 .mode{
-  font-weight:500;font-size:11.5px;color:var(--muted);
-  background:#f1f5f9;padding:1px 8px;border-radius:99px;
-}
-.place-item{
-  display:flex;justify-content:space-between;align-items:center;
+.place-groups{margin-top:16px;background:#fff;border:1px solid var(--line);
+  border-radius:12px;padding:12px}
+.place-groups h4{font-size:13px;font-weight:700;color:var(--brand);
+  margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.place-groups h4 .mode{font-weight:500;font-size:11.5px;color:var(--muted);
+  background:#f1f5f9;padding:1px 8px;border-radius:99px}
+.place-item{display:flex;justify-content:space-between;align-items:center;
   padding:7px 10px;border-radius:8px;margin-bottom:5px;
-  background:#f8fafc;border:1px solid #eef2f7;
-  font-size:13px;
-}
+  background:#f8fafc;border:1px solid #eef2f7;font-size:13px}
 .place-item:last-child{margin-bottom:0}
 .place-item .place-name{font-weight:500;color:#334155;display:flex;align-items:center;gap:6px}
-.place-item .place-dot{
-  width:8px;height:8px;border-radius:50%;background:var(--brand2);flex:0 0 auto;
-}
-.place-item .place-count{
-  background:var(--brand2);color:#fff;font-size:11.5px;font-weight:700;
-  padding:1px 9px;border-radius:99px;
-}
-.place-item .place-seats{
-  font-size:11px;color:var(--muted);margin-left:8px;
-  font-family:ui-monospace,Menlo,monospace;
-}
+.place-item .place-dot{width:8px;height:8px;border-radius:50%;background:var(--brand2);flex:0 0 auto}
+.place-item .place-count{background:var(--brand2);color:#fff;font-size:11.5px;
+  font-weight:700;padding:1px 9px;border-radius:99px}
+.place-item .place-seats{font-size:11px;color:var(--muted);margin-left:8px;
+  font-family:ui-monospace,Menlo,monospace}
 
 /* MISC */
 .empty{padding:38px 20px;text-align:center;color:var(--muted)}
 .empty .big{font-size:34px;margin-bottom:8px;opacity:.5}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.toolbar input[type=search]{
-  padding:8px 12px;border:1px solid #cbd5e1;border-radius:10px;min-width:220px;outline:none;
-}
+.toolbar input[type=search]{padding:8px 12px;border:1px solid #cbd5e1;
+  border-radius:10px;min-width:220px;outline:none}
 .toolbar input[type=search]:focus{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12)}
-select.trip-select{
-  padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;
-  min-width:280px;max-width:100%;outline:none;font-weight:500;
-}
-.note{
-  background:#fffbeb;border:1px solid #fde68a;color:#78350f;
-  padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px;
-}
+select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
+  background:#fff;min-width:280px;max-width:100%;outline:none;font-weight:500}
+.note{background:#fffbeb;border:1px solid #fde68a;color:#78350f;
+  padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px}
 .note.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 .note.info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
-.toast{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120%);
-  background:#0f172a;color:#fff;padding:11px 20px;border-radius:12px;
-  box-shadow:0 14px 34px -10px rgba(0,0,0,.55);z-index:999;transition:.3s;font-size:14px;
-}
+.toast{position:fixed;bottom:22px;left:50%;
+  transform:translateX(-50%) translateY(120%);background:#0f172a;color:#fff;
+  padding:11px 20px;border-radius:12px;box-shadow:0 14px 34px -10px rgba(0,0,0,.55);
+  z-index:999;transition:.3s;font-size:14px}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.err{background:#991b1b}
 .toast.ok{background:#065f46}
 
-.id-tag{
-  display:inline-block;background:#f1f5f9;color:#334155;
+.id-tag{display:inline-block;background:#f1f5f9;color:#334155;
   padding:1px 7px;border-radius:6px;font-size:11.5px;
-  font-family:ui-monospace,Menlo,Consolas,monospace;
-  font-weight:600;letter-spacing:.3px;
-}
-.place-big{
-  display:inline-block;background:#fef9c3;color:#854d0e;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
+.place-big{display:inline-block;background:#fef9c3;color:#854d0e;
   border:1px solid #fde047;padding:3px 12px;border-radius:8px;
-  font-weight:600;font-size:14px;
-}
+  font-weight:600;font-size:14px}
 
-.trip-detail{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:8px;font-size:13px;
-}
-.trip-detail .td-item{
-  background:#f8fafc;border:1px solid #eef2f7;
-  padding:8px 11px;border-radius:8px;
-}
-.trip-detail .td-item .lbl{
-  display:block;font-size:11px;color:var(--muted);font-weight:600;
-  text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px;
-}
+.trip-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:8px;font-size:13px}
+.trip-detail .td-item{background:#f8fafc;border:1px solid #eef2f7;
+  padding:8px 11px;border-radius:8px}
+.trip-detail .td-item .lbl{display:block;font-size:11px;color:var(--muted);
+  font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
 .trip-detail .td-item .val{font-weight:600;color:#1e293b;font-size:13.5px}
 
-/* Loading */
-#loadingOverlay{
-  position:fixed;inset:0;background:rgba(15,23,42,.85);
+#loadingOverlay{position:fixed;inset:0;background:rgba(15,23,42,.85);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;color:#fff;gap:16px;
-}
+  z-index:9999;color:#fff;gap:16px}
 #loadingOverlay.hidden{display:none}
-.spinner{
-  width:44px;height:44px;border:4px solid rgba(255,255,255,.2);
-  border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite;
-}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);
+  border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* MODAL */
-.modal-backdrop{
-  position:fixed;inset:0;background:rgba(15,23,42,.6);
-  display:flex;align-items:center;justify-content:center;z-index:500;padding:20px;
-}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.6);
+  display:flex;align-items:center;justify-content:center;z-index:500;padding:20px}
 .modal-backdrop.hidden{display:none}
-.modal{
-  background:#fff;border-radius:16px;max-width:480px;width:100%;
-  box-shadow:0 25px 60px -20px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto;
-}
-.modal-head{
-  padding:16px 20px;border-bottom:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:center;
-}
+.modal{background:#fff;border-radius:16px;max-width:480px;width:100%;
+  box-shadow:0 25px 60px -20px rgba(0,0,0,.5);max-height:90vh;overflow-y:auto}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;align-items:center}
 .modal-head h3{font-size:16px;font-weight:600;color:var(--brand)}
-.modal-close{
-  background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);
-  width:32px;height:32px;border-radius:8px;
-}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;
+  color:var(--muted);width:32px;height:32px;border-radius:8px}
 .modal-close:hover{background:#f1f5f9;color:#0f172a}
 .modal-body{padding:20px}
-.modal-foot{
-  padding:14px 20px;border-top:1px solid var(--line);
-  display:flex;justify-content:flex-end;gap:10px;
-}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--line);
+  display:flex;justify-content:flex-end;gap:10px}
 
-/* PRINT */
 #printRoot{display:none}
 @media print{
   body{background:#fff}
@@ -434,70 +302,22 @@ select.trip-select{
 </head>
 <body>
 
-<!-- ============ LOADING ============ -->
 <div id="loadingOverlay">
   <div class="spinner"></div>
   <div>लोड हुँदै...</div>
 </div>
 
-<!-- ============ SETUP SCREEN (first time only) ============ -->
-<div id="setupScreen" style="display:none">
-  <div class="setup-card">
-    <div class="setup-logo">सप्र</div>
-    <h1>पहिलो पटक सेटअप</h1>
-    <p class="sub">प्रशासक (Admin) खाता बनाउनुहोस्</p>
-
-    <div class="setup-error" id="setupError"></div>
-
-    <form id="setupForm" autocomplete="off">
-      <div class="field">
-        <label>प्रशासकको पूरा नाम *</label>
-        <input type="text" id="setupFullname" required autofocus
-               placeholder="जस्तै: राम बहादुर थापा">
-      </div>
-      <div class="field">
-        <label>प्रयोगकर्ता नाम (Username) *</label>
-        <input type="text" id="setupUsername" required
-               placeholder="जस्तै: admin" pattern="[a-zA-Z0-9_.-]{3,30}">
-        <div class="hint">अंग्रेजी अक्षर, अंक वा _ . - मात्र (३–३० अक्षर)</div>
-      </div>
-      <div class="field">
-        <label>पासवर्ड *</label>
-        <input type="password" id="setupPassword" required minlength="6"
-               placeholder="कम्तीमा ६ अक्षर">
-      </div>
-      <div class="field">
-        <label>पासवर्ड फेरि लेख्नुहोस् *</label>
-        <input type="password" id="setupPassword2" required minlength="6"
-               placeholder="पुनः लेख्नुहोस्">
-      </div>
-      <button type="submit" class="btn primary" id="setupBtn">
-        ✔ प्रशासक खाता बनाउने
-      </button>
-    </form>
-
-    <div class="setup-note">
-      📌 यो स्क्रिन <b>केवल एक पटक</b> देखिन्छ।<br>
-      खाता बनाएपछि लगइन स्क्रिनमा जानुहुनेछ।<br>
-      पछि अरू operator थप्न: लगइन गरेर <b>👥 प्रयोगकर्ता</b> tab।
-    </div>
-  </div>
-</div>
-
-<!-- ============ LOGIN SCREEN ============ -->
+<!-- LOGIN -->
 <div id="loginScreen" style="display:none">
   <div class="login-card">
     <div class="login-logo">सप्र</div>
     <h1>बस आरक्षण प्रणाली</h1>
     <p class="sub">सशस्त्र प्रहरी बल, नेपाल</p>
-
     <div class="login-error" id="loginError"></div>
-
     <form id="loginForm" autocomplete="off">
       <div class="field">
         <label>प्रयोगकर्ता नाम</label>
-        <input type="text" id="loginUsername" required autofocus
-               placeholder="जस्तै: admin वा operator1">
+        <input type="text" id="loginUsername" required autofocus placeholder="Username">
       </div>
       <div class="field">
         <label>पासवर्ड</label>
@@ -508,7 +328,7 @@ select.trip-select{
   </div>
 </div>
 
-<!-- ============ MAIN APP ============ -->
+<!-- MAIN APP -->
 <div id="mainApp" style="display:none">
   <header class="topbar">
     <div class="brand">
@@ -518,9 +338,7 @@ select.trip-select{
         <p><span class="conn-status" id="connDot"></span>सञ्चालक एप — रियल-टाइम</p>
       </div>
     </div>
-
     <div class="stats" id="stats"></div>
-
     <div class="topbar-right">
       <div class="user-chip">
         <div class="avatar" id="userAvatar">—</div>
@@ -545,7 +363,6 @@ select.trip-select{
   <main id="view"></main>
 </div>
 
-<!-- MODAL -->
 <div class="modal-backdrop hidden" id="modalBackdrop">
   <div class="modal">
     <div class="modal-head">
@@ -562,7 +379,7 @@ select.trip-select{
 
 <script>
 /* =====================================================================
-   ⚠️ SUPABASE CONFIG — आफ्नो details यहाँ राख्नुहोस्
+   ⚠️ SUPABASE CONFIG — यहाँ आफ्नो details राख्नुहोस्
    ===================================================================== */
 const SUPABASE_URL = 'https://kwygidpzthsmyeqtctqr.supabase.co/rest/v1/';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt3eWdpZHB6dGhzbXllcXRjdHFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA4MjkyMjIsImV4cCI6MjEwNjQwNTIyMn0.-aeptvC97gPdHkW-yj7NDO1W-zI_GPl-lkiNEN-wQ0c';
@@ -580,26 +397,26 @@ const PLACES = {
 };
 
 const FESTIVALS = {
-  dashain: { name: 'बडादशैँ',      cls: 'f-dashain' },
-  tihar:   { name: 'तिहार र छठ',   cls: 'f-tihar'   }
+  dashain: { name: 'बडादशैँ', cls: 'f-dashain' },
+  tihar:   { name: 'तिहार र छठ', cls: 'f-tihar' }
 };
 
 const RANKS = [
-  { code: 'सप्रमनि',      full: 'सशस्त्र प्रहरी महानिरीक्षक' },
-  { code: 'सप्रअमनि',    full: 'सशस्त्र प्रहरी अतिरिक्त महानिरीक्षक' },
-  { code: 'सप्रनामनि',  full: 'सशस्त्र प्रहरी नायव महानिरीक्षक' },
-  { code: 'सप्रवउ',       full: 'सशस्त्र प्रहरी वरिष्ठ उपरीक्षक' },
-  { code: 'सप्रउ',         full: 'सशस्त्र प्रहरी उपरीक्षक' },
-  { code: 'सप्रनाउ',     full: 'सशस्त्र प्रहरी नायव उपरीक्षक' },
-  { code: 'सप्रनि',        full: 'सशस्त्र प्रहरी निरीक्षक' },
-  { code: 'सप्रबनानि',    full: 'सशस्त्र प्रहरी बरिष्ठ नायव निरीक्षक' },
-  { code: 'सप्रनानि',    full: 'सशस्त्र प्रहरी नायव निरीक्षक' },
-  { code: 'सप्रसनि',      full: 'सशस्त्र प्रहरी सहायक निरीक्षक' },
-  { code: 'सप्रबह',         full: 'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },
-  { code: 'सप्रह',         full: 'सशस्त्र प्रहरी हवल्दार' },
-  { code: 'सप्रसह',         full: 'सशस्त्र प्रहरी सहायक हवल्दार' },
-  { code: 'सप्रज',         full: 'सशस्त्र प्रहरी जवान' },
-  { code: 'सप्रप',         full: 'सशस्त्र प्रहरी परिचर' }
+  { code: 'सप्रमनि', full: 'सशस्त्र प्रहरी महानिरीक्षक' },
+  { code: 'सप्रअमनि', full: 'सशस्त्र प्रहरी अतिरिक्त महानिरीक्षक' },
+  { code: 'सप्रनामनि', full: 'सशस्त्र प्रहरी नायव महानिरीक्षक' },
+  { code: 'सप्रवउ', full: 'सशस्त्र प्रहरी वरिष्ठ उपरीक्षक' },
+  { code: 'सप्रउ', full: 'सशस्त्र प्रहरी उपरीक्षक' },
+  { code: 'सप्रनाउ', full: 'सशस्त्र प्रहरी नायव उपरीक्षक' },
+  { code: 'सप्रनि', full: 'सशस्त्र प्रहरी निरीक्षक' },
+  { code: 'सप्रबनानि', full: 'सशस्त्र प्रहरी बरिष्ठ नायव निरीक्षक' },
+  { code: 'सप्रनानि', full: 'सशस्त्र प्रहरी नायव निरीक्षक' },
+  { code: 'सप्रसनि', full: 'सशस्त्र प्रहरी सहायक निरीक्षक' },
+  { code: 'सप्रबह', full: 'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },
+  { code: 'सप्रह', full: 'सशस्त्र प्रहरी हवल्दार' },
+  { code: 'सप्रसह', full: 'सशस्त्र प्रहरी सहायक हवल्दार' },
+  { code: 'सप्रज', full: 'सशस्त्र प्रहरी जवान' },
+  { code: 'सप्रप', full: 'सशस्त्र प्रहरी परिचर' }
 ];
 
 const ROUTES = {
@@ -637,9 +454,9 @@ const TOTAL_SEATS = 37;
 const MAX_FAMILY_PER_HEAD = 3;
 
 const PASSENGER_TYPES = {
-  apf:    { label: 'सशस्त्र प्रहरी कर्मचारी',  short: 'सप्र',    cls: 'badge-apf',    seatCls: 'type-apf'    },
-  ex:     { label: 'भूतपूर्व सशस्त्र प्रहरी',   short: 'भूतपूर्व', cls: 'badge-ex',     seatCls: 'type-ex'     },
-  family: { label: 'परिवारको सदस्य',          short: 'परिवार',  cls: 'badge-family', seatCls: 'type-family' }
+  apf:    { label: 'सशस्त्र प्रहरी कर्मचारी', short: 'सप्र', cls: 'badge-apf', seatCls: 'type-apf' },
+  ex:     { label: 'भूतपूर्व सशस्त्र प्रहरी', short: 'भूतपूर्व', cls: 'badge-ex', seatCls: 'type-ex' },
+  family: { label: 'परिवारको सदस्य', short: 'परिवार', cls: 'badge-family', seatCls: 'type-family' }
 };
 
 const RELATIONS = ['पत्नी','पति','छोरा','छोरी','बुबा','आमा','दाजु','भाई','दिदी','बहिनी','अन्य'];
@@ -724,9 +541,9 @@ const TRIPS = TRIP_RAW.map((r, i) => ({
 
 const COORD_HQ = [
   { rank:'सप्रनानि', name:'सुजनराज कार्की', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9841370854' },
-  { rank:'जु.अ.',    name:'कल्याणकारी सेवा केन्द्र (प्रतिनिधि)', unit:'कल्याणकारी सेवा केन्द्र', phone:'—' },
-  { rank:'सप्रबह',   name:'संजय खड्का', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9841430852' },
-  { rank:'सप्रसह',   name:'प्रशान्त तामाङ्ग (कम्प्यूटर अपरेटर)', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9845771527' }
+  { rank:'जु.अ.', name:'कल्याणकारी सेवा केन्द्र (प्रतिनिधि)', unit:'कल्याणकारी सेवा केन्द्र', phone:'—' },
+  { rank:'सप्रबह', name:'संजय खड्का', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9841430852' },
+  { rank:'सप्रसह', name:'प्रशान्त तामाङ्ग (कम्प्यूटर अपरेटर)', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9845771527' }
 ];
 
 const COORD_UNITS = [
@@ -743,7 +560,7 @@ const COORD_UNITS = [
 
 let BOOKINGS_CACHE = {};
 let REALTIME_CHANNEL = null;
-const SESSION_KEY = 'apf_bus_session_v1';
+const SESSION_KEY = 'apf_bus_session_v2';
 
 const state = {
   user: null,
@@ -773,11 +590,9 @@ function rankFull(code) {
   const r = RANKS.find(x => x.code === code);
   return r ? r.full : code;
 }
-
 function tripLabel(t) {
   return `${t.date}  |  ${t.route.from} → ${t.route.to}  |  ${t.time}`;
 }
-
 function toast(msg, type = '') {
   const el = $('#toast');
   el.textContent = msg;
@@ -785,110 +600,35 @@ function toast(msg, type = '') {
   clearTimeout(el._t);
   el._t = setTimeout(() => { el.className = 'toast ' + type; }, 2800);
 }
-
 function fmtTime(t) {
   const [h, m] = t.split(':').map(Number);
   const part = h < 12 ? 'बिहान' : 'दिउँसो';
   return `${part} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} बजे`;
 }
-
 function headsOf(trip) {
   return Object.values(tripBookings(trip.id))
     .filter(p => p.type === 'apf' || p.type === 'ex')
     .sort((a, c) => a.seat - c.seat);
 }
-
 function familyCountOf(trip, headSeat) {
   return Object.values(tripBookings(trip.id))
     .filter(p => p.type === 'family' && p.headSeat === Number(headSeat)).length;
 }
-
 function familyMembersOf(trip, headSeat) {
   return Object.values(tripBookings(trip.id))
     .filter(p => p.type === 'family' && p.headSeat === Number(headSeat))
     .sort((a, c) => a.seat - c.seat);
 }
-
 function placeModeLabel(trip) {
   return trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 }
-
 function setConnectionStatus(online) {
   const dot = $('#connDot');
   if (dot) dot.classList.toggle('offline', !online);
 }
-
 function hideAllScreens() {
-  $('#setupScreen').style.display = 'none';
   $('#loginScreen').style.display = 'none';
   $('#mainApp').style.display = 'none';
-}
-
-/* =====================================================================
-   SETUP
-   ===================================================================== */
-
-async function checkNeedsSetup() {
-  const { data, error } = await sb.rpc('needs_setup');
-  if (error) {
-    console.error('needs_setup error:', error);
-    // If function doesn't exist, treat as needing setup
-    return null;
-  }
-  return data === true;
-}
-
-function showSetupScreen() {
-  hideAllScreens();
-  $('#setupScreen').style.display = 'flex';
-  setTimeout(() => $('#setupFullname')?.focus(), 100);
-}
-
-function bindSetup() {
-  const form = $('#setupForm');
-  const errEl = $('#setupError');
-  const btn = $('#setupBtn');
-
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    errEl.classList.remove('show');
-
-    const fullname = $('#setupFullname').value.trim();
-    const username = $('#setupUsername').value.trim().toLowerCase();
-    const pw = $('#setupPassword').value;
-    const pw2 = $('#setupPassword2').value;
-
-    if (!fullname) { errEl.textContent = 'पूरा नाम भर्नुहोस्।'; errEl.classList.add('show'); return; }
-    if (!username || username.length < 3) { errEl.textContent = 'प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।'; errEl.classList.add('show'); return; }
-    if (pw.length < 6) { errEl.textContent = 'पासवर्ड कम्तीमा ६ अक्षर।'; errEl.classList.add('show'); return; }
-    if (pw !== pw2) { errEl.textContent = 'दुई पासवर्ड मिलेनन्।'; errEl.classList.add('show'); return; }
-
-    btn.disabled = true;
-    btn.textContent = '⏳ बनाउँदै...';
-
-    const { error } = await sb.rpc('setup_first_admin', {
-      p_username: username,
-      p_password: pw,
-      p_full_name: fullname
-    });
-
-    btn.disabled = false;
-    btn.textContent = '✔ प्रशासक खाता बनाउने';
-
-    if (error) {
-      if (error.message.includes('already completed')) {
-        errEl.textContent = 'सेटअप पहिले नै सम्पन्न भइसकेको छ। लगइन गर्नुहोस्।';
-      } else {
-        errEl.textContent = 'बनाउन सकिएन: ' + error.message;
-      }
-      errEl.classList.add('show');
-      return;
-    }
-
-    toast('प्रशासक खाता बनाइयो! अब लगइन गर्नुहोस्।', 'ok');
-    $('#loginUsername').value = username;
-    showLoginScreen();
-  });
 }
 
 /* =====================================================================
@@ -900,7 +640,7 @@ async function doLogin(username, password) {
     p_username: username, p_password: password
   });
   if (error) {
-    console.error(error);
+    console.error('Login error:', error);
     return { ok: false, msg: 'लगइन गर्न सकिएन: ' + error.message };
   }
   if (!data || !data.length) {
@@ -929,7 +669,6 @@ async function restoreSession() {
   let parsed;
   try { parsed = JSON.parse(saved); } catch (e) { return false; }
   if (!parsed?.token) return false;
-
   const { data, error } = await sb.rpc('verify_session', { p_token: parsed.token });
   if (error || !data || !data.length) {
     sessionStorage.removeItem(SESSION_KEY);
@@ -1073,7 +812,7 @@ function setupRealtime() {
 }
 
 /* =====================================================================
-   HEADER STATS
+   STATS + ROUTER
    ===================================================================== */
 
 function renderStats() {
@@ -1094,10 +833,6 @@ function renderStats() {
     <div class="stat"><b>${family}</b><span>परिवार</span></div>
     <div class="stat"><b>${pct}%</b><span>अकुपेन्सी</span></div>`;
 }
-
-/* =====================================================================
-   ROUTER
-   ===================================================================== */
 
 function render() {
   renderStats();
@@ -1987,7 +1722,9 @@ function viewQuota() {
         <td>${cap}</td>
         <td>${used}</td>
         <td style="min-width:160px">
-          <div class="bar"><i class="${pct >= 100 ? 'full' : ''}" style="width:${pct}%"></i></div>
+          <div class="bar" style="height:8px;background:#eef2f7;border-radius:99px;overflow:hidden">
+            <i style="display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1b5289,#3b82f6);width:${pct}%"></i>
+          </div>
         </td>
         <td>${pct}%</td>
       </tr>`;
@@ -2116,18 +1853,15 @@ function viewUsers() {
 
 function bindUsers() {
   loadUsersTable();
-
   $('#newUserBtn')?.addEventListener('click', openNewUserModal);
 
   $('#changePwForm')?.addEventListener('submit', async e => {
     e.preventDefault();
     const oldPw = $('#oldPw').value;
     const newPw = $('#newPw').value;
-
     const { error } = await sb.rpc('change_password', {
       p_token: state.user.token, p_old: oldPw, p_new: newPw
     });
-
     if (error) {
       toast(error.message.includes('Wrong password')
         ? 'पुरानो पासवर्ड मिलेन।'
@@ -2228,10 +1962,7 @@ function openNewUserModal() {
       return;
     }
     if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
-    if (password.length < 4) {
-      toast('पासवर्ड कम्तीमा ४ अक्षरको हुनुपर्छ।', 'err');
-      return;
-    }
+    if (password.length < 4) { toast('पासवर्ड कम्तीमा ४ अक्षर।', 'err'); return; }
 
     const btn = $('#modalCreate');
     btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
@@ -2299,27 +2030,13 @@ async function startApp() {
 
 async function init() {
   bindLogin();
-  bindSetup();
-
-  // 1. Check if setup is needed
-  const needsSetup = await checkNeedsSetup();
-  if (needsSetup === true) {
-    $('#loadingOverlay').classList.add('hidden');
-    showSetupScreen();
-    return;
-  }
-
-  // 2. Try to restore previous session
   const restored = await restoreSession();
-  if (restored) {
-    $('#loadingOverlay').classList.add('hidden');
-    await startApp();
-    return;
-  }
-
-  // 3. Show login
   $('#loadingOverlay').classList.add('hidden');
-  showLoginScreen();
+  if (restored) {
+    await startApp();
+  } else {
+    showLoginScreen();
+  }
 }
 
 init();
