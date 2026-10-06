@@ -2278,3 +2278,227 @@ function viewUsers() {
       </div>
       <div class="panel-body" style="padding:0">
         <div class="tbl-wrap
+                  <table>
+            <thead><tr>
+              <th class="num">क्र.</th><th>प्रयोगकर्ता नाम</th><th>पूरा नाम</th>
+              <th>भूमिका</th><th>अवस्था</th><th>बनाइएको</th><th></th>
+            </tr></thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="7"><div class="empty">लोड हुँदै...</div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
+      <div class="panel-body">
+        <form id="changePwForm" style="max-width:400px">
+          <div class="field">
+            <label>पुरानो पासवर्ड</label>
+            <input type="password" id="oldPw" required>
+          </div>
+          <div class="field">
+            <label>नयाँ पासवर्ड</label>
+            <input type="password" id="newPw" required minlength="4">
+          </div>
+          <button type="submit" class="btn primary">पासवर्ड परिवर्तन</button>
+        </form>
+      </div>
+    </div>`;
+}
+
+function bindUsers() {
+  loadUsersTable();
+  $('#newUserBtn')?.addEventListener('click', openNewUserModal);
+
+  $('#changePwForm')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const oldPw = $('#oldPw').value;
+    const newPw = $('#newPw').value;
+    const { error } = await sb.rpc('change_password', {
+      p_token: state.user.token, p_old: oldPw, p_new: newPw
+    });
+    if (error) {
+      toast(error.message.includes('Wrong password')
+        ? 'पुरानो पासवर्ड मिलेन।'
+        : 'परिवर्तन गर्न सकिएन: ' + error.message, 'err');
+      return;
+    }
+    toast('पासवर्ड परिवर्तन भयो।', 'ok');
+    e.target.reset();
+  });
+}
+
+async function loadUsersTable() {
+  const tbody = $('#usersTableBody');
+  const { data, error } = await sb.rpc('admin_list_users', { p_token: state.user.token });
+  if (error) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">लोड गर्न सकिएन: ${esc(error.message)}</div></td></tr>`;
+    return;
+  }
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = data.map((u, i) => {
+    const isMe = u.id === state.user.id;
+    return `<tr>
+      <td class="num">${i + 1}</td>
+      <td><b>${esc(u.username)}</b>${isMe ? ' <span class="badge ok">तपाईं</span>' : ''}</td>
+      <td>${esc(u.full_name)}</td>
+      <td>
+        <span class="badge ${u.role === 'admin' ? 'badge-admin' : 'badge-operator'}">
+          ${u.role === 'admin' ? 'प्रशासक' : 'सञ्चालक'}
+        </span>
+      </td>
+      <td>${u.active ? '<span class="badge ok">सक्रिय</span>' : '<span class="badge danger">निष्क्रिय</span>'}</td>
+      <td>${new Date(u.created_at).toLocaleDateString('ne-NP')}</td>
+      <td>
+        ${!isMe ? `<button class="btn sm danger" data-del-user="${u.id}" data-name="${esc(u.username)}">हटाउने</button>` : '—'}
+      </td>
+    </tr>`;
+  }).join('');
+
+  $$('[data-del-user]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const uid = Number(btn.dataset.delUser);
+      const uname = btn.dataset.name;
+      if (!confirm(`प्रयोगकर्ता "${uname}" हटाउने?`)) return;
+      const { error } = await sb.rpc('admin_delete_user', {
+        p_token: state.user.token, p_user_id: uid
+      });
+      if (error) { toast('हटाउन सकिएन: ' + error.message, 'err'); return; }
+      toast('प्रयोगकर्ता हटाइयो।', 'ok');
+      loadUsersTable();
+    });
+  });
+}
+
+function openNewUserModal() {
+  $('#modalBox').classList.add('narrow');
+  $('#modalTitle').textContent = 'नयाँ प्रयोगकर्ता थप्नुहोस्';
+  $('#modalBody').innerHTML = `
+    <form id="newUserForm">
+      <div class="field">
+        <label>प्रयोगकर्ता नाम *</label>
+        <input type="text" id="nu_username" required placeholder="जस्तै: operator1">
+      </div>
+      <div class="field">
+        <label>पूरा नाम *</label>
+        <input type="text" id="nu_fullname" required placeholder="जस्तै: राम बहादुर थापा">
+      </div>
+      <div class="field">
+        <label>भूमिका *</label>
+        <select id="nu_role" required>
+          <option value="operator">सञ्चालक (Operator)</option>
+          <option value="admin">प्रशासक (Admin)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>पासवर्ड * (कम्तीमा ४ अक्षर)</label>
+        <input type="password" id="nu_password" required minlength="4">
+      </div>
+    </form>`;
+  $('#modalFoot').innerHTML = `
+    <button class="btn" id="modalCancel">रद्द</button>
+    <button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
+
+  $('#modalBackdrop').classList.remove('hidden');
+  setTimeout(() => $('#nu_username')?.focus(), 100);
+
+  $('#modalCancel').addEventListener('click', closeModal);
+  $('#modalCreate').addEventListener('click', async () => {
+    const username = $('#nu_username').value.trim().toLowerCase();
+    const fullname = $('#nu_fullname').value.trim();
+    const role = $('#nu_role').value;
+    const password = $('#nu_password').value;
+
+    if (!username || !fullname || !password) {
+      toast('सबै फाँट भर्नुहोस्।', 'err');
+      return;
+    }
+    if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
+    if (password.length < 4) { toast('पासवर्ड कम्तीमा ४ अक्षर।', 'err'); return; }
+
+    const btn = $('#modalCreate');
+    btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
+
+    const { error } = await sb.rpc('admin_create_user', {
+      p_token: state.user.token,
+      p_username: username,
+      p_password: password,
+      p_full_name: fullname,
+      p_role: role
+    });
+
+    btn.disabled = false; btn.textContent = 'सिर्जना गर्ने';
+
+    if (error) {
+      if (error.message.includes('duplicate')) {
+        toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
+      } else {
+        toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
+      }
+      return;
+    }
+
+    toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`, 'ok');
+    closeModal();
+    loadUsersTable();
+  });
+}
+
+function closeModal() {
+  $('#modalBackdrop').classList.add('hidden');
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+
+$$('.tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.tab = btn.dataset.tab;
+    if (state.tab === 'manifest') state.manifestTrip = state.activeTrip;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+$('#logoutBtn')?.addEventListener('click', async () => {
+  if (!confirm('लगआउट गर्ने?')) return;
+  await doLogout();
+  showLoginScreen();
+});
+
+$('#modalClose')?.addEventListener('click', closeModal);
+$('#modalBackdrop')?.addEventListener('click', e => {
+  if (e.target === $('#modalBackdrop')) closeModal();
+});
+
+async function startApp() {
+  showMainApp();
+  const ok = await fetchAllBookings();
+  if (!ok) toast('डाटा लोड गर्न सकिएन।', 'err');
+  render();
+  setupRealtime();
+}
+
+async function init() {
+  bindLogin();
+  const restored = await restoreSession();
+  $('#loadingOverlay').classList.add('hidden');
+  if (restored) {
+    await startApp();
+  } else {
+    showLoginScreen();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
