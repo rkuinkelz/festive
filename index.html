@@ -27,10 +27,9 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
   padding:20px; background:linear-gradient(135deg,#08203a 0%,#1b5289 100%)}
 .login-card{background:#fff; border-radius:20px; padding:36px 32px; max-width:420px; width:100%;
   box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
-.login-logo{width:72px; height:72px; border-radius:20px;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a); display:grid; place-items:center;
-  font-weight:700; font-size:20px; color:#0d2b4a; margin:0 auto 20px;
-  box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.login-logo-img{width:110px; height:110px; object-fit:contain; display:block;
+  margin:0 auto 18px; padding:6px;
+  filter:drop-shadow(0 6px 16px rgba(0,0,0,.15))}
 .login-card h1{font-size:22px; font-weight:700; text-align:center; color:#0d2b4a; margin-bottom:6px}
 .login-card p.sub{text-align:center; color:#64748b; font-size:13.5px; margin-bottom:28px}
 .login-card .field{margin-bottom:16px}
@@ -46,9 +45,9 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
   padding:14px 20px; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
   justify-content:space-between; box-shadow:0 10px 30px -14px rgba(8,32,58,.9)}
 .brand{display:flex; align-items:center; gap:14px; min-width:240px}
-.logo{width:48px;height:48px;border-radius:13px;flex:0 0 auto;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a); display:grid;place-items:center;
-  font-weight:700;font-size:14px;color:#0d2b4a; box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+.logo-img{width:52px; height:52px; object-fit:contain; flex:0 0 auto;
+  background:#fff; border-radius:13px; padding:4px;
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35), 0 4px 12px -4px rgba(0,0,0,.3)}
 .brand h1{font-size:17px;font-weight:600}
 .brand p{font-size:12px;color:#a9c4e0}
 .topbar-right{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
@@ -271,7 +270,6 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
 .modal-body{padding:20px}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--line);
   display:flex;justify-content:flex-end;gap:10px}
-
 #printRoot{display:none}
 @media print{
   body{background:#fff}
@@ -297,7 +295,9 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
 <!-- LOGIN -->
 <div id="loginScreen" style="display:none">
   <div class="login-card">
-    <div class="login-logo">सप्र</div>
+    <img src="logo.png" alt="APF" class="login-logo-img"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+    <div class="logo" style="display:none;width:110px;height:110px;border-radius:20px;margin:0 auto 18px;background:linear-gradient(160deg,#e8a33d,#c47f1a);font-weight:800;font-size:28px;color:#0d2b4a;place-items:center;box-shadow:inset 0 0 0 4px rgba(255,255,255,.35)">सप्र</div>
     <h1>बस आरक्षण प्रणाली</h1>
     <p class="sub">सशस्त्र प्रहरी बल, नेपाल</p>
     <div class="login-error" id="loginError"></div>
@@ -319,7 +319,9 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
 <div id="mainApp" style="display:none">
   <header class="topbar">
     <div class="brand">
-      <div class="logo">सप्र</div>
+      <img src="logo.png" alt="APF" class="logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+      <div class="logo" style="display:none;width:52px;height:52px;border-radius:13px;background:linear-gradient(160deg,#e8a33d,#c47f1a);font-weight:700;font-size:14px;color:#0d2b4a;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)">सप्र</div>
       <div>
         <h1>बस आरक्षण प्रणाली</h1>
         <p><span class="conn-status" id="connDot"></span>सञ्चालक एप — रियल-टाइम</p>
@@ -373,6 +375,9 @@ const SUPABASE_URL = 'https://kwygidpzthsmyeqtctqr.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_fDTrlzw18dQmTr2-Vz8u7A_L9C1iWY2';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* APF Logo — absolute URL so it also works inside print windows */
+const APF_LOGO_URL = new URL('logo.png', window.location.href).href;
 
 /* =====================================================================
    DATA
@@ -837,10 +842,9 @@ body{font-family:'Mukta','Noto Sans Devanagari',system-ui,sans-serif;
   background:linear-gradient(90deg,#e8a33d,#c47f1a 30%,#0d2b4a 50%,#1b5289 70%,#e8a33d)}
 .tk-header{background:linear-gradient(120deg,#08203a,#0d2b4a 50%,#1b5289);
   color:#fff; padding:20px 26px; display:flex; align-items:center; gap:18px}
-.tk-logo{width:64px; height:64px; border-radius:16px; flex:0 0 auto;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a);
-  display:grid; place-items:center; font-weight:800; font-size:20px;
-  color:#0d2b4a; box-shadow:inset 0 0 0 3px rgba(255,255,255,.35)}
+.tk-logo-img{width:64px; height:64px; object-fit:contain; flex:0 0 auto;
+  background:#fff; border-radius:16px; padding:6px;
+  box-shadow:0 4px 12px -4px rgba(0,0,0,.3)}
 .tk-head-text{flex:1}
 .tk-head-text h1{font-size:19px; font-weight:700; margin-bottom:2px}
 .tk-head-text p{font-size:12px; color:#a9c4e0; letter-spacing:.3px}
@@ -1024,7 +1028,8 @@ ${bodyTag}
 <div class="ticket">
   <div class="accent-bar"></div>
   <div class="tk-header">
-    <div class="tk-logo">सप्र</div>
+    <img src="${APF_LOGO_URL}" alt="APF" class="tk-logo-img"
+         onerror="this.outerHTML='<div style=&quot;width:64px;height:64px;border-radius:16px;background:linear-gradient(160deg,#e8a33d,#c47f1a);display:grid;place-items:center;font-weight:800;font-size:20px;color:#0d2b4a&quot;>सप्र</div>';">
     <div class="tk-head-text">
       <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
       <p>Armed Police Force, Nepal</p>
@@ -1983,6 +1988,9 @@ function printManifest() {
   }).join('');
 
   $('#printRoot').innerHTML = `
+    <div style="text-align:center;margin-bottom:12px">
+      <img src="${APF_LOGO_URL}" alt="APF" style="width:60px;height:60px;object-fit:contain">
+    </div>
     <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
     <h2>बस यात्री सूची — ${FESTIVALS[trip.festival].name}</h2>
     <div class="meta">
