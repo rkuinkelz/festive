@@ -575,7 +575,8 @@ const state = {
   newBookingType: 'apf',
   tab: 'schedule',
   manifestTrip: TRIPS[0].id,
-  search: ''
+  search: '',
+  ticketSelection: new Set()
 };
 
 /* =====================================================================
@@ -827,113 +828,126 @@ function setupRealtime() {
 }
 
 /* =====================================================================
-   TICKET
+   TICKET — compact A6 design
    ===================================================================== */
 
 const TICKET_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#eef1f6}
-body{font-family:'Mukta','Noto Sans Devanagari',system-ui,sans-serif;
-  color:#0f172a; padding:24px; display:flex; justify-content:center}
-.ticket{max-width:820px; width:100%; background:#fff;
-  border:2px solid #0d2b4a; border-radius:18px;
-  overflow:hidden; box-shadow:0 20px 60px -20px rgba(8,32,58,.4); position:relative}
-.accent-bar{height:6px;
+html,body{background:#eef1f6;font-family:'Mukta','Noto Sans Devanagari',sans-serif;color:#0f172a}
+body{padding:10mm;display:flex;justify-content:center}
+
+/* Single ticket: A6 (101mm × 143mm) */
+.ticket{
+  width:101mm; height:143mm; background:#fff;
+  border:1px solid #0d2b4a; border-radius:5px;
+  display:flex; flex-direction:column; overflow:hidden;
+  box-shadow:0 8px 24px -10px rgba(0,0,0,.4);
+  font-size:7pt;
+}
+.accent-bar{height:3px;
   background:linear-gradient(90deg,#e8a33d,#c47f1a 30%,#0d2b4a 50%,#1b5289 70%,#e8a33d)}
+
 .tk-header{background:linear-gradient(120deg,#08203a,#0d2b4a 50%,#1b5289);
-  color:#fff; padding:20px 26px; display:flex; align-items:center; gap:18px}
-.tk-logo-img{width:64px; height:64px; object-fit:contain; flex:0 0 auto;
-  background:#fff; border-radius:16px; padding:6px;
-  box-shadow:0 4px 12px -4px rgba(0,0,0,.3)}
-.tk-head-text{flex:1}
-.tk-head-text h1{font-size:19px; font-weight:700; margin-bottom:2px}
-.tk-head-text p{font-size:12px; color:#a9c4e0; letter-spacing:.3px}
-.tk-badge{display:flex; align-items:center; gap:10px;
-  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
-  border-radius:12px; padding:8px 14px}
-.tk-badge-icon{font-size:24px}
-.tk-badge-title{font-size:11px; color:#cbd5e1; letter-spacing:.6px; text-transform:uppercase}
-.tk-badge-ref{font-size:13px; font-weight:700; color:#fde047;
-  font-family:ui-monospace,monospace; letter-spacing:.4px; margin-top:2px}
-.tk-category{padding:10px 26px; text-align:center;
-  font-size:13px; font-weight:700; letter-spacing:.5px;
-  border-bottom:1px solid #e2e8f0}
-.tk-category.cat-apf{background:#dbeafe; color:#1e40af; border-bottom-color:#bfdbfe}
-.tk-category.cat-ex{background:#d1fae5; color:#065f46; border-bottom-color:#a7f3d0}
-.tk-category.cat-family{background:#fed7aa; color:#9a3412; border-bottom-color:#fdba74}
-.tk-category .cat-tag{display:inline-block; background:#fff; padding:3px 14px;
-  border-radius:99px; border:1.5px solid currentColor; margin:0 6px; letter-spacing:.6px}
-.tk-category .cat-sub{font-weight:500; font-size:12px; opacity:.85; margin-left:8px}
-.tk-route{padding:22px 26px 18px; background:linear-gradient(180deg,#f8fafc,#fff);
-  border-bottom:1px solid #e2e8f0; text-align:center}
-.tk-route-line{display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:12px}
-.tk-city{font-size:22px; font-weight:700; color:#0d2b4a}
-.tk-arrow{display:flex; align-items:center; gap:6px}
-.tk-arrow-line{display:block; width:26px; height:2px; background:#cbd5e1; border-radius:2px}
-.tk-arrow-bus{font-size:20px}
-.tk-route-meta{font-size:13.5px; color:#475569}
+  color:#fff; padding:4px 7px; display:flex; align-items:center; gap:5px}
+.tk-logo-img{width:26px; height:26px; object-fit:contain; flex:0 0 auto;
+  background:#fff; border-radius:5px; padding:2px}
+.tk-head-text{flex:1; min-width:0}
+.tk-head-text h1{font-size:8.5pt; font-weight:700; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis; line-height:1.15}
+.tk-head-text p{font-size:5.5pt; color:#a9c4e0; letter-spacing:.2px}
+.tk-ref-badge{background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3);
+  border-radius:4px; padding:2px 5px; font-size:6pt; color:#fde047;
+  font-family:ui-monospace,monospace; font-weight:700; white-space:nowrap}
+
+.tk-category{padding:3px 6px; font-size:7pt; font-weight:700; letter-spacing:.3px;
+  text-align:center; border-bottom:.5px solid #e2e8f0; line-height:1.3}
+.tk-category.cat-apf{background:#dbeafe; color:#1e40af}
+.tk-category.cat-ex{background:#d1fae5; color:#065f46}
+.tk-category.cat-family{background:#fed7aa; color:#9a3412}
+.tk-category .cat-tag{display:inline-block; background:#fff; padding:1px 8px;
+  border-radius:99px; border:1px solid currentColor; font-size:6.5pt}
+
+.tk-route{padding:4px 6px 3px; text-align:center; border-bottom:.5px solid #e2e8f0;
+  background:linear-gradient(180deg,#f8fafc,#fff)}
+.tk-route-line{display:flex; align-items:center; justify-content:center; gap:5px; margin-bottom:2px}
+.tk-city{font-size:11pt; font-weight:700; color:#0d2b4a; line-height:1.1}
+.tk-arrow-bus{font-size:10pt}
+.tk-route-meta{font-size:6.5pt; color:#475569}
 .tk-route-meta b{color:#0d2b4a}
-.tk-dot{margin:0 10px; color:#cbd5e1}
-.tk-body{display:grid; grid-template-columns:1fr 1px 1fr; gap:22px; padding:20px 26px}
-.tk-divider{background:repeating-linear-gradient(
-  to bottom, #cbd5e1 0, #cbd5e1 5px, transparent 5px, transparent 11px)}
-.tk-section h3{font-size:11px; font-weight:700; color:#64748b;
-  text-transform:uppercase; letter-spacing:.6px;
-  padding-bottom:8px; margin-bottom:10px; border-bottom:2px solid #e2e8f0}
-.tk-table{width:100%; font-size:13px; border-collapse:collapse}
-.tk-table tr td{padding:5px 0; vertical-align:top}
-.tk-table .lbl{color:#64748b; width:42%}
-.tk-table .val{font-weight:600; color:#0f172a; text-align:right}
+.tk-dot{margin:0 4px; color:#cbd5e1}
+
+.tk-body{display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px 6px;
+  flex:1; min-height:0; overflow:hidden}
+.tk-section{min-height:0; overflow:hidden}
+.tk-section h3{font-size:6pt; font-weight:700; color:#64748b;
+  text-transform:uppercase; letter-spacing:.4px; padding-bottom:2px;
+  margin-bottom:2px; border-bottom:.5px solid #e2e8f0}
+.tk-table{width:100%; font-size:6.5pt; border-collapse:collapse}
+.tk-table tr td{padding:1px 0; vertical-align:top; line-height:1.25}
+.tk-table .lbl{color:#64748b; width:40%}
+.tk-table .val{font-weight:600; color:#0f172a; text-align:right; word-break:break-word}
 .tk-seat{display:inline-block; background:#fef9c3; color:#854d0e;
-  border:1.5px solid #fde047; border-radius:8px;
-  padding:1px 10px; font-weight:700; font-size:15px}
-.tk-guardian{margin-top:8px; padding:10px 12px;
-  background:#fffbeb; border:1px solid #fde68a; border-radius:10px}
-.tk-guardian-title{font-size:10.5px; font-weight:700; color:#92400e;
-  text-transform:uppercase; letter-spacing:.5px; margin-bottom:6px}
-.tk-guardian-name{font-size:14px; font-weight:700; color:#78350f; margin-bottom:2px}
-.tk-guardian-meta{font-size:12px; color:#92400e; line-height:1.5}
-.tk-tear{display:flex; align-items:center; gap:10px;
-  padding:0 26px; height:16px; position:relative}
-.tk-tear::before, .tk-tear::after{content:''; position:absolute; width:20px; height:20px;
-  background:#fff; border-radius:50%; top:-2px; border:2px solid #0d2b4a}
-.tk-tear::before{left:-12px}
-.tk-tear::after{right:-12px}
-.tk-tear-line{flex:1; border-top:2px dashed #cbd5e1; position:relative}
-.tk-tear-mark{position:absolute; left:50%; top:-11px; transform:translateX(-50%);
-  font-size:14px; color:#94a3b8; background:#fff; padding:0 6px}
-.tk-footer{display:grid; grid-template-columns:auto 1fr auto;
-  gap:22px; align-items:center; padding:16px 26px 18px; background:#f8fafc}
-.tk-qr{text-align:center}
-.tk-qr img{display:block; border:1px solid #e2e8f0; border-radius:8px; background:#fff}
-.tk-qr-label{font-size:10px; color:#64748b; margin-top:4px; letter-spacing:.3px}
-.tk-ref-lbl{font-size:10.5px; color:#64748b; text-transform:uppercase; letter-spacing:.6px; margin-bottom:3px}
-.tk-ref-val{font-family:ui-monospace,Menlo,monospace; font-size:16px; font-weight:700;
-  color:#0d2b4a; letter-spacing:.5px; margin-bottom:6px}
-.tk-ref-meta{font-size:11.5px; color:#64748b; line-height:1.5}
+  border:1px solid #fde047; border-radius:3px;
+  padding:0 5px; font-weight:700; font-size:8.5pt}
+
+.tk-guardian{margin-top:2px; padding:2px 4px; background:#fffbeb;
+  border:.5px solid #fde68a; border-radius:3px; font-size:6pt; line-height:1.3}
+.tk-guardian-title{font-weight:700; color:#92400e; font-size:5.5pt;
+  letter-spacing:.3px; margin-bottom:1px}
+.tk-guardian-name{font-weight:700; color:#78350f; font-size:7pt}
+.tk-guardian-meta{color:#92400e}
+
+.tk-tear{height:6px; position:relative; border-top:1px dashed #cbd5e1; margin-top:2px}
+.tk-tear-mark{position:absolute; left:50%; top:-5px; transform:translateX(-50%);
+  font-size:7pt; color:#94a3b8; background:#fff; padding:0 3px; line-height:1}
+
+.tk-footer{display:grid; grid-template-columns:auto 1fr; gap:5px; align-items:center;
+  padding:3px 6px; background:#f8fafc; font-size:5.5pt; color:#64748b;
+  border-top:.5px solid #e2e8f0}
+.tk-qr img{display:block; border:.5px solid #e2e8f0; border-radius:3px}
+.tk-qr-label{font-size:5pt; text-align:center; margin-top:1px}
+.tk-ref-lbl{font-size:5pt; text-transform:uppercase; letter-spacing:.3px;
+  margin-bottom:1px; font-weight:700}
+.tk-ref-val{font-family:ui-monospace,monospace; font-size:7.5pt; font-weight:700;
+  color:#0d2b4a; letter-spacing:.3px; line-height:1.1}
+.tk-ref-meta{font-size:5pt; line-height:1.3; margin-top:1px}
 .tk-ref-meta b{color:#0f172a}
-.tk-sign{text-align:center; flex:0 0 auto}
-.tk-sign-line{width:150px; height:34px; border-bottom:1.5px solid #334155; margin-bottom:4px}
-.tk-sign-lbl{font-size:11px; color:#64748b}
-.tk-terms{padding:12px 26px 16px; font-size:11px; color:#64748b;
-  text-align:center; line-height:1.6; border-top:1px solid #e2e8f0; background:#f8fafc}
+
+.tk-terms{padding:2px 6px; font-size:5pt; color:#64748b; text-align:center;
+  line-height:1.25; border-top:.5px solid #e2e8f0; background:#f8fafc}
 .tk-terms b{color:#0d2b4a}
+
+/* Batch: 4 tickets per A4 page (2×2 grid) */
+.batch-page{
+  width:210mm; min-height:297mm; background:#fff; padding:3mm;
+  display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
+  gap:2mm; margin:0 auto;
+}
+.batch-page .ticket{
+  width:100%; height:100%; box-shadow:none; border-radius:3px;
+}
+
 @media print{
   html,body{background:#fff; padding:0}
-  .ticket{border-radius:0; box-shadow:none; border-width:2px; max-width:100%}
-  @page{size:A4 landscape; margin:8mm}
+  body{display:block; padding:0}
+  .ticket{box-shadow:none; border-radius:3px; border-width:1px}
+  .batch-page{
+    width:auto; min-height:auto; padding:0;
+    page-break-after:always; break-after:page;
+  }
+  .batch-page:last-child{page-break-after:auto; break-after:auto}
+  @page{size:A4 portrait; margin:4mm}
 }
 `;
 
-function buildTicketPage(trip, p, q, head, autoPrint) {
+/* ---- Core: build just the ticket DIV (no page wrapper) ---- */
+function buildTicketDiv(trip, p, q, head) {
   const isFamily = p.type === 'family';
-  const pt = PASSENGER_TYPES[p.type];
   const modeLabel = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य स्थान';
   const placeName = q ? q.label : '—';
   const seat = seatLabel(p.seat);
   const side = (p.seat >= 1 && p.seat <= 16) ? 'साईड A'
              : (p.seat >= 17 && p.seat <= 32) ? 'साईड B' : 'पछाडिको लाइन';
-
   const cat = categoryLabel(p.type);
   const catCls = 'cat-' + p.type;
 
@@ -942,14 +956,9 @@ function buildTicketPage(trip, p, q, head, autoPrint) {
   const refNum = `${trip.id}-${seatClean}-${opInitials}`;
 
   const qrLines = [
-    'APF BUS TICKET',
-    'Ref: ' + refNum,
-    'Category: ' + cat,
-    'Trip: ' + trip.id,
-    'Route: ' + trip.route.from + ' to ' + trip.route.to,
-    'Date: ' + trip.date + ' BS',
-    'Time: ' + trip.time,
-    'Seat: ' + seat,
+    'APF BUS TICKET', 'Ref: ' + refNum, 'Category: ' + cat,
+    'Trip: ' + trip.id, 'Route: ' + trip.route.from + ' to ' + trip.route.to,
+    'Date: ' + trip.date + ' BS', 'Time: ' + trip.time, 'Seat: ' + seat,
     'Passenger: ' + p.name
   ];
   if (isFamily && head) {
@@ -959,16 +968,16 @@ function buildTicketPage(trip, p, q, head, autoPrint) {
   } else {
     qrLines.push('ID: ' + (p.idNo || '-'));
   }
-  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&data=' +
+  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=' +
                 encodeURIComponent(qrLines.join('\n'));
 
   let paxRows;
   if (isFamily) {
     paxRows = `
       <tr><td class="lbl">नाम</td><td class="val">${esc(p.name)}</td></tr>
-      <tr><td class="lbl">श्रेणी</td><td class="val">आश्रित परिवार</td></tr>
+      <tr><td class="lbl">श्रेणी</td><td class="val">आश्रित</td></tr>
       <tr><td class="lbl">सम्बन्ध</td><td class="val">${esc(p.relation || '—')}</td></tr>
-      <tr><td class="lbl">लिङ्ग / उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
+      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
       <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(head?.phone || '—')}</td></tr>`;
   } else {
     paxRows = `
@@ -977,7 +986,7 @@ function buildTicketPage(trip, p, q, head, autoPrint) {
       <tr><td class="lbl">दर्जा</td><td class="val">${esc(p.rank || '—')}</td></tr>
       <tr><td class="lbl">ID नं.</td><td class="val">${esc(p.idNo || '—')}</td></tr>
       <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(p.phone || '—')}</td></tr>
-      <tr><td class="lbl">लिङ्ग / उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>`;
+      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>`;
   }
 
   let guardianBlock = '';
@@ -987,33 +996,85 @@ function buildTicketPage(trip, p, q, head, autoPrint) {
         <div class="tk-guardian-title">सम्बन्धित ${esc(headTypeLabel(head.type))}</div>
         <div class="tk-guardian-name">${esc(head.name)}</div>
         <div class="tk-guardian-meta">
-          ${head.rank ? `<b>दर्जा:</b> ${esc(head.rank)}` : ''}
-          ${head.idNo ? ` &nbsp;·&nbsp; <b>ID:</b> ${esc(head.idNo)}` : ''}
-          ${head.unit ? `<br><b>कार्यालय:</b> ${esc(head.unit)}` : ''}
-          <br><b>सिट:</b> ${esc(seatLabel(head.seat))} &nbsp;·&nbsp; <b>श्रेणी:</b> ${esc(categoryLabel(head.type))}
+          ${head.rank ? `${esc(head.rank)} · ` : ''}${head.idNo ? `ID: ${esc(head.idNo)}` : ''}
+          <br>सिट ${esc(seatLabel(head.seat))}
         </div>
-      </div>`;
-  } else if (isFamily) {
-    guardianBlock = `
-      <div class="tk-guardian">
-        <div class="tk-guardian-title">सम्बन्धित कर्मचारी</div>
-        <div class="tk-guardian-meta">विवरण भेटिएन</div>
       </div>`;
   }
 
+  return `
+<div class="ticket">
+  <div class="accent-bar"></div>
+  <div class="tk-header">
+    <img src="${APF_LOGO_URL}" alt="APF" class="tk-logo-img"
+         onerror="this.outerHTML='<div style=&quot;width:26px;height:26px;border-radius:5px;background:linear-gradient(160deg,#e8a33d,#c47f1a);display:grid;place-items:center;font-weight:800;font-size:10px;color:#0d2b4a&quot;>सप्र</div>';">
+    <div class="tk-head-text">
+      <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
+      <p>Armed Police Force, Nepal</p>
+    </div>
+    <div class="tk-ref-badge">${esc(refNum)}</div>
+  </div>
+  <div class="tk-category ${catCls}">
+    <span class="cat-tag">${esc(cat)}</span>
+  </div>
+  <div class="tk-route">
+    <div class="tk-route-line">
+      <span class="tk-city">${esc(trip.route.from)}</span>
+      <span class="tk-arrow-bus">🚌</span>
+      <span class="tk-city">${esc(trip.route.to)}</span>
+    </div>
+    <div class="tk-route-meta">
+      <b>मिति:</b> ${esc(trip.date)} (वि.सं.)
+      <span class="tk-dot">•</span>
+      <b>समय:</b> ${fmtTime(trip.time)}
+    </div>
+  </div>
+  <div class="tk-body">
+    <div class="tk-section">
+      <h3>यात्रुको विवरण</h3>
+      <table class="tk-table">${paxRows}</table>
+      ${guardianBlock}
+    </div>
+    <div class="tk-section">
+      <h3>यात्राको विवरण</h3>
+      <table class="tk-table">
+        <tr><td class="lbl">सिट</td><td class="val"><span class="tk-seat">${esc(seat)}</span></td></tr>
+        <tr><td class="lbl">स्थान</td><td class="val">${esc(side)}</td></tr>
+        <tr><td class="lbl">${esc(modeLabel)}</td><td class="val">${esc(placeName)}</td></tr>
+        <tr><td class="lbl">छुट्ने स्थान</td><td class="val">${esc(trip.place)}</td></tr>
+        <tr><td class="lbl">छुट्ने समय</td><td class="val">${fmtTime(trip.time)}</td></tr>
+        <tr><td class="lbl">पर्व</td><td class="val">${esc(FESTIVALS[trip.festival].name)}</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="tk-tear"><span class="tk-tear-mark">✂</span></div>
+  <div class="tk-footer">
+    <div class="tk-qr">
+      <img src="${qrUrl}" alt="QR" width="70" height="70">
+      <div class="tk-qr-label">स्क्यान</div>
+    </div>
+    <div class="tk-ref">
+      <div class="tk-ref-lbl">बुकिङ सन्दर्भ</div>
+      <div class="tk-ref-val">${esc(refNum)}</div>
+      <div class="tk-ref-meta">
+        जारी: <b>${esc(p.createdBy || state.user?.username || '—')}</b>
+        ${p.at ? ` · ${new Date(p.at).toLocaleDateString('ne-NP')}` : ''}
+        <br>हस्ताक्षर: ______________________
+      </div>
+    </div>
+  </div>
+  <div class="tk-terms">
+    यात्रा गर्नुअघि परिचयपत्र साथमा राख्नुहोस् · ३० मिनेट अगाडि पुग्नुहोस्
+  </div>
+</div>`;
+}
+
+/* ---- Single ticket page ---- */
+function buildTicketPage(trip, p, q, head, autoPrint) {
+  const ticketDiv = buildTicketDiv(trip, p, q, head);
   const bodyTag = autoPrint
     ? '<body onload="setTimeout(function(){window.print()},900)">'
     : '<body>';
-
-  let catSub = '';
-  if (isFamily && head) {
-    catSub = `<span class="cat-sub">— सम्बन्धित ${esc(headTypeLabel(head.type))}: ${esc(head.name)}</span>`;
-  } else if (p.type === 'apf') {
-    catSub = '<span class="cat-sub">— सेवारत सशस्त्र प्रहरी</span>';
-  } else if (p.type === 'ex') {
-    catSub = '<span class="cat-sub">— सेवानिवृत्त सशस्त्र प्रहरी</span>';
-  }
-
   return `<!DOCTYPE html>
 <html lang="ne">
 <head>
@@ -1024,91 +1085,40 @@ function buildTicketPage(trip, p, q, head, autoPrint) {
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>${TICKET_CSS}</style>
 </head>
-${bodyTag}
-<div class="ticket">
-  <div class="accent-bar"></div>
-  <div class="tk-header">
-    <img src="${APF_LOGO_URL}" alt="APF" class="tk-logo-img"
-         onerror="this.outerHTML='<div style=&quot;width:64px;height:64px;border-radius:16px;background:linear-gradient(160deg,#e8a33d,#c47f1a);display:grid;place-items:center;font-weight:800;font-size:20px;color:#0d2b4a&quot;>सप्र</div>';">
-    <div class="tk-head-text">
-      <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
-      <p>Armed Police Force, Nepal</p>
-    </div>
-    <div class="tk-badge">
-      <div class="tk-badge-icon">🎫</div>
-      <div>
-        <div class="tk-badge-title">बस यात्रा टिकट</div>
-        <div class="tk-badge-ref">${esc(refNum)}</div>
-      </div>
-    </div>
-  </div>
-  <div class="tk-category ${catCls}">
-    <span class="cat-tag">${esc(cat)}</span>
-    ${catSub}
-  </div>
-  <div class="tk-route">
-    <div class="tk-route-line">
-      <span class="tk-city">${esc(trip.route.from)}</span>
-      <span class="tk-arrow">
-        <span class="tk-arrow-line"></span>
-        <span class="tk-arrow-bus">🚌</span>
-        <span class="tk-arrow-line"></span>
-      </span>
-      <span class="tk-city">${esc(trip.route.to)}</span>
-    </div>
-    <div class="tk-route-meta">
-      <span><b>मिति:</b> ${esc(trip.date)} (वि.सं.)</span>
-      <span class="tk-dot">•</span>
-      <span><b>समय:</b> ${fmtTime(trip.time)}</span>
-    </div>
-  </div>
-  <div class="tk-body">
-    <div class="tk-section">
-      <h3>यात्रुको विवरण</h3>
-      <table class="tk-table">${paxRows}</table>
-      ${guardianBlock}
-    </div>
-    <div class="tk-divider"></div>
-    <div class="tk-section">
-      <h3>यात्राको विवरण</h3>
-      <table class="tk-table">
-        <tr><td class="lbl">सिट नं.</td><td class="val"><span class="tk-seat">${esc(seat)}</span></td></tr>
-        <tr><td class="lbl">स्थान</td><td class="val">${esc(side)}</td></tr>
-        <tr><td class="lbl">${esc(modeLabel)}</td><td class="val">${esc(placeName)}</td></tr>
-        <tr><td class="lbl">छुट्ने स्थान</td><td class="val">${esc(trip.place)}</td></tr>
-        <tr><td class="lbl">छुट्ने समय</td><td class="val">${fmtTime(trip.time)}</td></tr>
-        <tr><td class="lbl">पर्व</td><td class="val">${esc(FESTIVALS[trip.festival].name)}</td></tr>
-      </table>
-    </div>
-  </div>
-  <div class="tk-tear">
-    <span class="tk-tear-line"></span>
-    <span class="tk-tear-mark">✂</span>
-  </div>
-  <div class="tk-footer">
-    <div class="tk-qr">
-      <img src="${qrUrl}" alt="QR" width="110" height="110">
-      <div class="tk-qr-label">स्क्यान गर्नुहोस्</div>
-    </div>
-    <div class="tk-ref">
-      <div class="tk-ref-lbl">बुकिङ सन्दर्भ</div>
-      <div class="tk-ref-val">${esc(refNum)}</div>
-      <div class="tk-ref-meta">
-        जारी गर्ने: <b>${esc(p.createdBy || state.user?.username || '—')}</b>
-        ${p.at ? `<br>जारी मिति: ${new Date(p.at).toLocaleString('ne-NP')}` : ''}
-      </div>
-    </div>
-    <div class="tk-sign">
-      <div class="tk-sign-line"></div>
-      <div class="tk-sign-lbl">बस सञ्चालक / समन्वय अधिकृत</div>
-    </div>
-  </div>
-  <div class="tk-terms">
-    <b>नोट:</b> यात्रा गर्नुअघि आफ्नो परिचयपत्र साथमा राख्नुहोस्। बस छुट्ने समयभन्दा कम्तीमा ३० मिनेट अगाडि पुग्नुहोस्।
-    यो टिकट कार्यालयको अभिलेख हो — कृपया सुरक्षित राख्नुहोस्।
-  </div>
-</div>
-</body>
+${bodyTag}${ticketDiv}</body>
+</html>`;
+}
+
+/* ---- Batch: 4 tickets per A4 page ---- */
+function buildBatchTicketPage(items, autoPrint) {
+  const TICKETS_PER_PAGE = 4;
+  let html = '';
+  for (let i = 0; i < items.length; i += TICKETS_PER_PAGE) {
+    const chunk = items.slice(i, i + TICKETS_PER_PAGE);
+    html += '<div class="batch-page">';
+    chunk.forEach(it => {
+      html += buildTicketDiv(it.trip, it.p, it.q, it.head);
+    });
+    for (let k = chunk.length; k < TICKETS_PER_PAGE; k++) {
+      html += '<div style="visibility:hidden"></div>';
+    }
+    html += '</div>';
+  }
+
+  const bodyTag = autoPrint
+    ? '<body onload="setTimeout(function(){window.print()},1200)">'
+    : '<body>';
+  return `<!DOCTYPE html>
+<html lang="ne">
+<head>
+<meta charset="UTF-8">
+<title>बस यात्रा टिकट — ${items.length} tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>${TICKET_CSS}</style>
+</head>
+${bodyTag}${html}</body>
 </html>`;
 }
 
@@ -1127,7 +1137,11 @@ function openTicket(trip, seat) {
   $('#modalTitle').textContent = 'बस यात्रा टिकट — ' + p.name;
   $('#modalBody').innerHTML = `
     <iframe id="ticketFrame" src="${url}"
-            style="width:100%; height:640px; border:1px solid #e2e8f0; border-radius:10px; background:#fff;"></iframe>
+            style="width:100%; height:520px; border:1px solid #e2e8f0;
+                   border-radius:10px; background:#fff;"></iframe>
+    <div class="hint" style="margin-top:8px; text-align:center">
+      A4 page मा ४ वटा ticket अटाउँछ। धेरै ticket एकैचोटि प्रिन्ट गर्न Manifest tab बाट छान्नुहोस्।
+    </div>
   `;
   $('#modalFoot').innerHTML = `
     <button class="btn" id="closeTicketBtn">बन्द गर्ने</button>
@@ -1149,6 +1163,27 @@ function openTicket(trip, seat) {
     setTimeout(() => URL.revokeObjectURL(printUrl), 30000);
     if (!w) toast('Popup अवरोध भयो — browser ले popup allow गर्नुहोस्।', 'err');
   });
+}
+
+/* ---- Print multiple selected tickets (4 per A4 page) ---- */
+function openBatchTickets(trip, seats) {
+  const items = [];
+  seats.forEach(seat => {
+    const p = tripBookings(trip.id)[seat];
+    if (!p) return;
+    const q = quotaOf(trip.route, p.quota);
+    const head = p.type === 'family' ? tripBookings(trip.id)[p.headSeat] : null;
+    items.push({ trip, p, q, head });
+  });
+  if (!items.length) return toast('कुनै सिट छानिएको छैन।', 'err');
+
+  const html = buildBatchTicketPage(items, true);
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const w = window.open(url, '_blank', 'width=1100,height=800');
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  if (!w) toast('Popup अवरोध भयो — browser ले popup allow गर्नुहोस्।', 'err');
+  else toast(`${items.length} वटा ticket — प्रिन्ट हुँदैछ...`, 'ok');
 }
 
 /* =====================================================================
@@ -1818,7 +1853,7 @@ async function submitBooking(trip) {
 }
 
 /* =====================================================================
-   MANIFEST
+   MANIFEST — with checkbox + batch print
    ===================================================================== */
 
 function viewManifest() {
@@ -1846,6 +1881,7 @@ function viewManifest() {
     const qq = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
     const head = p.type === 'family' ? b[p.headSeat] : null;
+    const isChecked = state.ticketSelection.has(p.seat);
 
     const rankCell = p.type === 'family'
       ? `<b>${esc(p.relation || '—')}</b>
@@ -1858,6 +1894,11 @@ function viewManifest() {
     const phoneCell = p.type === 'family' ? (head ? esc(head.phone || '—') : '—') : esc(p.phone || '—');
 
     return `<tr>
+      <td style="width:36px; text-align:center">
+        <input type="checkbox" class="tkt-check" data-seat="${p.seat}"
+               ${isChecked ? 'checked' : ''}
+               style="width:18px; height:18px; cursor:pointer; accent-color:#1b5289;">
+      </td>
       <td class="num"><b>${seatLabel(p.seat)}</b></td>
       <td><b>${esc(p.name)}</b></td>
       <td><span class="badge ${pt.cls}">${pt.short}</span></td>
@@ -1872,7 +1913,7 @@ function viewManifest() {
         <button class="btn sm danger" data-del="${p.seat}">हटाउने</button>
       </td>
     </tr>`;
-  }).join('') : `<tr><td colspan="10"><div class="empty"><div class="big">📋</div>कुनै आरक्षण भेटिएन।</div></td></tr>`;
+  }).join('') : `<tr><td colspan="11"><div class="empty"><div class="big">📋</div>कुनै आरक्षण भेटिएन।</div></td></tr>`;
 
   let apfC = 0, exC = 0, famC = 0;
   list.forEach(p => {
@@ -1881,6 +1922,9 @@ function viewManifest() {
     else famC++;
   });
 
+  const selCount = state.ticketSelection.size;
+  const allSelected = list.length > 0 && selCount === list.length;
+
   return `
     <div class="panel">
       <div class="panel-head">
@@ -1888,14 +1932,29 @@ function viewManifest() {
         <div class="toolbar">
           <select class="trip-select" id="manifestSelect">${tripOptions}</select>
           <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / स्थान / फोन" value="${esc(state.search)}">
-          <button class="btn" id="printBtn">🖨 प्रिन्ट</button>
+          <button class="btn" id="printBtn">🖨 सूची प्रिन्ट</button>
           <button class="btn" id="csvBtn">⬇ CSV</button>
         </div>
       </div>
+
+      <div class="panel-head" style="background:#f0f9ff;border-bottom:1px solid #bfdbfe">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
+          <button class="btn sm" id="selectAllBtn">${allSelected ? '☑ सबै हटाउने' : '☐ सबै छान्नुहोस्'}</button>
+          <span class="hint" style="margin:0">
+            छानिएको: <b>${selCount}</b> वटा ticket
+            ${selCount > 0 ? `· ${Math.ceil(selCount / 4)} A4 page` : ''}
+          </span>
+        </div>
+        <button class="btn primary" id="printBatchBtn" ${selCount === 0 ? 'disabled' : ''}>
+          🎫 छानिएका ${selCount > 0 ? selCount + ' वटा' : ''} ticket प्रिन्ट
+        </button>
+      </div>
+
       <div class="panel-body" style="padding:0">
         <div class="tbl-wrap">
           <table>
             <thead><tr>
+              <th style="width:36px"></th>
               <th class="num">सिट</th><th>नाम थर</th><th>श्रेणी</th>
               <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय/सम्बन्धित</th>
               <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
@@ -1919,6 +1978,7 @@ function bindManifest() {
   $('#manifestSelect')?.addEventListener('change', e => {
     state.manifestTrip = e.target.value;
     state.search = '';
+    state.ticketSelection.clear();
     render();
   });
 
@@ -1933,6 +1993,37 @@ function bindManifest() {
     });
   }
 
+  // Individual checkboxes
+  $$('.tkt-check').forEach(cb => {
+    cb.addEventListener('change', e => {
+      const seat = Number(e.target.dataset.seat);
+      if (e.target.checked) state.ticketSelection.add(seat);
+      else state.ticketSelection.delete(seat);
+      render();
+    });
+  });
+
+  // Select all / Clear all
+  $('#selectAllBtn')?.addEventListener('click', () => {
+    const trip = getTrip(state.manifestTrip);
+    const allSeats = Object.keys(tripBookings(trip.id)).map(Number);
+    if (state.ticketSelection.size === allSeats.length) {
+      state.ticketSelection.clear();
+    } else {
+      state.ticketSelection = new Set(allSeats);
+    }
+    render();
+  });
+
+  // Print batch tickets
+  $('#printBatchBtn')?.addEventListener('click', () => {
+    const trip = getTrip(state.manifestTrip);
+    const seats = Array.from(state.ticketSelection).sort((a, b) => a - b);
+    if (!seats.length) return toast('कुनै सिट छानिएको छैन।', 'err');
+    openBatchTickets(trip, seats);
+  });
+
+  // Single ticket button
   $$('[data-ticket]').forEach(btn => {
     btn.addEventListener('click', () => {
       const seat = Number(btn.dataset.ticket);
@@ -1941,6 +2032,7 @@ function bindManifest() {
     });
   });
 
+  // Delete
   $$('[data-del]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const seat = Number(btn.dataset.del);
@@ -1954,6 +2046,7 @@ function bindManifest() {
       if (!confirm(msg)) return;
       const seats = [seat, ...family.map(f => f.seat)];
       if (!await deleteBookings(trip.id, seats)) return;
+      state.ticketSelection.delete(seat);
       toast('आरक्षण हटाइयो।', 'ok');
       await fetchAllBookings();
       render();
@@ -1989,7 +2082,8 @@ function printManifest() {
 
   $('#printRoot').innerHTML = `
     <div style="text-align:center;margin-bottom:12px">
-      <img src="${APF_LOGO_URL}" alt="APF" style="width:60px;height:60px;object-fit:contain">
+      <img src="${APF_LOGO_URL}" alt="APF" style="width:60px;height:60px;object-fit:contain"
+           onerror="this.style.display='none'">
     </div>
     <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
     <h2>बस यात्री सूची — ${FESTIVALS[trip.festival].name}</h2>
@@ -2183,228 +2277,4 @@ function viewUsers() {
         <button class="btn primary" id="newUserBtn">➕ नयाँ प्रयोगकर्ता</button>
       </div>
       <div class="panel-body" style="padding:0">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th class="num">क्र.</th><th>प्रयोगकर्ता नाम</th><th>पूरा नाम</th>
-              <th>भूमिका</th><th>अवस्था</th><th>बनाइएको</th><th></th>
-            </tr></thead>
-            <tbody id="usersTableBody">
-              <tr><td colspan="7"><div class="empty">लोड हुँदै...</div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
-      <div class="panel-body">
-        <form id="changePwForm" style="max-width:400px">
-          <div class="field">
-            <label>पुरानो पासवर्ड</label>
-            <input type="password" id="oldPw" required>
-          </div>
-          <div class="field">
-            <label>नयाँ पासवर्ड</label>
-            <input type="password" id="newPw" required minlength="4">
-          </div>
-          <button type="submit" class="btn primary">पासवर्ड परिवर्तन</button>
-        </form>
-      </div>
-    </div>`;
-}
-
-function bindUsers() {
-  loadUsersTable();
-  $('#newUserBtn')?.addEventListener('click', openNewUserModal);
-
-  $('#changePwForm')?.addEventListener('submit', async e => {
-    e.preventDefault();
-    const oldPw = $('#oldPw').value;
-    const newPw = $('#newPw').value;
-    const { error } = await sb.rpc('change_password', {
-      p_token: state.user.token, p_old: oldPw, p_new: newPw
-    });
-    if (error) {
-      toast(error.message.includes('Wrong password')
-        ? 'पुरानो पासवर्ड मिलेन।'
-        : 'परिवर्तन गर्न सकिएन: ' + error.message, 'err');
-      return;
-    }
-    toast('पासवर्ड परिवर्तन भयो।', 'ok');
-    e.target.reset();
-  });
-}
-
-async function loadUsersTable() {
-  const tbody = $('#usersTableBody');
-  const { data, error } = await sb.rpc('admin_list_users', { p_token: state.user.token });
-  if (error) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">लोड गर्न सकिएन: ${esc(error.message)}</div></td></tr>`;
-    return;
-  }
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`;
-    return;
-  }
-
-  tbody.innerHTML = data.map((u, i) => {
-    const isMe = u.id === state.user.id;
-    return `<tr>
-      <td class="num">${i + 1}</td>
-      <td><b>${esc(u.username)}</b>${isMe ? ' <span class="badge ok">तपाईं</span>' : ''}</td>
-      <td>${esc(u.full_name)}</td>
-      <td>
-        <span class="badge ${u.role === 'admin' ? 'badge-admin' : 'badge-operator'}">
-          ${u.role === 'admin' ? 'प्रशासक' : 'सञ्चालक'}
-        </span>
-      </td>
-      <td>${u.active ? '<span class="badge ok">सक्रिय</span>' : '<span class="badge danger">निष्क्रिय</span>'}</td>
-      <td>${new Date(u.created_at).toLocaleDateString('ne-NP')}</td>
-      <td>
-        ${!isMe ? `<button class="btn sm danger" data-del-user="${u.id}" data-name="${esc(u.username)}">हटाउने</button>` : '—'}
-      </td>
-    </tr>`;
-  }).join('');
-
-  $$('[data-del-user]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const uid = Number(btn.dataset.delUser);
-      const uname = btn.dataset.name;
-      if (!confirm(`प्रयोगकर्ता "${uname}" हटाउने?`)) return;
-      const { error } = await sb.rpc('admin_delete_user', {
-        p_token: state.user.token, p_user_id: uid
-      });
-      if (error) { toast('हटाउन सकिएन: ' + error.message, 'err'); return; }
-      toast('प्रयोगकर्ता हटाइयो।', 'ok');
-      loadUsersTable();
-    });
-  });
-}
-
-function openNewUserModal() {
-  $('#modalBox').classList.add('narrow');
-  $('#modalTitle').textContent = 'नयाँ प्रयोगकर्ता थप्नुहोस्';
-  $('#modalBody').innerHTML = `
-    <form id="newUserForm">
-      <div class="field">
-        <label>प्रयोगकर्ता नाम *</label>
-        <input type="text" id="nu_username" required placeholder="जस्तै: operator1">
-      </div>
-      <div class="field">
-        <label>पूरा नाम *</label>
-        <input type="text" id="nu_fullname" required placeholder="जस्तै: राम बहादुर थापा">
-      </div>
-      <div class="field">
-        <label>भूमिका *</label>
-        <select id="nu_role" required>
-          <option value="operator">सञ्चालक (Operator)</option>
-          <option value="admin">प्रशासक (Admin)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>पासवर्ड * (कम्तीमा ४ अक्षर)</label>
-        <input type="password" id="nu_password" required minlength="4">
-      </div>
-    </form>`;
-  $('#modalFoot').innerHTML = `
-    <button class="btn" id="modalCancel">रद्द</button>
-    <button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
-
-  $('#modalBackdrop').classList.remove('hidden');
-  setTimeout(() => $('#nu_username')?.focus(), 100);
-
-  $('#modalCancel').addEventListener('click', closeModal);
-  $('#modalCreate').addEventListener('click', async () => {
-    const username = $('#nu_username').value.trim().toLowerCase();
-    const fullname = $('#nu_fullname').value.trim();
-    const role = $('#nu_role').value;
-    const password = $('#nu_password').value;
-
-    if (!username || !fullname || !password) {
-      toast('सबै फाँट भर्नुहोस्।', 'err');
-      return;
-    }
-    if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
-    if (password.length < 4) { toast('पासवर्ड कम्तीमा ४ अक्षर।', 'err'); return; }
-
-    const btn = $('#modalCreate');
-    btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
-
-    const { error } = await sb.rpc('admin_create_user', {
-      p_token: state.user.token,
-      p_username: username,
-      p_password: password,
-      p_full_name: fullname,
-      p_role: role
-    });
-
-    btn.disabled = false; btn.textContent = 'सिर्जना गर्ने';
-
-    if (error) {
-      if (error.message.includes('duplicate')) {
-        toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
-      } else {
-        toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
-      }
-      return;
-    }
-
-    toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`, 'ok');
-    closeModal();
-    loadUsersTable();
-  });
-}
-
-function closeModal() {
-  $('#modalBackdrop').classList.add('hidden');
-}
-
-/* =====================================================================
-   INIT
-   ===================================================================== */
-
-$$('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    state.tab = btn.dataset.tab;
-    if (state.tab === 'manifest') state.manifestTrip = state.activeTrip;
-    render();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-});
-
-$('#logoutBtn')?.addEventListener('click', async () => {
-  if (!confirm('लगआउट गर्ने?')) return;
-  await doLogout();
-  showLoginScreen();
-});
-
-$('#modalClose')?.addEventListener('click', closeModal);
-$('#modalBackdrop')?.addEventListener('click', e => {
-  if (e.target === $('#modalBackdrop')) closeModal();
-});
-
-async function startApp() {
-  showMainApp();
-  const ok = await fetchAllBookings();
-  if (!ok) toast('डाटा लोड गर्न सकिएन।', 'err');
-  render();
-  setupRealtime();
-}
-
-async function init() {
-  bindLogin();
-  const restored = await restoreSession();
-  $('#loadingOverlay').classList.add('hidden');
-  if (restored) {
-    await startApp();
-  } else {
-    showLoginScreen();
-  }
-}
-
-init();
-</script>
-</body>
-</html>
+        <div class="tbl-wrap
