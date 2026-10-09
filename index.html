@@ -182,20 +182,20 @@ tbody tr:last-child td{border-bottom:none}
 .legend .lg-sel{background:#1b5289;border-color:#1b5289}
 .legend .lg-cabin{background:#64748b;border-color:#64748b}
 .place-groups{margin-top:16px;background:#fff;border:1px solid var(--line);
-  border-radius:12px;padding:12px}
+  border-radius:12px;padding:12px;max-height:340px;overflow-y:auto}
 .place-groups h4{font-size:13px;font-weight:700;color:var(--brand);
-  margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;position:sticky;top:0;background:#fff;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .place-groups h4 .mode{font-weight:500;font-size:11.5px;color:var(--muted);
   background:#f1f5f9;padding:1px 8px;border-radius:99px}
 .place-item{display:flex;justify-content:space-between;align-items:center;
-  padding:7px 10px;border-radius:8px;margin-bottom:5px;
-  background:#f8fafc;border:1px solid #eef2f7;font-size:13px}
+  padding:5px 8px;border-radius:6px;margin-bottom:3px;
+  background:#f8fafc;border:1px solid #eef2f7;font-size:12.5px}
 .place-item:last-child{margin-bottom:0}
 .place-item .place-name{font-weight:500;color:#334155;display:flex;align-items:center;gap:6px}
-.place-item .place-dot{width:8px;height:8px;border-radius:50%;background:var(--brand2);flex:0 0 auto}
-.place-item .place-count{background:var(--brand2);color:#fff;font-size:11.5px;
-  font-weight:700;padding:1px 9px;border-radius:99px}
-.place-item .place-seats{font-size:11px;color:var(--muted);margin-left:8px;
+.place-item .place-dot{width:7px;height:7px;border-radius:50%;background:var(--brand2);flex:0 0 auto}
+.place-item .place-count{background:var(--brand2);color:#fff;font-size:11px;
+  font-weight:700;padding:1px 8px;border-radius:99px}
+.place-item .place-seats{font-size:10.5px;color:var(--muted);margin-left:6px;
   font-family:ui-monospace,Menlo,monospace}
 .empty{padding:38px 20px;text-align:center;color:var(--muted)}
 .empty .big{font-size:34px;margin-bottom:8px;opacity:.5}
@@ -386,35 +386,108 @@ const RANKS = [
   { code: 'सप्रप', full: 'सशस्त्र प्रहरी परिचर' }
 ];
 
+/* ============ पूर्व र पश्चिम route — २०-२० stops ============ */
 const ROUTES = {
-  'KTM-KAK': { from: 'काठमाडौँ', to: 'काँकडभिट्टा', mode: 'dropoff', quotas: [
-    { key:'east', label:'ईटहरी देखी पूर्वका स्थानहरू', seats:16 },
-    { key:'itahari', label:'ईटहरी', seats:7 },
-    { key:'saptari', label:'सप्तरी', seats:6 },
-    { key:'bardibas', label:'बर्दिबास', seats:6 },
-    { key:'narayanghat', label:'नारायणघाट', seats:2 }
-  ]},
-  'KTM-GAD': { from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff', quotas: [
-    { key:'karnali', label:'कर्णाली पश्चिमका स्थानहरू', seats:16 },
-    { key:'kohalpur', label:'कोहलपुर', seats:8 },
-    { key:'bhalubang', label:'भालुवाङ्ग', seats:3 },
-    { key:'butwal', label:'बुटवल', seats:8 },
-    { key:'narayanghat', label:'नारायणघाट', seats:2 }
-  ]},
-  'KAK-KTM': { from: 'काँकडभिट्टा', to: 'काठमाडौँ', mode: 'pickup', quotas: [
-    { key:'kakarbhitta', label:'काँकडभिट्टा', seats:20 },
-    { key:'narayanghat', label:'नारायणघाट', seats:7 },
-    { key:'bardibas', label:'बर्दिबास', seats:5 },
-    { key:'saptari', label:'सप्तरी', seats:3 },
-    { key:'itahari', label:'ईटहरी', seats:2 }
-  ]},
-  'GAD-KTM': { from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup', quotas: [
-    { key:'gaddachowki', label:'गड्डाचौकी', seats:16 },
-    { key:'narayanghat', label:'नारायणघाट', seats:8 },
-    { key:'butwal', label:'बुटवल', seats:8 },
-    { key:'bhalubang', label:'भालुवाङ्ग', seats:3 },
-    { key:'kohalpur', label:'कोहलपुर', seats:2 }
-  ]}
+  'KTM-GAD': {
+    from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff',
+    quotas: [
+      { key:'narayanghat',   label:'नारायणगढ',                seats:3 },
+      { key:'gaindakot',     label:'गैँडाकोट',                seats:2 },
+      { key:'kawasoti',      label:'कावासोती',                seats:2 },
+      { key:'bardaghat',     label:'बर्दघाट',                 seats:2 },
+      { key:'sunwal',        label:'सुनवल',                    seats:2 },
+      { key:'butwal',        label:'बुटवल',                    seats:3 },
+      { key:'jitpur',        label:'जीतपुर (कपिलवस्तु)',      seats:1 },
+      { key:'gorusinge',     label:'गोरुसिङ्गे',              seats:2 },
+      { key:'chandrauta',    label:'चन्द्रौटा',               seats:2 },
+      { key:'bhalubang',     label:'भालुवाङ',                 seats:1 },
+      { key:'lamhi',         label:'लम्ही',                    seats:1 },
+      { key:'amelia',        label:'अमेलिया',                 seats:1 },
+      { key:'kohalpur',      label:'कोहलपुर',                 seats:3 },
+      { key:'bhurigaun',     label:'भुरिगाउँ',               seats:1 },
+      { key:'chisapani',     label:'चिसापानी (कर्णाली)',      seats:2 },
+      { key:'lamki',         label:'लम्की',                    seats:2 },
+      { key:'sukhhad',       label:'सुखड (घोडाघोडी)',        seats:1 },
+      { key:'attariya',      label:'अत्तरिया',                seats:2 },
+      { key:'mahendranagar', label:'महेन्द्रनगर (भीमदत्त)',  seats:1 },
+      { key:'gaddachowki',   label:'गड्डाचौकी',               seats:3 }
+    ]
+  },
+  'GAD-KTM': {
+    from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup',
+    quotas: [
+      { key:'gaddachowki',   label:'गड्डाचौकी',               seats:3 },
+      { key:'mahendranagar', label:'महेन्द्रनगर (भीमदत्त)',  seats:1 },
+      { key:'attariya',      label:'अत्तरिया',                seats:2 },
+      { key:'sukhhad',       label:'सुखड (घोडाघोडी)',        seats:1 },
+      { key:'lamki',         label:'लम्की',                    seats:2 },
+      { key:'chisapani',     label:'चिसापानी (कर्णाली)',      seats:2 },
+      { key:'bhurigaun',     label:'भुरिगाउँ',               seats:1 },
+      { key:'kohalpur',      label:'कोहलपुर',                 seats:3 },
+      { key:'amelia',        label:'अमेलिया',                 seats:1 },
+      { key:'lamhi',         label:'लम्ही',                    seats:1 },
+      { key:'bhalubang',     label:'भालुवाङ',                 seats:1 },
+      { key:'chandrauta',    label:'चन्द्रौटा',               seats:2 },
+      { key:'gorusinge',     label:'गोरुसिङ्गे',              seats:2 },
+      { key:'jitpur',        label:'जीतपुर (कपिलवस्तु)',      seats:1 },
+      { key:'butwal',        label:'बुटवल',                    seats:3 },
+      { key:'sunwal',        label:'सुनवल',                    seats:2 },
+      { key:'bardaghat',     label:'बर्दघाट',                 seats:2 },
+      { key:'kawasoti',      label:'कावासोती',                seats:2 },
+      { key:'gaindakot',     label:'गैँडाकोट',                seats:2 },
+      { key:'narayanghat',   label:'नारायणगढ',                seats:3 }
+    ]
+  },
+  'KTM-KAK': {
+    from: 'काठमाडौँ', to: 'काँकरभिट्टा', mode: 'dropoff',
+    quotas: [
+      { key:'narayanghat',   label:'नारायणगढ',                seats:3 },
+      { key:'ratnanagar',    label:'रत्ननगर (टाँडी)',          seats:1 },
+      { key:'bhandara',      label:'भण्डारा',                  seats:1 },
+      { key:'manahari',      label:'मनहरी',                    seats:1 },
+      { key:'hetauda',       label:'हेटौँडा',                  seats:2 },
+      { key:'nijgadh',       label:'निजगढ',                    seats:1 },
+      { key:'chandranigahapur', label:'चन्द्रनिगाहपुर (चपुर)', seats:2 },
+      { key:'bardibas',      label:'बर्दिबास',                 seats:3 },
+      { key:'dhalkebar',     label:'ढल्केबर',                  seats:2 },
+      { key:'lahan',         label:'लाहान',                    seats:3 },
+      { key:'kanchanpur',    label:'कञ्चनपुर',                seats:1 },
+      { key:'bhardah',       label:'भारदह',                    seats:2 },
+      { key:'inaruwa',       label:'इनरुवा',                   seats:2 },
+      { key:'itahari',       label:'इटहरी',                    seats:3 },
+      { key:'biratchowk',    label:'विराटचोक',                seats:2 },
+      { key:'pathari',       label:'पथरी',                     seats:1 },
+      { key:'damak',         label:'दमक',                      seats:2 },
+      { key:'birtamod',      label:'बिर्तामोड',                seats:2 },
+      { key:'charali',       label:'चारआली',                   seats:1 },
+      { key:'kakarbhitta',   label:'काँकरभिट्टा',             seats:2 }
+    ]
+  },
+  'KAK-KTM': {
+    from: 'काँकरभिट्टा', to: 'काठमाडौँ', mode: 'pickup',
+    quotas: [
+      { key:'kakarbhitta',   label:'काँकरभिट्टा',             seats:2 },
+      { key:'charali',       label:'चारआली',                   seats:1 },
+      { key:'birtamod',      label:'बिर्तामोड',                seats:2 },
+      { key:'damak',         label:'दमक',                      seats:2 },
+      { key:'pathari',       label:'पथरी',                     seats:1 },
+      { key:'biratchowk',    label:'विराटचोक',                seats:2 },
+      { key:'itahari',       label:'इटहरी',                    seats:3 },
+      { key:'inaruwa',       label:'इनरुवा',                   seats:2 },
+      { key:'bhardah',       label:'भारदह',                    seats:2 },
+      { key:'kanchanpur',    label:'कञ्चनपुर',                seats:1 },
+      { key:'lahan',         label:'लाहान',                    seats:3 },
+      { key:'dhalkebar',     label:'ढल्केबर',                  seats:2 },
+      { key:'bardibas',      label:'बर्दिबास',                 seats:3 },
+      { key:'chandranigahapur', label:'चन्द्रनिगाहपुर (चपुर)', seats:2 },
+      { key:'nijgadh',       label:'निजगढ',                    seats:1 },
+      { key:'hetauda',       label:'हेटौँडा',                  seats:2 },
+      { key:'manahari',      label:'मनहरी',                    seats:1 },
+      { key:'bhandara',      label:'भण्डारा',                  seats:1 },
+      { key:'ratnanagar',    label:'रत्ननगर (टाँडी)',          seats:1 },
+      { key:'narayanghat',   label:'नारायणगढ',                seats:3 }
+    ]
+  }
 };
 
 const TOTAL_SEATS = 37;
@@ -461,10 +534,23 @@ function seatLabel(n) {
 function shortPlaceLabel(label) {
   if (!label) return '?';
   const map = {
-    'काँकडभिट्टा': 'काँक', 'गड्डाचौकी': 'गड्डा', 'नारायणघाट': 'नारा',
-    'बर्दिबास': 'बर्दी', 'सप्तरी': 'सप्त', 'ईटहरी': 'ईट', 'कोहलपुर': 'कोह',
-    'भालुवाङ्ग': 'भालु', 'बुटवल': 'बुट',
-    'कर्णाली पश्चिमका स्थानहरू': 'कर्णा', 'ईटहरी देखी पूर्वका स्थानहरू': 'ईट+'
+    /* पश्चिम */
+    'नारायणगढ': 'नारा', 'गैँडाकोट': 'गैँ', 'कावासोती': 'कावा',
+    'बर्दघाट': 'बर्द', 'सुनवल': 'सुन', 'बुटवल': 'बुट',
+    'जीतपुर (कपिलवस्तु)': 'जीत', 'गोरुसिङ्गे': 'गोरु',
+    'चन्द्रौटा': 'चन्द्र', 'भालुवाङ': 'भालु', 'लम्ही': 'लम्ही',
+    'अमेलिया': 'अमे', 'कोहलपुर': 'कोह', 'भुरिगाउँ': 'भुरि',
+    'चिसापानी (कर्णाली)': 'चिसा', 'लम्की': 'लम्की',
+    'सुखड (घोडाघोडी)': 'सुख', 'अत्तरिया': 'अत्तर',
+    'महेन्द्रनगर (भीमदत्त)': 'महेन्द्र', 'गड्डाचौकी': 'गड्डा',
+    /* पूर्व */
+    'रत्ननगर (टाँडी)': 'रत्न', 'भण्डारा': 'भण्डा', 'मनहरी': 'मन',
+    'हेटौँडा': 'हेटौ', 'निजगढ': 'निज',
+    'चन्द्रनिगाहपुर (चपुर)': 'चपुर', 'बर्दिबास': 'बर्दि',
+    'ढल्केबर': 'ढल्के', 'लाहान': 'लाहान', 'कञ्चनपुर': 'कञ्च',
+    'भारदह': 'भार', 'इनरुवा': 'इनरु', 'इटहरी': 'ईट',
+    'विराटचोक': 'विराट', 'पथरी': 'पथरी', 'दमक': 'दमक',
+    'बिर्तामोड': 'बिर्ता', 'चारआली': 'चार', 'काँकरभिट्टा': 'काँक'
   };
   return map[label] || label.slice(0, 3);
 }
@@ -586,20 +672,6 @@ function fmtTime(t) {
   const [h, m] = t.split(':').map(Number);
   const part = h < 12 ? 'बिहान' : 'दिउँसो';
   return `${part} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} बजे`;
-}
-
-function headsOf(trip) {
-  return Object.values(tripBookings(trip.id))
-    .filter(p => p.type === 'apf' || p.type === 'ex')
-    .sort((a, c) => a.seat - c.seat);
-}
-
-function familyCountOf(trip, headSeat) {
-  return 0; // deprecated
-}
-
-function familyMembersOf(trip, headSeat) {
-  return []; // deprecated
 }
 
 function placeModeLabel(trip) {
@@ -1063,10 +1135,8 @@ ${bodyTag}${html}</body>
 function openTicket(trip, seat) {
   const p = tripBookings(trip.id)[seat];
   if (!p) return;
-
   const q = quotaOf(trip.route, p.quota);
   const html = buildTicketPage(trip, p, q, false);
-
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
 
@@ -1078,13 +1148,10 @@ function openTicket(trip, seat) {
                    border-radius:10px; background:#fff;"></iframe>
     <div class="hint" style="margin-top:8px; text-align:center">
       A4 page मा ४ वटा ticket अटाउँछ। धेरै ticket एकैचोटि प्रिन्ट गर्न Manifest tab बाट छान्नुहोस्।
-    </div>
-  `;
+    </div>`;
   $('#modalFoot').innerHTML = `
     <button class="btn" id="closeTicketBtn">बन्द गर्ने</button>
-    <button class="btn primary" id="printTicketBtn">🖨 प्रिन्ट गर्ने</button>
-  `;
-
+    <button class="btn primary" id="printTicketBtn">🖨 प्रिन्ट गर्ने</button>`;
   $('#modalBackdrop').classList.remove('hidden');
 
   $('#closeTicketBtn')?.addEventListener('click', () => {
@@ -1098,7 +1165,7 @@ function openTicket(trip, seat) {
     const printUrl = URL.createObjectURL(printBlob);
     const w = window.open(printUrl, '_blank', 'width=1100,height=800');
     setTimeout(() => URL.revokeObjectURL(printUrl), 30000);
-    if (!w) toast('Popup अवरोध भयो — browser ले popup allow गर्नुहोस्।', 'err');
+    if (!w) toast('Popup अवरोध भयो।', 'err');
   });
 }
 
@@ -1111,13 +1178,12 @@ function openBatchTickets(trip, seats) {
     items.push({ trip, p, q });
   });
   if (!items.length) return toast('कुनै सिट छानिएको छैन।', 'err');
-
   const html = buildBatchTicketPage(items, true);
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
   const w = window.open(url, '_blank', 'width=1100,height=800');
   setTimeout(() => URL.revokeObjectURL(url), 60000);
-  if (!w) toast('Popup अवरोध भयो — browser ले popup allow गर्नुहोस्।', 'err');
+  if (!w) toast('Popup अवरोध भयो।', 'err');
   else toast(`${items.length} वटा ticket — प्रिन्ट हुँदैछ...`, 'ok');
 }
 
@@ -1134,7 +1200,6 @@ function renderStats() {
   }));
   const booked = apf + ex + family;
   const pct = totalSeats ? Math.round(booked / totalSeats * 100) : 0;
-
   $('#stats').innerHTML = `
     <div class="stat"><b>${TRIPS.length}</b><span>यात्रा</span></div>
     <div class="stat"><b>${apf}</b><span>बहालवाला</span></div>
@@ -1147,7 +1212,6 @@ function render() {
   renderStats();
   $$('.tab').forEach(b =>
     b.classList.toggle('active', b.dataset.tab === state.tab));
-
   const view = $('#view');
   if (state.tab === 'schedule')     view.innerHTML = viewSchedule();
   if (state.tab === 'booking')      view.innerHTML = viewBooking();
@@ -1155,7 +1219,6 @@ function render() {
   if (state.tab === 'quota')        view.innerHTML = viewQuota();
   if (state.tab === 'coordination') view.innerHTML = viewCoordination();
   if (state.tab === 'users')        view.innerHTML = viewUsers();
-
   if (state.tab === 'booking') bindBooking();
   if (state.tab === 'manifest') bindManifest();
   if (state.tab === 'schedule') bindSchedule();
@@ -1187,7 +1250,6 @@ function viewSchedule() {
         <td><button class="btn sm primary" data-book="${t.id}">आरक्षण</button></td>
       </tr>`;
     }).join('');
-
     return `
       <div class="panel">
         <div class="panel-head">
@@ -1206,7 +1268,6 @@ function viewSchedule() {
         </div>
       </div>`;
   }).join('');
-
   return `
     <div class="note">
       📌 सबै मिति <b>वि.सं.</b> मा छन्। प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>
@@ -1266,11 +1327,9 @@ function renderBusMap(bookings, trip) {
     html += `<div class="cabin-seat ${s.cls}">${esc(s.label)}</div>`;
   });
   html += '</div>';
-
   html += `<div class="side-headers">
     <span class="label-a">साईड A</span><span class="label-b">साईड B</span>
   </div>`;
-
   SEAT_LAYOUT.rows.forEach(row => {
     html += '<div class="seat-row">';
     row.a.forEach(n => { html += seatBtn(n, bookings, trip); });
@@ -1278,7 +1337,6 @@ function renderBusMap(bookings, trip) {
     row.b.forEach(n => { html += seatBtn(n, bookings, trip); });
     html += '</div>';
   });
-
   html += '<div class="back-label">पछाडिको लाइन — क · ख · ग · घ · ङ</div>';
   html += '<div class="seat-row back">';
   SEAT_LAYOUT.backRow.forEach(s => { html += seatBtn(s.num, bookings, trip); });
@@ -1297,13 +1355,15 @@ function renderPlaceGroups(trip, bookings) {
     const count = g.seats.length;
     const seatList = g.seats.sort((a, b) => a - b).map(seatLabel).join(', ');
     const empty = count === 0;
+    const full = count >= g.total;
+    const bg = empty ? '#cbd5e1' : (full ? '#dc2626' : '#1b5289');
     return `<div class="place-item">
       <span class="place-name">
-        <span class="place-dot" style="background:${empty ? '#cbd5e1' : '#1b5289'}"></span>
+        <span class="place-dot" style="background:${bg}"></span>
         ${esc(g.label)}
         ${seatList ? `<span class="place-seats">${esc(seatList)}</span>` : ''}
       </span>
-      <span class="place-count" style="background:${empty ? '#cbd5e1' : '#1b5289'}">${count}/${g.total}</span>
+      <span class="place-count" style="background:${bg}">${count}/${g.total}</span>
     </div>`;
   }).join('');
 
@@ -1330,7 +1390,6 @@ function viewBooking() {
     else if (p.type === 'ex') exC++;
     else if (p.type === 'family') famC++;
   });
-
   const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   return `
@@ -1368,7 +1427,7 @@ function viewBooking() {
                   <div class="td-item"><span class="lbl">छुट्ने समय</span><span class="val">${fmtTime(trip.time)}</span></div>
                   <div class="td-item" style="grid-column:1/-1;background:#fef9c3;border-color:#fde047">
                     <span class="lbl">यस यात्राको ${esc(modeText)}</span>
-                    <span class="val" style="font-size:12.5px">${trip.route.quotas.map(q => esc(q.label)).join(' · ')}</span>
+                    <span class="val" style="font-size:12.5px">${trip.route.quotas.length} वटा स्थान उपलब्ध</span>
                   </div>
                 </div>
               </div>
@@ -1390,7 +1449,7 @@ function emptySeatPrompt() {
       <p class="hint">
         माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
         साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
-        <b>आश्रित परिवारले कर्मचारी नगए पनि यात्रा गर्न सक्छन्</b> — कर्मचारीको नाम/दर्जा/ID म्यानुअल भर्नुहोस्।
+        <b>आश्रित परिवारले कर्मचारी नगए पनि यात्रा गर्न सक्छन्।</b>
       </p>
     </div>
   </div>`;
@@ -1480,7 +1539,7 @@ function newBookingForm(trip, seat) {
       <div class="hint">
         ${type === 'family'
           ? 'आश्रित परिवार — सम्बन्धित कर्मचारी (बहालवाला/अवकाश) को विवरण म्यानुअल भर्नुहोस्।'
-          : `प्रत्येक बहालवाला/अवकाश कर्मचारीको बढीमा ${MAX_FAMILY_PER_HEAD} जना आश्रित परिवार।`}
+          : `प्रत्येक कर्मचारीको बढीमा ${MAX_FAMILY_PER_HEAD} जना आश्रित परिवार।`}
       </div>
     </div>`;
 
@@ -1601,16 +1660,13 @@ function familyFormFields(trip, seat, label, typeRadio) {
       <form id="bookingForm" autocomplete="off">
         <input type="hidden" id="fSeat" value="${seat}">
         ${typeRadio}
-
         <div class="note info" style="margin-bottom:14px">
           📌 यात्रु आश्रित परिवारको सदस्य हो। सम्बन्धित कर्मचारी (बहालवाला/अवकाश) यो यात्रामा नगए पनि आश्रितले यात्रा गर्न सक्छन्।
         </div>
-
         <div class="field">
           <label>आश्रित सदस्यको नाम थर *</label>
           <input type="text" id="fName" required placeholder="जस्तै: सीता थापा">
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>सम्बन्ध *</label>
@@ -1628,16 +1684,13 @@ function familyFormFields(trip, seat, label, typeRadio) {
             </select>
           </div>
         </div>
-
         <div class="field">
           <label>उमेर</label>
           <input type="number" id="fAge" min="1" max="120">
         </div>
-
         <div style="font-size:12px; font-weight:700; color:#9a3412; background:#fef3c7; padding:8px 12px; border-radius:8px; margin:16px 0 12px">
           सम्बन्धित कर्मचारीको विवरण (बहालवाला/अवकाश)
         </div>
-
         <div class="field">
           <label>कर्मचारीको प्रकार *</label>
           <select id="fHeadType" required>
@@ -1645,12 +1698,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
             <option value="ex">अवकाश प्राप्त सशस्त्र प्रहरी</option>
           </select>
         </div>
-
         <div class="field">
           <label>कर्मचारीको नाम थर *</label>
           <input type="text" id="fHeadName" required placeholder="जस्तै: राम बहादुर थापा">
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>कर्मचारीको दर्जा *</label>
@@ -1661,7 +1712,6 @@ function familyFormFields(trip, seat, label, typeRadio) {
             <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace">
           </div>
         </div>
-
         <div class="grid2">
           <div class="field">
             <label>सम्पर्क नं. *</label>
@@ -1672,7 +1722,6 @@ function familyFormFields(trip, seat, label, typeRadio) {
             <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन">
           </div>
         </div>
-
         <div class="field">
           <label>${esc(modeText)} *</label>
           <select id="fQuota" required>
@@ -1680,12 +1729,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
             ${quotaOptions}
           </select>
         </div>
-
         <div class="field">
           <label>कैफियत</label>
           <input type="text" id="fNote" placeholder="वैकल्पिक">
         </div>
-
         <div style="display:flex;gap:10px;margin-top:6px">
           <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
           <button type="button" class="btn" id="closeSeat">रद्द</button>
@@ -1696,14 +1743,12 @@ function familyFormFields(trip, seat, label, typeRadio) {
 
 function bindBooking() {
   const trip = getTrip(state.activeTrip);
-
   $('#tripSelect')?.addEventListener('change', e => {
     state.activeTrip = e.target.value;
     state.selectedSeat = null;
     state.newBookingType = 'apf';
     render();
   });
-
   $$('[data-seat]').forEach(btn => {
     btn.addEventListener('click', () => {
       state.selectedSeat = Number(btn.dataset.seat);
@@ -1711,35 +1756,28 @@ function bindBooking() {
       render();
     });
   });
-
   $('#closeSeat')?.addEventListener('click', () => { state.selectedSeat = null; render(); });
-
   $('#cancelBooking')?.addEventListener('click', async () => {
     const seat = state.selectedSeat;
     const b = tripBookings(trip.id);
     const p = b[seat];
     if (!p) return;
-
     if (!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण रद्द गर्ने?`)) return;
-
     if (!await deleteBooking(trip.id, seat)) return;
     state.selectedSeat = null;
     toast('आरक्षण रद्द गरियो।', 'ok');
     await fetchAllBookings();
     render();
   });
-
   $('#printTicketBtn')?.addEventListener('click', () => {
     openTicket(trip, state.selectedSeat);
   });
-
   $$('input[name="fType"]').forEach(r => {
     r.addEventListener('change', e => {
       state.newBookingType = e.target.value;
       render();
     });
   });
-
   $('#bookingForm')?.addEventListener('submit', e => {
     e.preventDefault();
     submitBooking(trip);
@@ -1905,7 +1943,6 @@ function viewManifest() {
           <button class="btn" id="csvBtn">⬇ CSV</button>
         </div>
       </div>
-
       <div class="panel-head" style="background:#f0f9ff;border-bottom:1px solid #bfdbfe">
         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
           <button class="btn sm" id="selectAllBtn">${allSelected ? '☑ सबै हटाउने' : '☐ सबै छान्नुहोस्'}</button>
@@ -1918,7 +1955,6 @@ function viewManifest() {
           🎫 छानिएका ${selCount > 0 ? selCount + ' वटा' : ''} ticket प्रिन्ट
         </button>
       </div>
-
       <div class="panel-body" style="padding:0">
         <div class="tbl-wrap">
           <table>
@@ -1950,7 +1986,6 @@ function bindManifest() {
     state.ticketSelection.clear();
     render();
   });
-
   const search = $('#manifestSearch');
   if (search) {
     search.addEventListener('input', e => {
@@ -1961,7 +1996,6 @@ function bindManifest() {
       if (s2) { s2.focus(); s2.setSelectionRange(pos, pos); }
     });
   }
-
   $$('.tkt-check').forEach(cb => {
     cb.addEventListener('change', e => {
       const seat = Number(e.target.dataset.seat);
@@ -1970,7 +2004,6 @@ function bindManifest() {
       render();
     });
   });
-
   $('#selectAllBtn')?.addEventListener('click', () => {
     const trip = getTrip(state.manifestTrip);
     const allSeats = Object.keys(tripBookings(trip.id)).map(Number);
@@ -1981,14 +2014,12 @@ function bindManifest() {
     }
     render();
   });
-
   $('#printBatchBtn')?.addEventListener('click', () => {
     const trip = getTrip(state.manifestTrip);
     const seats = Array.from(state.ticketSelection).sort((a, b) => a - b);
     if (!seats.length) return toast('कुनै सिट छानिएको छैन।', 'err');
     openBatchTickets(trip, seats);
   });
-
   $$('[data-ticket]').forEach(btn => {
     btn.addEventListener('click', () => {
       const seat = Number(btn.dataset.ticket);
@@ -1996,7 +2027,6 @@ function bindManifest() {
       openTicket(trip, seat);
     });
   });
-
   $$('[data-del]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const seat = Number(btn.dataset.del);
@@ -2004,9 +2034,7 @@ function bindManifest() {
       const b = tripBookings(trip.id);
       const p = b[seat];
       if (!p) return;
-
       if (!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण हटाउने?`)) return;
-
       if (!await deleteBooking(trip.id, seat)) return;
       state.ticketSelection.delete(seat);
       toast('आरक्षण हटाइयो।', 'ok');
@@ -2014,7 +2042,6 @@ function bindManifest() {
       render();
     });
   });
-
   $('#printBtn')?.addEventListener('click', printManifest);
   $('#csvBtn')?.addEventListener('click', exportCSV);
 }
@@ -2024,7 +2051,6 @@ function printManifest() {
   const b = tripBookings(trip.id);
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
   const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण (चढ्ने)' : 'गन्तव्य (झर्ने)';
-
   const rows = list.map((p, i) => {
     const q = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
@@ -2039,7 +2065,6 @@ function printManifest() {
       <td>${esc(q ? q.label : '')}</td><td></td>
     </tr>`;
   }).join('');
-
   $('#printRoot').innerHTML = `
     <div style="text-align:center;margin-bottom:12px">
       <img src="${APF_LOGO_URL}" alt="APF" style="width:60px;height:60px;object-fit:contain" onerror="this.style.display='none'">
@@ -2069,7 +2094,6 @@ function printManifest() {
       <div>.................................<br>बस सञ्चालक</div>
       <div>.................................<br>समन्वय अधिकृत</div>
     </div>`;
-
   window.print();
 }
 
@@ -2078,7 +2102,6 @@ function exportCSV() {
   const b = tripBookings(trip.id);
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
   if (!list.length) return toast('निर्यात गर्न कुनै डाटा छैन।', 'err');
-
   const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य';
   const head = ['सिट','नाम थर','श्रेणी','दर्जा','ID नं.','सम्बन्ध',
                 'सम्बन्धित कर्मचारी','कर्मचारीको प्रकार','कार्यालय/युनिट','सम्पर्क',
@@ -2098,11 +2121,9 @@ function exportCSV() {
       q ? q.label : '', p.gender || '', p.age || '', p.note || ''
     ];
   });
-
   const csv = '\uFEFF' + [head, ...rows]
     .map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(','))
     .join('\r\n');
-
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2144,7 +2165,6 @@ function viewQuota() {
         <td>${pct}%</td>
       </tr>`;
     }).join('');
-
     return `
       <div class="panel">
         <div class="panel-head">
@@ -2164,9 +2184,8 @@ function viewQuota() {
         </div>
       </div>`;
   }).join('');
-
   return `<div class="note">
-    📊 <b>चढ्ने/झर्ने स्थान अनुसार कोटा</b> — प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
+    📊 <b>प्रत्येक स्थान अनुसार कोटा</b> — प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
   </div>${blocks}`;
 }
 
@@ -2182,14 +2201,12 @@ function viewCoordination() {
       <td>${esc(o.unit)}</td>
       <td>${o.phone !== '—' ? `<a href="tel:${o.phone}">${o.phone}</a>` : '—'}</td>
     </tr>`).join('');
-
   const unitRows = COORD_UNITS.map((u, i) => `
     <tr>
       <td class="num">${i + 1}</td>
       <td>${esc(u)}</td>
       <td>—</td><td>—</td><td>—</td>
     </tr>`).join('');
-
   return `
     <div class="panel">
       <div class="panel-head">
@@ -2202,7 +2219,6 @@ function viewCoordination() {
         </table>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-head">
         <h2>काठमाडौँ देखी काँकडभिट्टा रुट
@@ -2244,7 +2260,6 @@ function viewUsers() {
         </div>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
       <div class="panel-body">
@@ -2266,7 +2281,6 @@ function viewUsers() {
 function bindUsers() {
   loadUsersTable();
   $('#newUserBtn')?.addEventListener('click', openNewUserModal);
-
   $('#changePwForm')?.addEventListener('submit', async e => {
     e.preventDefault();
     const oldPw = $('#oldPw').value;
@@ -2296,7 +2310,6 @@ async function loadUsersTable() {
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`;
     return;
   }
-
   tbody.innerHTML = data.map((u, i) => {
     const isMe = u.id === state.user.id;
     return `<tr>
@@ -2315,7 +2328,6 @@ async function loadUsersTable() {
       </td>
     </tr>`;
   }).join('');
-
   $$('[data-del-user]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const uid = Number(btn.dataset.delUser);
@@ -2359,27 +2371,19 @@ function openNewUserModal() {
   $('#modalFoot').innerHTML = `
     <button class="btn" id="modalCancel">रद्द</button>
     <button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
-
   $('#modalBackdrop').classList.remove('hidden');
   setTimeout(() => $('#nu_username')?.focus(), 100);
-
   $('#modalCancel').addEventListener('click', closeModal);
   $('#modalCreate').addEventListener('click', async () => {
     const username = $('#nu_username').value.trim().toLowerCase();
     const fullname = $('#nu_fullname').value.trim();
     const role = $('#nu_role').value;
     const password = $('#nu_password').value;
-
-    if (!username || !fullname || !password) {
-      toast('सबै फाँट भर्नुहोस्।', 'err');
-      return;
-    }
+    if (!username || !fullname || !password) { toast('सबै फाँट भर्नुहोस्।', 'err'); return; }
     if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
     if (password.length < 4) { toast('पासवर्ड कम्तीमा ४ अक्षर।', 'err'); return; }
-
     const btn = $('#modalCreate');
     btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
-
     const { error } = await sb.rpc('admin_create_user', {
       p_token: state.user.token,
       p_username: username,
@@ -2387,18 +2391,12 @@ function openNewUserModal() {
       p_full_name: fullname,
       p_role: role
     });
-
     btn.disabled = false; btn.textContent = 'सिर्जना गर्ने';
-
     if (error) {
-      if (error.message.includes('duplicate')) {
-        toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
-      } else {
-        toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
-      }
+      if (error.message.includes('duplicate')) toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
+      else toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
       return;
     }
-
     toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`, 'ok');
     closeModal();
     loadUsersTable();
@@ -2420,18 +2418,15 @@ $$('.tab').forEach(btn => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
-
 $('#logoutBtn')?.addEventListener('click', async () => {
   if (!confirm('लगआउट गर्ने?')) return;
   await doLogout();
   showLoginScreen();
 });
-
 $('#modalClose')?.addEventListener('click', closeModal);
 $('#modalBackdrop')?.addEventListener('click', e => {
   if (e.target === $('#modalBackdrop')) closeModal();
 });
-
 async function startApp() {
   showMainApp();
   const ok = await fetchAllBookings();
@@ -2439,7 +2434,6 @@ async function startApp() {
   render();
   setupRealtime();
 }
-
 async function init() {
   bindLogin();
   const restored = await restoreSession();
@@ -2450,7 +2444,6 @@ async function init() {
     showLoginScreen();
   }
 }
-
 init();
 </script>
 </body>
