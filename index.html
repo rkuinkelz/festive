@@ -10,93 +10,61 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#eef1f6; --surface:#fff; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
-  --brand:#0d2b4a; --brand2:#1b5289; --accent:#e8a33d;
-  --ok:#0f9d58; --danger:#d64545; --warn:#d97706;
-  --radius:14px;
-  --shadow:0 1px 2px rgba(16,24,40,.06), 0 8px 24px -12px rgba(16,24,40,.25);
-}
+:root{--bg:#eef1f6;--surface:#fff;--ink:#0f172a;--muted:#64748b;--line:#e2e8f0;--brand:#0d2b4a;--brand2:#1b5289;--accent:#e8a33d;--ok:#0f9d58;--danger:#d64545;--warn:#d97706;--radius:14px;--shadow:0 1px 2px rgba(16,24,40,.06),0 8px 24px -12px rgba(16,24,40,.25)}
 html,body{height:100%}
-body{font-family:'Mukta','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
-  background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; font-size:15px; line-height:1.5}
+body{font-family:'Mukta','Noto Sans Devanagari',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-size:15px;line-height:1.5}
 button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
-#loginScreen{min-height:100vh; display:flex; align-items:center; justify-content:center;
-  padding:20px; background:linear-gradient(135deg,#08203a 0%,#1b5289 100%)}
-.login-card{background:#fff; border-radius:20px; padding:36px 32px; max-width:420px; width:100%;
-  box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
-.login-logo-img{width:110px; height:110px; object-fit:contain; display:block;
-  margin:0 auto 18px; padding:6px; filter:drop-shadow(0 6px 16px rgba(0,0,0,.15))}
-.login-card h1{font-size:22px; font-weight:700; text-align:center; color:#0d2b4a; margin-bottom:6px}
-.login-card p.sub{text-align:center; color:#64748b; font-size:13.5px; margin-bottom:28px}
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,#08203a 0%,#1b5289 100%)}
+.login-card{background:#fff;border-radius:20px;padding:36px 32px;max-width:420px;width:100%;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
+.login-logo-img{width:110px;height:110px;object-fit:contain;display:block;margin:0 auto 18px;padding:6px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.15))}
+.login-card h1{font-size:22px;font-weight:700;text-align:center;color:#0d2b4a;margin-bottom:6px}
+.login-card p.sub{text-align:center;color:#64748b;font-size:13.5px;margin-bottom:28px}
 .login-card .field{margin-bottom:16px}
 .login-card .field label{font-size:13px}
-.login-card .field input{padding:12px 14px; font-size:15px}
-.login-card .btn.primary{width:100%; justify-content:center; padding:13px; font-size:15px; font-weight:600}
-.login-error{background:#fef2f2; border:1px solid #fecaca; color:#991b1b;
-  padding:10px 14px; border-radius:10px; font-size:13px; margin-bottom:16px; display:none}
+.login-card .field input{padding:12px 14px;font-size:15px}
+.login-card .btn.primary{width:100%;justify-content:center;padding:13px;font-size:15px;font-weight:600}
+.login-error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px;display:none}
 .login-error.show{display:block}
-.topbar{background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289); color:#fff;
-  padding:14px 20px; display:flex; flex-wrap:wrap; gap:14px; align-items:center;
-  justify-content:space-between; box-shadow:0 10px 30px -14px rgba(8,32,58,.9)}
-.brand{display:flex; align-items:center; gap:14px; min-width:240px}
-.logo-img{width:52px; height:52px; object-fit:contain; flex:0 0 auto;
-  background:#fff; border-radius:13px; padding:4px;
-  box-shadow:inset 0 0 0 2px rgba(255,255,255,.35), 0 4px 12px -4px rgba(0,0,0,.3)}
+.topbar{background:linear-gradient(120deg,#08203a,#0d2b4a 45%,#1b5289);color:#fff;padding:14px 20px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;box-shadow:0 10px 30px -14px rgba(8,32,58,.9)}
+.brand{display:flex;align-items:center;gap:14px;min-width:240px}
+.logo-img{width:52px;height:52px;object-fit:contain;flex:0 0 auto;background:#fff;border-radius:13px;padding:4px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 4px 12px -4px rgba(0,0,0,.3)}
 .brand h1{font-size:17px;font-weight:600}
 .brand p{font-size:12px;color:#a9c4e0}
-.topbar-right{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.topbar-right{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .stats{display:flex;gap:8px;flex-wrap:wrap}
-.stat{background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.16);
-  border-radius:11px; padding:6px 12px; min-width:76px; text-align:center}
+.stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);border-radius:11px;padding:6px 12px;min-width:76px;text-align:center}
 .stat b{display:block;font-size:17px;font-weight:600;line-height:1.2}
 .stat span{font-size:10.5px;color:#b9d0e8}
-.user-chip{display:flex; align-items:center; gap:9px;
-  background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2);
-  border-radius:12px; padding:5px 12px 5px 5px}
-.user-chip .avatar{width:32px; height:32px; border-radius:50%;
-  background:linear-gradient(160deg,#e8a33d,#c47f1a); color:#0d2b4a;
-  display:grid; place-items:center; font-weight:700; font-size:12px}
-.user-chip .u-meta{display:flex; flex-direction:column; line-height:1.2}
-.user-chip .u-name{color:#fff; font-weight:600; font-size:13px}
-.user-chip .u-role{font-size:10.5px; color:#cbd5e1; font-weight:500}
-.user-chip .u-role.admin{color:#fde047; font-weight:700}
-.btn-logout{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
-  color:#fff; padding:8px 14px; border-radius:10px; cursor:pointer;
-  font-weight:500; font-size:13px}
-.btn-logout:hover{background:rgba(239,68,68,.25); border-color:#ef4444}
-.conn-status{display:inline-block;width:8px;height:8px;border-radius:50%;
-  background:#10b981;margin-right:6px;vertical-align:middle}
+.user-chip{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:5px 12px 5px 5px}
+.user-chip .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(160deg,#e8a33d,#c47f1a);color:#0d2b4a;display:grid;place-items:center;font-weight:700;font-size:12px}
+.user-chip .u-meta{display:flex;flex-direction:column;line-height:1.2}
+.user-chip .u-name{color:#fff;font-weight:600;font-size:13px}
+.user-chip .u-role{font-size:10.5px;color:#cbd5e1;font-weight:500}
+.user-chip .u-role.admin{color:#fde047;font-weight:700}
+.btn-logout{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:500;font-size:13px}
+.btn-logout:hover{background:rgba(239,68,68,.25);border-color:#ef4444}
+.conn-status{display:inline-block;width:8px;height:8px;border-radius:50%;background:#10b981;margin-right:6px;vertical-align:middle}
 .conn-status.offline{background:#ef4444}
-.tabs{background:var(--surface); border-bottom:1px solid var(--line);
-  display:flex; gap:4px; padding:0 16px; overflow-x:auto;
-  position:sticky; top:0; z-index:40; box-shadow:0 2px 10px -8px rgba(0,0,0,.3)}
-.tab{background:none;border:none;cursor:pointer;padding:14px 16px;
-  font-weight:500;color:var(--muted);white-space:nowrap;
-  border-bottom:3px solid transparent;transition:.15s}
+.tabs{background:var(--surface);border-bottom:1px solid var(--line);display:flex;gap:4px;padding:0 16px;overflow-x:auto;position:sticky;top:0;z-index:40;box-shadow:0 2px 10px -8px rgba(0,0,0,.3)}
+.tab{background:none;border:none;cursor:pointer;padding:14px 16px;font-weight:500;color:var(--muted);white-space:nowrap;border-bottom:3px solid transparent;transition:.15s}
 .tab:hover{color:var(--brand2);background:#f8fafc}
 .tab.active{color:var(--brand);border-bottom-color:var(--accent);font-weight:600}
 .tab.admin-tab{color:#9a3412}
 .tab.admin-tab.active{color:#9a3412;border-bottom-color:#f97316}
 main{padding:20px;max-width:1320px;margin:0 auto}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
-.panel-head{padding:14px 18px;border-bottom:1px solid var(--line);
-  display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
-  background:linear-gradient(180deg,#fbfcfe,#f5f7fb)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:20px}
+.panel-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:linear-gradient(180deg,#fbfcfe,#f5f7fb)}
 .panel-head h2{font-size:16px;font-weight:600;color:var(--brand)}
 .panel-head h2 small{display:block;font-size:12px;color:var(--muted);font-weight:400}
 .panel-body{padding:18px}
 .tbl-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
-thead th{background:#f1f5f9;text-align:left;padding:10px 12px;font-weight:600;
-  color:#334155;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
+thead th{background:#f1f5f9;text-align:left;padding:10px 12px;font-weight:600;color:#334155;font-size:13px;border-bottom:1px solid var(--line);white-space:nowrap}
 tbody td{padding:10px 12px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
 tbody tr:hover{background:#f8fafc}
 tbody tr:last-child td{border-bottom:none}
 .num{width:44px;color:var(--muted);font-variant-numeric:tabular-nums}
-.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;
-  font-weight:600;background:#e0e7ff;color:#3730a3;white-space:nowrap}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;background:#e0e7ff;color:#3730a3;white-space:nowrap}
 .badge.f-dashain{background:#ffe8d6;color:#9a3412}
 .badge.f-tihar{background:#ede9fe;color:#5b21b6}
 .badge.ok{background:#d1fae5;color:#065f46}
@@ -107,11 +75,8 @@ tbody tr:last-child td{border-bottom:none}
 .badge.badge-family{background:#fed7aa;color:#9a3412}
 .badge.badge-admin{background:#fed7aa;color:#9a3412;border:1px solid #fdba74}
 .badge.badge-operator{background:#dbeafe;color:#1e40af}
-.badge.route-badge{background:#fef9c3;color:#854d0e;border:1px solid #fde047;
-  font-weight:600;font-size:12.5px}
-.btn{border:1px solid var(--line);background:#fff;color:var(--ink);
-  padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:500;
-  transition:.15s;display:inline-flex;align-items:center;gap:6px}
+.badge.route-badge{background:#fef9c3;color:#854d0e;border:1px solid #fde047;font-weight:600;font-size:12.5px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 14px;border-radius:10px;cursor:pointer;font-weight:500;transition:.15s;display:inline-flex;align-items:center;gap:6px}
 .btn:hover{background:#f8fafc;border-color:#cbd5e1}
 .btn.primary{background:var(--brand2);border-color:var(--brand2);color:#fff}
 .btn.primary:hover{background:#164570}
@@ -121,136 +86,89 @@ tbody tr:last-child td{border-bottom:none}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .field{margin-bottom:12px}
 .field label{display:block;font-size:12.5px;font-weight:600;color:#475569;margin-bottom:5px}
-.field input,.field select,.field textarea{width:100%;padding:9px 11px;
-  border:1px solid #cbd5e1;border-radius:9px;background:#fff;outline:none;transition:.15s}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12)}
+.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid #cbd5e1;border-radius:9px;background:#fff;outline:none;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
 .hint{font-size:12px;color:var(--muted);margin-top:4px}
 .type-radio{display:flex;gap:8px;flex-wrap:wrap}
-.radio-chip{border:1.6px solid #cbd5e1;background:#fff;border-radius:10px;
-  padding:7px 12px;cursor:pointer;font-weight:500;font-size:13px;
-  display:flex;align-items:center;gap:6px;transition:.15s}
+.radio-chip{border:1.6px solid #cbd5e1;background:#fff;border-radius:10px;padding:7px 12px;cursor:pointer;font-weight:500;font-size:13px;display:flex;align-items:center;gap:6px;transition:.15s}
 .radio-chip input{margin:0;accent-color:var(--brand2)}
 .radio-chip:hover{border-color:#94a3b8}
 .radio-chip.active{border-color:var(--brand2);background:#eff6ff;color:var(--brand2);font-weight:600}
 .booking-grid{display:grid;grid-template-columns:400px 1fr;gap:20px;align-items:start}
 @media(max-width:960px){.booking-grid{grid-template-columns:1fr}}
-.bus{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;
-  max-width:380px;margin:0 auto}
-.bus-cabin{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;
-  padding:10px;background:linear-gradient(180deg,#e2e8f0,#cbd5e1);
-  border-radius:10px;margin-bottom:14px;border-bottom:2px dashed #94a3b8}
-.cabin-seat{background:#64748b;color:#fff;border-radius:7px;padding:9px 4px;
-  text-align:center;font-size:11.5px;font-weight:600;line-height:1.25}
+.bus{background:#f8fafc;border:1px solid var(--line);border-radius:16px;padding:14px;max-width:380px;margin:0 auto}
+.bus-cabin{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:10px;background:linear-gradient(180deg,#e2e8f0,#cbd5e1);border-radius:10px;margin-bottom:14px;border-bottom:2px dashed #94a3b8}
+.cabin-seat{background:#64748b;color:#fff;border-radius:7px;padding:9px 4px;text-align:center;font-size:11.5px;font-weight:600;line-height:1.25}
 .cabin-seat.driver{background:#1e293b}
 .cabin-seat.standby{background:#7c8798}
-.side-headers{display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;
-  gap:8px;margin-bottom:6px;font-size:11px;font-weight:700;color:#475569;
-  text-align:center;letter-spacing:.4px}
+.side-headers{display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;gap:8px;margin-bottom:6px;font-size:11px;font-weight:700;color:#475569;text-align:center;letter-spacing:.4px}
 .side-headers .label-a{grid-column:1/3}
 .side-headers .label-b{grid-column:4/6}
 .seat-row{display:grid;grid-template-columns:1fr 1fr 22px 1fr 1fr;gap:8px;margin-bottom:8px}
 .seat-row.back{grid-template-columns:repeat(5,1fr);margin-top:4px}
 .aisle{display:flex;align-items:center;justify-content:center}
 .door-icon{font-size:15px;line-height:1;filter:grayscale(.3)}
-.seat{aspect-ratio:1/1;border-radius:10px;border:1.6px solid #cbd5e1;background:#fff;
-  font-size:12.5px;font-weight:600;color:#334155;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:.12s;padding:0;position:relative}
+.seat{aspect-ratio:1/1;border-radius:10px;border:1.6px solid #cbd5e1;background:#fff;font-size:12.5px;font-weight:600;color:#334155;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.12s;padding:0;position:relative}
 .seat:hover:not(.booked):not(.selected){border-color:var(--brand2);background:#eff6ff;transform:translateY(-2px)}
 .seat.booked{cursor:pointer}
 .seat.booked.type-apf{background:#dbeafe;border-color:#93c5fd;color:#1e40af}
 .seat.booked.type-ex{background:#d1fae5;border-color:#6ee7b7;color:#065f46}
 .seat.booked.type-family{background:#fed7aa;border-color:#fdba74;color:#9a3412}
 .seat.booked:hover{filter:brightness(.95)}
-.seat.selected{background:var(--brand2)!important;border-color:var(--brand2)!important;
-  color:#fff!important;box-shadow:0 0 0 3px rgba(27,82,137,.25);transform:none}
-.seat-tag{position:absolute;bottom:-1px;right:-1px;background:#0f172a;color:#fff;
-  font-size:8.5px;font-weight:700;padding:0px 3px;border-radius:5px;line-height:1.3;
-  max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.back-label{text-align:center;font-size:11px;color:var(--muted);
-  margin:12px 0 6px;font-weight:600;letter-spacing:.4px}
-.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;
-  font-size:12px;color:var(--muted);flex-wrap:wrap}
-.legend i{width:13px;height:13px;border-radius:4px;display:inline-block;
-  margin-right:5px;vertical-align:-2px;border:1.5px solid #cbd5e1}
+.seat.selected{background:var(--brand2)!important;border-color:var(--brand2)!important;color:#fff!important;box-shadow:0 0 0 3px rgba(27,82,137,.25);transform:none}
+.seat-tag{position:absolute;bottom:-1px;right:-1px;background:#0f172a;color:#fff;font-size:8.5px;font-weight:700;padding:0px 3px;border-radius:5px;line-height:1.3;max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.back-label{text-align:center;font-size:11px;color:var(--muted);margin:12px 0 6px;font-weight:600;letter-spacing:.4px}
+.legend{display:flex;gap:12px;justify-content:center;margin-top:14px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.legend i{width:13px;height:13px;border-radius:4px;display:inline-block;margin-right:5px;vertical-align:-2px;border:1.5px solid #cbd5e1}
 .legend .lg-empty{background:#fff}
 .legend .lg-apf{background:#dbeafe;border-color:#93c5fd}
 .legend .lg-ex{background:#d1fae5;border-color:#6ee7b7}
 .legend .lg-family{background:#fed7aa;border-color:#fdba74}
 .legend .lg-sel{background:#1b5289;border-color:#1b5289}
 .legend .lg-cabin{background:#64748b;border-color:#64748b}
-.place-groups{margin-top:16px;background:#fff;border:1px solid var(--line);
-  border-radius:12px;padding:12px;max-height:340px;overflow-y:auto}
-.place-groups h4{font-size:13px;font-weight:700;color:var(--brand);
-  margin-bottom:10px;display:flex;align-items:center;gap:6px;position:sticky;top:0;background:#fff;padding-bottom:6px;border-bottom:1px solid var(--line)}
-.place-groups h4 .mode{font-weight:500;font-size:11.5px;color:var(--muted);
-  background:#f1f5f9;padding:1px 8px;border-radius:99px}
-.place-item{display:flex;justify-content:space-between;align-items:center;
-  padding:5px 8px;border-radius:6px;margin-bottom:3px;
-  background:#f8fafc;border:1px solid #eef2f7;font-size:12.5px}
+.place-groups{margin-top:16px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:340px;overflow-y:auto}
+.place-groups h4{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:10px;display:flex;align-items:center;gap:6px;position:sticky;top:0;background:#fff;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.place-groups h4 .mode{font-weight:500;font-size:11.5px;color:var(--muted);background:#f1f5f9;padding:1px 8px;border-radius:99px}
+.place-item{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;border-radius:6px;margin-bottom:3px;background:#f8fafc;border:1px solid #eef2f7;font-size:12.5px}
 .place-item:last-child{margin-bottom:0}
 .place-item .place-name{font-weight:500;color:#334155;display:flex;align-items:center;gap:6px}
 .place-item .place-dot{width:7px;height:7px;border-radius:50%;background:var(--brand2);flex:0 0 auto}
-.place-item .place-count{background:var(--brand2);color:#fff;font-size:11px;
-  font-weight:700;padding:1px 8px;border-radius:99px}
-.place-item .place-seats{font-size:10.5px;color:var(--muted);margin-left:6px;
-  font-family:ui-monospace,Menlo,monospace}
+.place-item .place-count{background:var(--brand2);color:#fff;font-size:11px;font-weight:700;padding:1px 8px;border-radius:99px}
+.place-item .place-seats{font-size:10.5px;color:var(--muted);margin-left:6px;font-family:ui-monospace,Menlo,monospace}
 .empty{padding:38px 20px;text-align:center;color:var(--muted)}
 .empty .big{font-size:34px;margin-bottom:8px;opacity:.5}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.toolbar input[type=search]{padding:8px 12px;border:1px solid #cbd5e1;
-  border-radius:10px;min-width:220px;outline:none}
+.toolbar input[type=search]{padding:8px 12px;border:1px solid #cbd5e1;border-radius:10px;min-width:220px;outline:none}
 .toolbar input[type=search]:focus{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(27,82,137,.12)}
-select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
-  background:#fff;min-width:280px;max-width:100%;outline:none;font-weight:500}
-.note{background:#fffbeb;border:1px solid #fde68a;color:#78350f;
-  padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px}
+select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;min-width:280px;max-width:100%;outline:none;font-weight:500}
+.note{background:#fffbeb;border:1px solid #fde68a;color:#78350f;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:16px}
 .note.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 .note.info{background:#eff6ff;border-color:#bfdbfe;color:#1e40af}
-.toast{position:fixed;bottom:22px;left:50%;
-  transform:translateX(-50%) translateY(120%);background:#0f172a;color:#fff;
-  padding:11px 20px;border-radius:12px;box-shadow:0 14px 34px -10px rgba(0,0,0,.55);
-  z-index:999;transition:.3s;font-size:14px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(120%);background:#0f172a;color:#fff;padding:11px 20px;border-radius:12px;box-shadow:0 14px 34px -10px rgba(0,0,0,.55);z-index:999;transition:.3s;font-size:14px}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.err{background:#991b1b}
 .toast.ok{background:#065f46}
-.id-tag{display:inline-block;background:#f1f5f9;color:#334155;
-  padding:1px 7px;border-radius:6px;font-size:11.5px;
-  font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
-.place-big{display:inline-block;background:#fef9c3;color:#854d0e;
-  border:1px solid #fde047;padding:3px 12px;border-radius:8px;
-  font-weight:600;font-size:14px}
-.trip-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-  gap:8px;font-size:13px}
-.trip-detail .td-item{background:#f8fafc;border:1px solid #eef2f7;
-  padding:8px 11px;border-radius:8px}
-.trip-detail .td-item .lbl{display:block;font-size:11px;color:var(--muted);
-  font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
+.id-tag{display:inline-block;background:#f1f5f9;color:#334155;padding:1px 7px;border-radius:6px;font-size:11.5px;font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600}
+.place-big{display:inline-block;background:#fef9c3;color:#854d0e;border:1px solid #fde047;padding:3px 12px;border-radius:8px;font-weight:600;font-size:14px}
+.trip-detail{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;font-size:13px}
+.trip-detail .td-item{background:#f8fafc;border:1px solid #eef2f7;padding:8px 11px;border-radius:8px}
+.trip-detail .td-item .lbl{display:block;font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
 .trip-detail .td-item .val{font-weight:600;color:#1e293b;font-size:13.5px}
-#loadingOverlay{position:fixed;inset:0;background:rgba(15,23,42,.85);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  z-index:9999;color:#fff;gap:16px}
+#loadingOverlay{position:fixed;inset:0;background:rgba(15,23,42,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;color:#fff;gap:16px}
 #loadingOverlay.hidden{display:none}
-.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);
-  border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
+.spinner{width:44px;height:44px;border:4px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.6);
-  display:flex;align-items:center;justify-content:center;z-index:500;padding:20px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;z-index:500;padding:20px}
 .modal-backdrop.hidden{display:none}
-.modal{background:#fff;border-radius:16px;max-width:900px;width:100%;
-  box-shadow:0 25px 60px -20px rgba(0,0,0,.5);max-height:92vh;overflow-y:auto}
+.modal{background:#fff;border-radius:16px;max-width:900px;width:100%;box-shadow:0 25px 60px -20px rgba(0,0,0,.5);max-height:92vh;overflow-y:auto}
 .modal.narrow{max-width:480px}
-.modal-head{padding:16px 20px;border-bottom:1px solid var(--line);
-  display:flex;justify-content:space-between;align-items:center}
+.modal-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;z-index:2}
 .modal-head h3{font-size:16px;font-weight:600;color:var(--brand)}
-.modal-close{background:none;border:none;font-size:22px;cursor:pointer;
-  color:var(--muted);width:32px;height:32px;border-radius:8px}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);width:32px;height:32px;border-radius:8px}
 .modal-close:hover{background:#f1f5f9;color:#0f172a}
 .modal-body{padding:20px}
-.modal-foot{padding:14px 20px;border-top:1px solid var(--line);
-  display:flex;justify-content:flex-end;gap:10px}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:#fff}
 #printRoot{display:none}
 @media print{
   body{background:#fff}
@@ -258,7 +176,7 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
   #printRoot{display:block !important;padding:0;font-size:12px}
   #printRoot h1{font-size:16px;text-align:center;margin-bottom:2px}
   #printRoot h2{font-size:13px;text-align:center;font-weight:400;margin-bottom:14px;color:#333}
-  #printRoot table{width:100%;border-collapse:collapse;font-size:10px}
+  #printRoot table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:8px}
   #printRoot th,#printRoot td{border:1px solid #999;padding:4px 5px;text-align:left}
   #printRoot th{background:#eee}
   #printRoot .meta{margin:10px 0;font-size:12px}
@@ -318,7 +236,6 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
       <button class="btn-logout" id="logoutBtn">लगआउट</button>
     </div>
   </header>
-
   <nav class="tabs" id="tabs">
     <button class="tab active" data-tab="schedule">📅 तालिका</button>
     <button class="tab" data-tab="booking">🎫 आरक्षण</button>
@@ -327,7 +244,6 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
     <button class="tab" data-tab="coordination">☎️ समन्वय</button>
     <button class="tab admin-tab" data-tab="users" id="usersTab" style="display:none">👥 प्रयोगकर्ता</button>
   </nav>
-
   <main id="view"></main>
 </div>
 
@@ -346,298 +262,157 @@ select.trip-select{padding:9px 12px;border:1px solid #cbd5e1;border-radius:10px;
 <div class="toast" id="toast"></div>
 
 <script>
-/* =====================================================================
-   CONFIG
-   ===================================================================== */
+/* ================== CONFIG ================== */
 const SUPABASE_URL = 'https://kwygidpzthsmyeqtctqr.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_fDTrlzw18dQmTr2-Vz8u7A_L9C1iWY2';
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const APF_LOGO_URL = new URL('logo.png', window.location.href).href;
 
-/* =====================================================================
-   DATA
-   ===================================================================== */
+/* ================== DATA ================== */
 const PLACES = {
   HQ:  'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय',
   KAK: 'सीमा सुरक्षा गुल्म, काँकरभिट्टा',
   GAD: 'सीमा सुरक्षा गुल्म, गड्डाचौकी'
 };
-
 const FESTIVALS = {
   dashain: { name: 'बडादशैँ', cls: 'f-dashain' },
   tihar:   { name: 'तिहार र छठ', cls: 'f-tihar' }
 };
-
 const RANKS = [
-  { code: 'सप्रमनि', full: 'सशस्त्र प्रहरी महानिरीक्षक' },
-  { code: 'सप्रअमनि', full: 'सशस्त्र प्रहरी अतिरिक्त महानिरीक्षक' },
-  { code: 'सप्रनामनि', full: 'सशस्त्र प्रहरी नायव महानिरीक्षक' },
-  { code: 'सप्रवउ', full: 'सशस्त्र प्रहरी वरिष्ठ उपरीक्षक' },
-  { code: 'सप्रउ', full: 'सशस्त्र प्रहरी उपरीक्षक' },
-  { code: 'सप्रनाउ', full: 'सशस्त्र प्रहरी नायव उपरीक्षक' },
-  { code: 'सप्रनि', full: 'सशस्त्र प्रहरी निरीक्षक' },
-  { code: 'सप्रबनानि', full: 'सशस्त्र प्रहरी बरिष्ठ नायव निरीक्षक' },
-  { code: 'सप्रनानि', full: 'सशस्त्र प्रहरी नायव निरीक्षक' },
-  { code: 'सप्रसनि', full: 'सशस्त्र प्रहरी सहायक निरीक्षक' },
-  { code: 'सप्रबह', full: 'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },
-  { code: 'सप्रह', full: 'सशस्त्र प्रहरी हवल्दार' },
-  { code: 'सप्रसह', full: 'सशस्त्र प्रहरी सहायक हवल्दार' },
-  { code: 'सप्रज', full: 'सशस्त्र प्रहरी जवान' },
-  { code: 'सप्रप', full: 'सशस्त्र प्रहरी परिचर' }
+  { code:'सप्रमनि', full:'सशस्त्र प्रहरी महानिरीक्षक' },
+  { code:'सप्रअमनि', full:'सशस्त्र प्रहरी अतिरिक्त महानिरीक्षक' },
+  { code:'सप्रनामनि', full:'सशस्त्र प्रहरी नायव महानिरीक्षक' },
+  { code:'सप्रवउ', full:'सशस्त्र प्रहरी वरिष्ठ उपरीक्षक' },
+  { code:'सप्रउ', full:'सशस्त्र प्रहरी उपरीक्षक' },
+  { code:'सप्रनाउ', full:'सशस्त्र प्रहरी नायव उपरीक्षक' },
+  { code:'सप्रनि', full:'सशस्त्र प्रहरी निरीक्षक' },
+  { code:'सप्रबनानि', full:'सशस्त्र प्रहरी बरिष्ठ नायव निरीक्षक' },
+  { code:'सप्रनानि', full:'सशस्त्र प्रहरी नायव निरीक्षक' },
+  { code:'सप्रसनि', full:'सशस्त्र प्रहरी सहायक निरीक्षक' },
+  { code:'सप्रबह', full:'सशस्त्र प्रहरी बरिष्ठ हवल्दार' },
+  { code:'सप्रह', full:'सशस्त्र प्रहरी हवल्दार' },
+  { code:'सप्रसह', full:'सशस्त्र प्रहरी सहायक हवल्दार' },
+  { code:'सप्रज', full:'सशस्त्र प्रहरी जवान' },
+  { code:'सप्रप', full:'सशस्त्र प्रहरी परिचर' }
 ];
-
-/* =====================================================================
-   ROUTES — Same 5 quota segments per route (same seats), but each
-   segment now lists multiple places. Seat count is per SEGMENT.
-   ===================================================================== */
 const ROUTES = {
-  'KTM-KAK': {
-    from: 'काठमाडौँ', to: 'काँकरभिट्टा', mode: 'dropoff',
-    quotas: [
-      { key:'narayanghat', label:'नारायणगढ', seats:2,
-        places:['नारायणगढ'] },
-      { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:6,
-        places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ',
-                'चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
-      { key:'saptari', label:'सप्तरी क्षेत्र', seats:6,
-        places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
-      { key:'itahari', label:'इटहरी', seats:7,
-        places:['इटहरी'] },
-      { key:'east', label:'सुदूर पूर्व', seats:16,
-        places:['विराटचोक','पथरी','दमक','बिर्तामोड','चारआली','काँकरभिट्टा'] }
-    ]
-  },
-  'KTM-GAD': {
-    from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff',
-    quotas: [
-      { key:'narayanghat', label:'नारायणगढ', seats:2,
-        places:['नारायणगढ'] },
-      { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
-        places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल',
-                'जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
-      { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
-        places:['भालुवाङ','लम्ही','अमेलिया'] },
-      { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:8,
-        places:['कोहलपुर','भुरिगाउँ'] },
-      { key:'karnali', label:'कर्णाली पश्चिम क्षेत्र', seats:16,
-        places:['चिसापानी (कर्णाली)','लम्की','सुखड (घोडाघोडी)','अत्तरिया',
-                'महेन्द्रनगर (भीमदत्त)','गड्डाचौकी'] }
-    ]
-  },
-  'KAK-KTM': {
-    from: 'काँकरभिट्टा', to: 'काठमाडौँ', mode: 'pickup',
-    quotas: [
-      { key:'kakarbhitta', label:'काँकरभिट्टा क्षेत्र', seats:20,
-        places:['काँकरभिट्टा','चारआली','बिर्तामोड','दमक','पथरी','विराटचोक'] },
-      { key:'narayanghat', label:'नारायणगढ', seats:7,
-        places:['नारायणगढ'] },
-      { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:5,
-        places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ',
-                'चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
-      { key:'saptari', label:'सप्तरी क्षेत्र', seats:3,
-        places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
-      { key:'itahari', label:'इटहरी', seats:2,
-        places:['इटहरी'] }
-    ]
-  },
-  'GAD-KTM': {
-    from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup',
-    quotas: [
-      { key:'gaddachowki', label:'गड्डाचौकी क्षेत्र', seats:16,
-        places:['गड्डाचौकी','महेन्द्रनगर (भीमदत्त)','अत्तरिया','सुखड (घोडाघोडी)',
-                'लम्की','चिसापानी (कर्णाली)'] },
-      { key:'narayanghat', label:'नारायणगढ', seats:8,
-        places:['नारायणगढ'] },
-      { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
-        places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल',
-                'जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
-      { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
-        places:['भालुवाङ','लम्ही','अमेलिया'] },
-      { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:2,
-        places:['कोहलपुर','भुरिगाउँ'] }
-    ]
-  }
+  'KTM-KAK': { from:'काठमाडौँ', to:'काँकरभिट्टा', mode:'dropoff', quotas:[
+    { key:'narayanghat', label:'नारायणगढ', seats:2, places:['नारायणगढ'] },
+    { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:6,
+      places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ','चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
+    { key:'saptari', label:'सप्तरी क्षेत्र', seats:6,
+      places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
+    { key:'itahari', label:'इटहरी', seats:7, places:['इटहरी'] },
+    { key:'east', label:'सुदूर पूर्व', seats:16,
+      places:['विराटचोक','पथरी','दमक','बिर्तामोड','चारआली','काँकरभिट्टा'] }
+  ]},
+  'KTM-GAD': { from:'काठमाडौँ', to:'गड्डाचौकी', mode:'dropoff', quotas:[
+    { key:'narayanghat', label:'नारायणगढ', seats:2, places:['नारायणगढ'] },
+    { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
+      places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल','जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
+    { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
+      places:['भालुवाङ','लम्ही','अमेलिया'] },
+    { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:8,
+      places:['कोहलपुर','भुरिगाउँ'] },
+    { key:'karnali', label:'कर्णाली पश्चिम क्षेत्र', seats:16,
+      places:['चिसापानी (कर्णाली)','लम्की','सुखड (घोडाघोडी)','अत्तरिया','महेन्द्रनगर (भीमदत्त)','गड्डाचौकी'] }
+  ]},
+  'KAK-KTM': { from:'काँकरभिट्टा', to:'काठमाडौँ', mode:'pickup', quotas:[
+    { key:'kakarbhitta', label:'काँकरभिट्टा क्षेत्र', seats:20,
+      places:['काँकरभिट्टा','चारआली','बिर्तामोड','दमक','पथरी','विराटचोक'] },
+    { key:'narayanghat', label:'नारायणगढ', seats:7, places:['नारायणगढ'] },
+    { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:5,
+      places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ','चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
+    { key:'saptari', label:'सप्तरी क्षेत्र', seats:3,
+      places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
+    { key:'itahari', label:'इटहरी', seats:2, places:['इटहरी'] }
+  ]},
+  'GAD-KTM': { from:'गड्डाचौकी', to:'काठमाडौँ', mode:'pickup', quotas:[
+    { key:'gaddachowki', label:'गड्डाचौकी क्षेत्र', seats:16,
+      places:['गड्डाचौकी','महेन्द्रनगर (भीमदत्त)','अत्तरिया','सुखड (घोडाघोडी)','लम्की','चिसापानी (कर्णाली)'] },
+    { key:'narayanghat', label:'नारायणगढ', seats:8, places:['नारायणगढ'] },
+    { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
+      places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल','जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
+    { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
+      places:['भालुवाङ','लम्ही','अमेलिया'] },
+    { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:2,
+      places:['कोहलपुर','भुरिगाउँ'] }
+  ]}
 };
-
 const TOTAL_SEATS = 37;
 const MAX_FAMILY_PER_HEAD = 3;
-
 const PASSENGER_TYPES = {
-  apf:    { label: 'बहालवाला सशस्त्र प्रहरी',      short: 'बहालवाला', cls: 'badge-apf',    seatCls: 'type-apf'    },
-  ex:     { label: 'अवकाश प्राप्त सशस्त्र प्रहरी',  short: 'अवकाश',   cls: 'badge-ex',     seatCls: 'type-ex'     },
-  family: { label: 'आश्रित परिवारको सदस्य',        short: 'आश्रित',   cls: 'badge-family', seatCls: 'type-family' }
+  apf:    { label:'बहालवाला सशस्त्र प्रहरी', short:'बहालवाला', cls:'badge-apf', seatCls:'type-apf' },
+  ex:     { label:'अवकाश प्राप्त सशस्त्र प्रहरी', short:'अवकाश', cls:'badge-ex', seatCls:'type-ex' },
+  family: { label:'आश्रित परिवारको सदस्य', short:'आश्रित', cls:'badge-family', seatCls:'type-family' }
 };
-
 const RELATIONS = ['पत्नी','पति','छोरा','छोरी','बुबा','आमा','दाजु','भाई','दिदी','बहिनी','अन्य'];
-
 const SEAT_LAYOUT = {
   frontCabin: [
-    { label: 'सहचालक', cls: '' },
-    { label: 'चालक (स्ट्याण्डबाई)', cls: 'standby' },
-    { label: 'चालक', cls: 'driver' }
+    { label:'सहचालक', cls:'' },
+    { label:'चालक (स्ट्याण्डबाई)', cls:'standby' },
+    { label:'चालक', cls:'driver' }
   ],
   rows: [
-    { a: [1, 2],   b: [17, 18] },
-    { a: [3, 4],   b: [19, 20] },
-    { a: [5, 6],   b: [21, 22] },
-    { a: [7, 8],   b: [23, 24], door: true },
-    { a: [9, 10],  b: [25, 26] },
-    { a: [11, 12], b: [27, 28] },
-    { a: [13, 14], b: [29, 30] },
-    { a: [15, 16], b: [31, 32] }
+    { a:[1,2], b:[17,18] }, { a:[3,4], b:[19,20] },
+    { a:[5,6], b:[21,22] }, { a:[7,8], b:[23,24], door:true },
+    { a:[9,10], b:[25,26] }, { a:[11,12], b:[27,28] },
+    { a:[13,14], b:[29,30] }, { a:[15,16], b:[31,32] }
   ],
   backRow: [
-    { num: 33, label: 'क' }, { num: 34, label: 'ख' }, { num: 35, label: 'ग' },
-    { num: 36, label: 'घ' }, { num: 37, label: 'ङ' }
+    { num:33, label:'क' }, { num:34, label:'ख' }, { num:35, label:'ग' },
+    { num:36, label:'घ' }, { num:37, label:'ङ' }
   ]
 };
-
-function seatLabel(n) {
-  n = Number(n);
-  if (n >= 1 && n <= 16) return 'A' + n;
-  if (n >= 17 && n <= 32) return 'B' + (n - 16);
-  const b = SEAT_LAYOUT.backRow.find(s => s.num === n);
-  return b ? b.label : String(n);
-}
-
-function shortPlaceLabel(label) {
-  if (!label) return '?';
-  const map = {
-    'नारायणगढ': 'नारा', 'गैँडाकोट': 'गैँ', 'कावासोती': 'कावा',
-    'बर्दघाट': 'बर्द', 'सुनवल': 'सुन', 'बुटवल': 'बुट',
-    'जीतपुर (कपिलवस्तु)': 'जीत', 'गोरुसिङ्गे': 'गोरु',
-    'चन्द्रौटा': 'चन्द्र', 'भालुवाङ': 'भालु', 'लम्ही': 'लम्ही',
-    'अमेलिया': 'अमे', 'कोहलपुर': 'कोह', 'भुरिगाउँ': 'भुरि',
-    'चिसापानी (कर्णाली)': 'चिसा', 'लम्की': 'लम्की',
-    'सुखड (घोडाघोडी)': 'सुख', 'अत्तरिया': 'अत्तर',
-    'महेन्द्रनगर (भीमदत्त)': 'महेन्द्र', 'गड्डाचौकी': 'गड्डा',
-    'रत्ननगर (टाँडी)': 'रत्न', 'भण्डारा': 'भण्डा', 'मनहरी': 'मन',
-    'हेटौँडा': 'हेटौ', 'निजगढ': 'निज',
-    'चन्द्रनिगाहपुर (चपुर)': 'चपुर', 'बर्दिबास': 'बर्दि',
-    'ढल्केबर': 'ढल्के', 'लाहान': 'लाहान', 'कञ्चनपुर': 'कञ्च',
-    'भारदह': 'भार', 'इनरुवा': 'इनरु', 'इटहरी': 'ईट',
-    'विराटचोक': 'विराट', 'पथरी': 'पथरी', 'दमक': 'दमक',
-    'बिर्तामोड': 'बिर्ता', 'चारआली': 'चार', 'काँकरभिट्टा': 'काँक'
-  };
-  return map[label] || label.slice(0, 3);
-}
-
-function categoryLabel(type) {
-  if (type === 'apf') return 'बहालवाला';
-  if (type === 'ex')  return 'अवकाश प्राप्त';
-  if (type === 'family') return 'आश्रित परिवार';
-  return '—';
-}
-
-function headTypeLabel(type) {
-  if (type === 'apf') return 'बहालवाला कर्मचारी';
-  if (type === 'ex')  return 'अवकाश प्राप्त कर्मचारी';
-  return '—';
-}
-
-/* Find which quota segment contains a given place (or segment key for backward compat) */
-function findSegment(route, placeOrKey) {
-  if (!placeOrKey) return null;
-  for (const q of route.quotas) {
-    if (q.key === placeOrKey) return q;
-    if (q.places && q.places.includes(placeOrKey)) return q;
-  }
-  return null;
-}
-
-/* Display name for a stored quota value */
-function placeDisplay(route, quota) {
-  if (!quota) return '—';
-  const seg = findSegment(route, quota);
-  if (!seg) return quota;
-  if (seg.key === quota) return seg.label;  // old booking had segment key
-  return quota;  // actual place name
-}
-
+function seatLabel(n){ n=Number(n); if(n>=1&&n<=16) return 'A'+n; if(n>=17&&n<=32) return 'B'+(n-16); const b=SEAT_LAYOUT.backRow.find(s=>s.num===n); return b?b.label:String(n); }
+function shortPlaceLabel(l){ if(!l) return '?'; const m={'नारायणगढ':'नारा','गैँडाकोट':'गैँ','कावासोती':'कावा','बर्दघाट':'बर्द','सुनवल':'सुन','बुटवल':'बुट','जीतपुर (कपिलवस्तु)':'जीत','गोरुसिङ्गे':'गोरु','चन्द्रौटा':'चन्द्र','भालुवाङ':'भालु','लम्ही':'लम्ही','अमेलिया':'अमे','कोहलपुर':'कोह','भुरिगाउँ':'भुरि','चिसापानी (कर्णाली)':'चिसा','लम्की':'लम्की','सुखड (घोडाघोडी)':'सुख','अत्तरिया':'अत्तर','महेन्द्रनगर (भीमदत्त)':'महेन्द्र','गड्डाचौकी':'गड्डा','रत्ननगर (टाँडी)':'रत्न','भण्डारा':'भण्डा','मनहरी':'मन','हेटौँडा':'हेटौ','निजगढ':'निज','चन्द्रनिगाहपुर (चपुर)':'चपुर','बर्दिबास':'बर्दि','ढल्केबर':'ढल्के','लाहान':'लाहान','कञ्चनपुर':'कञ्च','भारदह':'भार','इनरुवा':'इनरु','इटहरी':'ईट','विराटचोक':'विराट','पथरी':'पथरी','दमक':'दमक','बिर्तामोड':'बिर्ता','चारआली':'चार','काँकरभिट्टा':'काँक'}; return m[l]||l.slice(0,3); }
+function categoryLabel(t){ if(t==='apf') return 'बहालवाला'; if(t==='ex') return 'अवकाश प्राप्त'; if(t==='family') return 'आश्रित परिवार'; return '—'; }
+function headTypeLabel(t){ if(t==='apf') return 'बहालवाला कर्मचारी'; if(t==='ex') return 'अवकाश प्राप्त कर्मचारी'; return '—'; }
+function findSegment(route, placeOrKey){ if(!placeOrKey) return null; for(const q of route.quotas){ if(q.key===placeOrKey) return q; if(q.places && q.places.includes(placeOrKey)) return q; } return null; }
+function placeDisplay(route, quota){ if(!quota) return '—'; const seg=findSegment(route,quota); if(!seg) return quota; if(seg.key===quota) return seg.label; return quota; }
 const TRIP_RAW = [
-  ['dashain','2083/06/26','KTM-KAK','HQ','14:00'],
-  ['dashain','2083/06/26','KTM-GAD','HQ','09:00'],
-  ['dashain','2083/06/28','KAK-KTM','KAK','14:00'],
-  ['dashain','2083/06/28','GAD-KTM','GAD','09:00'],
-  ['dashain','2083/06/30','KTM-KAK','HQ','14:00'],
-  ['dashain','2083/06/30','KTM-GAD','HQ','09:00'],
-  ['dashain','2083/07/01','KAK-KTM','KAK','14:00'],
-  ['dashain','2083/07/01','GAD-KTM','GAD','09:00'],
-  ['dashain','2083/07/03','KTM-KAK','HQ','14:00'],
-  ['dashain','2083/07/03','KTM-GAD','HQ','09:00'],
-  ['dashain','2083/07/05','KAK-KTM','KAK','14:00'],
-  ['dashain','2083/07/05','GAD-KTM','GAD','09:00'],
-  ['dashain','2083/07/07','KTM-KAK','HQ','14:00'],
-  ['dashain','2083/07/07','KTM-GAD','HQ','09:00'],
-  ['dashain','2083/07/09','KAK-KTM','KAK','14:00'],
-  ['dashain','2083/07/09','GAD-KTM','GAD','09:00'],
-  ['tihar','2083/07/21','KTM-KAK','HQ','14:00'],
-  ['tihar','2083/07/21','KTM-GAD','HQ','09:00'],
-  ['tihar','2083/07/23','KAK-KTM','KAK','14:00'],
-  ['tihar','2083/07/23','GAD-KTM','GAD','09:00'],
-  ['tihar','2083/07/25','KTM-KAK','HQ','14:00'],
-  ['tihar','2083/07/25','KTM-GAD','HQ','09:00'],
-  ['tihar','2083/07/27','KAK-KTM','KAK','14:00'],
-  ['tihar','2083/07/27','GAD-KTM','GAD','09:00'],
-  ['tihar','2083/07/29','KTM-KAK','HQ','14:00'],
-  ['tihar','2083/07/29','KTM-GAD','HQ','09:00'],
-  ['tihar','2083/08/01','KAK-KTM','KAK','14:00'],
-  ['tihar','2083/08/01','GAD-KTM','GAD','09:00']
+  ['dashain','2083/06/26','KTM-KAK','HQ','14:00'],['dashain','2083/06/26','KTM-GAD','HQ','09:00'],
+  ['dashain','2083/06/28','KAK-KTM','KAK','14:00'],['dashain','2083/06/28','GAD-KTM','GAD','09:00'],
+  ['dashain','2083/06/30','KTM-KAK','HQ','14:00'],['dashain','2083/06/30','KTM-GAD','HQ','09:00'],
+  ['dashain','2083/07/01','KAK-KTM','KAK','14:00'],['dashain','2083/07/01','GAD-KTM','GAD','09:00'],
+  ['dashain','2083/07/03','KTM-KAK','HQ','14:00'],['dashain','2083/07/03','KTM-GAD','HQ','09:00'],
+  ['dashain','2083/07/05','KAK-KTM','KAK','14:00'],['dashain','2083/07/05','GAD-KTM','GAD','09:00'],
+  ['dashain','2083/07/07','KTM-KAK','HQ','14:00'],['dashain','2083/07/07','KTM-GAD','HQ','09:00'],
+  ['dashain','2083/07/09','KAK-KTM','KAK','14:00'],['dashain','2083/07/09','GAD-KTM','GAD','09:00'],
+  ['tihar','2083/07/21','KTM-KAK','HQ','14:00'],['tihar','2083/07/21','KTM-GAD','HQ','09:00'],
+  ['tihar','2083/07/23','KAK-KTM','KAK','14:00'],['tihar','2083/07/23','GAD-KTM','GAD','09:00'],
+  ['tihar','2083/07/25','KTM-KAK','HQ','14:00'],['tihar','2083/07/25','KTM-GAD','HQ','09:00'],
+  ['tihar','2083/07/27','KAK-KTM','KAK','14:00'],['tihar','2083/07/27','GAD-KTM','GAD','09:00'],
+  ['tihar','2083/07/29','KTM-KAK','HQ','14:00'],['tihar','2083/07/29','KTM-GAD','HQ','09:00'],
+  ['tihar','2083/08/01','KAK-KTM','KAK','14:00'],['tihar','2083/08/01','GAD-KTM','GAD','09:00']
 ];
-
-const TRIPS = TRIP_RAW.map((r, i) => ({
-  id: 'T' + (i + 1), festival: r[0], date: r[1],
-  routeId: r[2], placeKey: r[3], place: PLACES[r[3]],
-  time: r[4], route: ROUTES[r[2]], seats: TOTAL_SEATS
-}));
-
+const TRIPS = TRIP_RAW.map((r,i)=>({id:'T'+(i+1), festival:r[0], date:r[1], routeId:r[2], placeKey:r[3], place:PLACES[r[3]], time:r[4], route:ROUTES[r[2]], seats:TOTAL_SEATS}));
 const COORD_HQ = [
   { rank:'सप्रनानि', name:'सुजनराज कार्की', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9841370854' },
   { rank:'जु.अ.', name:'कल्याणकारी सेवा केन्द्र (प्रतिनिधि)', unit:'कल्याणकारी सेवा केन्द्र', phone:'—' },
   { rank:'सप्रबह', name:'संजय खड्का', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9841430852' },
   { rank:'सप्रसह', name:'प्रशान्त तामाङ्ग (कम्प्यूटर अपरेटर)', unit:'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय', phone:'9845771527' }
 ];
+const COORD_UNITS = ['नं. 17 गण हेक्वा चितवन','नं. 2 छिन्नमस्ता बाहिनी','सुरक्षा बेश क्याम्प लाहान सिरहा','नं. 1 बराह बाहिनी','प्रस्तावित सीमा सुरक्षा गुल्म काँकडभिट्टा'];
 
-const COORD_UNITS = [
-  'नं. 17 गण हेक्वा चितवन',
-  'नं. 2 छिन्नमस्ता बाहिनी',
-  'सुरक्षा बेश क्याम्प लाहान सिरहा',
-  'नं. 1 बराह बाहिनी',
-  'प्रस्तावित सीमा सुरक्षा गुल्म काँकडभिट्टा'
-];
-
-/* =====================================================================
-   STATE
-   ===================================================================== */
+/* ================== STATE ================== */
 let BOOKINGS_CACHE = {};
 let REALTIME_CHANNEL = null;
-const SESSION_KEY = 'apf_bus_session_v4';
-
+const SESSION_KEY = 'apf_bus_session_v5';
 const state = {
-  user: null,
-  activeTrip: TRIPS[0].id,
-  selectedSeat: null,
-  newBookingType: 'apf',
-  tab: 'schedule',
-  manifestTrip: TRIPS[0].id,
-  search: '',
-  ticketSelection: new Set()
+  user: null, activeTrip: TRIPS[0].id, selectedSeat: null,
+  newBookingType: 'apf', tab: 'schedule', manifestTrip: TRIPS[0].id,
+  search: '', ticketSelection: new Set()
 };
 
-/* =====================================================================
-   HELPERS
-   ===================================================================== */
+/* ================== HELPERS ================== */
 const $  = sel => document.querySelector(sel);
 const $$ = sel => document.querySelectorAll(sel);
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
-  ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
-
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 const getTrip = id => TRIPS.find(t => t.id === id) || TRIPS[0];
 const tripBookings = id => BOOKINGS_CACHE[id] || {};
 const bookedCount = id => Object.keys(tripBookings(id)).length;
-
-/* Count bookings in a specific segment */
-function segmentCount(tripId, segKey) {
+function segmentCount(tripId, segKey){
   const b = BOOKINGS_CACHE[tripId] || {};
   return Object.values(b).filter(p => {
     const trip = getTrip(tripId);
@@ -645,588 +420,346 @@ function segmentCount(tripId, segKey) {
     return seg && seg.key === segKey;
   }).length;
 }
+function rankFull(code){ const r = RANKS.find(x => x.code === code); return r ? r.full : code; }
+function tripLabel(t){ return `${t.date}  |  ${t.route.from} → ${t.route.to}  |  ${t.time}`; }
+function toast(msg, type=''){ const el=$('#toast'); el.textContent=msg; el.className='toast show '+type; clearTimeout(el._t); el._t=setTimeout(()=>{el.className='toast '+type;},2800); }
+function fmtTime(t){ const [h,m]=t.split(':').map(Number); const part=h<12?'बिहान':'दिउँसो'; return `${part} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} बजे`; }
+function placeModeLabel(trip){ return trip.route.mode==='pickup'?'आरोहण स्थान (चढ्ने)':'गन्तव्य (झर्ने)'; }
+function setConnectionStatus(online){ const dot=$('#connDot'); if(dot) dot.classList.toggle('offline',!online); }
+function hideAllScreens(){ $('#loginScreen').style.display='none'; $('#mainApp').style.display='none'; }
 
-function rankFull(code) {
-  const r = RANKS.find(x => x.code === code);
-  return r ? r.full : code;
-}
-
-function tripLabel(t) {
-  return `${t.date}  |  ${t.route.from} → ${t.route.to}  |  ${t.time}`;
-}
-
-function toast(msg, type = '') {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.className = 'toast show ' + type;
-  clearTimeout(el._t);
-  el._t = setTimeout(() => { el.className = 'toast ' + type; }, 2800);
-}
-
-function fmtTime(t) {
-  const [h, m] = t.split(':').map(Number);
-  const part = h < 12 ? 'बिहान' : 'दिउँसो';
-  return `${part} ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} बजे`;
-}
-
-function placeModeLabel(trip) {
-  return trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-}
-
-function setConnectionStatus(online) {
-  const dot = $('#connDot');
-  if (dot) dot.classList.toggle('offline', !online);
-}
-
-function hideAllScreens() {
-  $('#loginScreen').style.display = 'none';
-  $('#mainApp').style.display = 'none';
-}
-
-/* =====================================================================
-   AUTH
-   ===================================================================== */
-async function doLogin(username, password) {
-  const { data, error } = await sb.rpc('login_user', {
-    p_username: username, p_password: password
-  });
-  if (error) {
-    console.error('Login error:', error);
-    return { ok: false, msg: 'लगइन गर्न सकिएन: ' + error.message };
-  }
-  if (!data || !data.length) {
-    return { ok: false, msg: 'प्रयोगकर्ता नाम वा पासवर्ड मिलेन।' };
-  }
+/* ================== AUTH ================== */
+async function doLogin(username, password){
+  const {data, error} = await sb.rpc('login_user', { p_username: username, p_password: password });
+  if(error){ console.error('Login error:',error); return {ok:false,msg:'लगइन गर्न सकिएन: '+error.message}; }
+  if(!data || !data.length) return {ok:false,msg:'प्रयोगकर्ता नाम वा पासवर्ड मिलेन।'};
   const row = data[0];
-  return { ok: true, user: {
-    id: row.id, username: row.username, full_name: row.full_name,
-    role: row.role, token: row.token
-  }};
+  return {ok:true,user:{id:row.id,username:row.username,full_name:row.full_name,role:row.role,token:row.token}};
 }
-
-async function doLogout() {
-  if (state.user?.token) {
-    try { await sb.rpc('logout_user', { p_token: state.user.token }); } catch (e) {}
-  }
+async function doLogout(){
+  if(state.user?.token){ try { await sb.rpc('logout_user',{p_token:state.user.token}); } catch(e){} }
   sessionStorage.removeItem(SESSION_KEY);
-  state.user = null;
-  BOOKINGS_CACHE = {};
-  if (REALTIME_CHANNEL) { sb.removeChannel(REALTIME_CHANNEL); REALTIME_CHANNEL = null; }
+  state.user = null; BOOKINGS_CACHE = {};
+  if(REALTIME_CHANNEL){ sb.removeChannel(REALTIME_CHANNEL); REALTIME_CHANNEL=null; }
 }
-
-async function restoreSession() {
+async function restoreSession(){
   const saved = sessionStorage.getItem(SESSION_KEY);
-  if (!saved) return false;
-  let parsed;
-  try { parsed = JSON.parse(saved); } catch (e) { return false; }
-  if (!parsed?.token) return false;
-  const { data, error } = await sb.rpc('verify_session', { p_token: parsed.token });
-  if (error || !data || !data.length) {
-    sessionStorage.removeItem(SESSION_KEY);
-    return false;
-  }
+  if(!saved) return false;
+  let parsed; try { parsed = JSON.parse(saved); } catch(e){ return false; }
+  if(!parsed?.token) return false;
+  const {data, error} = await sb.rpc('verify_session',{p_token:parsed.token});
+  if(error || !data || !data.length){ sessionStorage.removeItem(SESSION_KEY); return false; }
   const row = data[0];
-  state.user = {
-    id: row.id, username: row.username, full_name: row.full_name,
-    role: row.role, token: parsed.token
-  };
+  state.user = {id:row.id,username:row.username,full_name:row.full_name,role:row.role,token:parsed.token};
   return true;
 }
-
-function saveSession() {
-  if (state.user) {
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-      token: state.user.token, username: state.user.username
-    }));
-  }
-}
-
-function showLoginScreen() {
-  hideAllScreens();
-  $('#loginScreen').style.display = 'flex';
-  setTimeout(() => $('#loginUsername')?.focus(), 100);
-}
-
-function showMainApp() {
-  hideAllScreens();
-  $('#mainApp').style.display = 'block';
-
-  const initials = (state.user.full_name || state.user.username || '?')
-    .split(' ').map(s => s[0]).slice(0, 2).join('').toUpperCase();
-
+function saveSession(){ if(state.user){ sessionStorage.setItem(SESSION_KEY, JSON.stringify({token:state.user.token, username:state.user.username})); } }
+function showLoginScreen(){ hideAllScreens(); $('#loginScreen').style.display='flex'; setTimeout(()=>$('#loginUsername')?.focus(),100); }
+function showMainApp(){
+  hideAllScreens(); $('#mainApp').style.display='block';
+  const initials = (state.user.full_name||state.user.username||'?').split(' ').map(s=>s[0]).slice(0,2).join('').toUpperCase();
   $('#userAvatar').textContent = initials;
-  $('#userName').textContent = state.user.full_name || state.user.username;
+  $('#userName').textContent = state.user.full_name||state.user.username;
   const roleEl = $('#userRole');
-  roleEl.textContent = state.user.role === 'admin' ? 'प्रशासक' : 'सञ्चालक';
-  roleEl.className = 'u-role' + (state.user.role === 'admin' ? ' admin' : '');
-  $('#usersTab').style.display = state.user.role === 'admin' ? '' : 'none';
+  roleEl.textContent = state.user.role==='admin'?'प्रशासक':'सञ्चालक';
+  roleEl.className = 'u-role'+(state.user.role==='admin'?' admin':'');
+  $('#usersTab').style.display = state.user.role==='admin'?'':'none';
 }
-
-function bindLogin() {
-  const form = $('#loginForm');
-  const errEl = $('#loginError');
-  const btn = $('#loginBtn');
-  form.addEventListener('submit', async e => {
-    e.preventDefault();
-    errEl.classList.remove('show');
-    const username = $('#loginUsername').value.trim();
-    const password = $('#loginPassword').value;
-    if (!username || !password) {
-      errEl.textContent = 'दुवै फाँट भर्नुहोस्।';
-      errEl.classList.add('show');
-      return;
-    }
-    btn.disabled = true;
-    btn.textContent = '⏳ लगइन हुँदै...';
-    const res = await doLogin(username, password);
-    btn.disabled = false;
-    btn.textContent = '🔐 लगइन गर्नुहोस्';
-    if (!res.ok) {
-      errEl.textContent = res.msg;
-      errEl.classList.add('show');
-      return;
-    }
-    state.user = res.user;
-    saveSession();
-    $('#loginPassword').value = '';
+function bindLogin(){
+  const form=$('#loginForm'), errEl=$('#loginError'), btn=$('#loginBtn');
+  form.addEventListener('submit', async e=>{
+    e.preventDefault(); errEl.classList.remove('show');
+    const username=$('#loginUsername').value.trim(); const password=$('#loginPassword').value;
+    if(!username||!password){ errEl.textContent='दुवै फाँट भर्नुहोस्।'; errEl.classList.add('show'); return; }
+    btn.disabled=true; btn.textContent='⏳ लगइन हुँदै...';
+    const res=await doLogin(username,password);
+    btn.disabled=false; btn.textContent='🔐 लगइन गर्नुहोस्';
+    if(!res.ok){ errEl.textContent=res.msg; errEl.classList.add('show'); return; }
+    state.user=res.user; saveSession(); $('#loginPassword').value='';
     await startApp();
   });
 }
 
-/* =====================================================================
-   SUPABASE DATA
-   ===================================================================== */
-function rowToBooking(row) {
-  return {
-    seat: row.seat, type: row.type, name: row.name,
-    rank: row.rank, idNo: row.id_no, unit: row.unit, phone: row.phone,
-    quota: row.quota, gender: row.gender, age: row.age, note: row.note,
-    headName: row.head_name, headType: row.head_type,
-    relation: row.relation,
-    at: row.created_at, dbId: row.id, createdBy: row.created_by
-  };
+/* ================== SUPABASE DATA ================== */
+function rowToBooking(row){
+  return { seat:row.seat, type:row.type, name:row.name, rank:row.rank, idNo:row.id_no,
+    unit:row.unit, phone:row.phone, quota:row.quota, gender:row.gender, age:row.age,
+    note:row.note, headName:row.head_name, headType:row.head_type, relation:row.relation,
+    at:row.created_at, dbId:row.id, createdBy:row.created_by };
 }
-
-async function fetchAllBookings() {
-  const { data, error } = await sb.from('bookings').select('*');
-  if (error) { console.error(error); setConnectionStatus(false); return false; }
+async function fetchAllBookings(){
+  const {data, error}=await sb.from('bookings').select('*');
+  if(error){ console.error(error); setConnectionStatus(false); return false; }
   setConnectionStatus(true);
-  BOOKINGS_CACHE = {};
-  data.forEach(row => {
-    if (!BOOKINGS_CACHE[row.trip_id]) BOOKINGS_CACHE[row.trip_id] = {};
-    BOOKINGS_CACHE[row.trip_id][row.seat] = rowToBooking(row);
-  });
+  BOOKINGS_CACHE={};
+  data.forEach(row=>{ if(!BOOKINGS_CACHE[row.trip_id]) BOOKINGS_CACHE[row.trip_id]={}; BOOKINGS_CACHE[row.trip_id][row.seat]=rowToBooking(row); });
   return true;
 }
-
-async function insertBooking(tripId, b) {
-  const { error } = await sb.from('bookings').insert([{
-    trip_id: tripId, seat: b.seat, type: b.type, name: b.name,
-    rank: b.rank || null, id_no: b.idNo || null, unit: b.unit || null,
-    phone: b.phone || null, quota: b.quota, gender: b.gender || null,
-    age: b.age || null, note: b.note || null,
-    head_name: b.headName || null, head_type: b.headType || null,
-    relation: b.relation || null,
-    created_by: state.user?.username || null
+async function insertBooking(tripId, b){
+  const {error}=await sb.from('bookings').insert([{
+    trip_id:tripId, seat:b.seat, type:b.type, name:b.name,
+    rank:b.rank||null, id_no:b.idNo||null, unit:b.unit||null,
+    phone:b.phone||null, quota:b.quota, gender:b.gender||null,
+    age:b.age||null, note:b.note||null,
+    head_name:b.headName||null, head_type:b.headType||null,
+    relation:b.relation||null, created_by:state.user?.username||null
   }]);
-  if (error) {
+  if(error){
     console.error(error);
-    if (error.code === '23505') toast('यो सिट भर्खरै अरूले आरक्षण गरिसके।', 'err');
-    else toast('सेभ गर्न सकिएन: ' + error.message, 'err');
+    if(error.code==='23505') toast('यो सिट भर्खरै अरूले आरक्षण गरिसके।','err');
+    else toast('सेभ गर्न सकिएन: '+error.message,'err');
     return false;
   }
   return true;
 }
-
-async function deleteBooking(tripId, seat) {
-  const { error } = await sb.from('bookings')
-    .delete().eq('trip_id', tripId).eq('seat', seat);
-  if (error) { toast('मेटाउन सकिएन।', 'err'); console.error(error); return false; }
+async function deleteBooking(tripId, seat){
+  const {error}=await sb.from('bookings').delete().eq('trip_id',tripId).eq('seat',seat);
+  if(error){ toast('मेटाउन सकिएन।','err'); console.error(error); return false; }
   return true;
 }
-
-function setupRealtime() {
-  if (REALTIME_CHANNEL) sb.removeChannel(REALTIME_CHANNEL);
+function setupRealtime(){
+  if(REALTIME_CHANNEL) sb.removeChannel(REALTIME_CHANNEL);
   REALTIME_CHANNEL = sb.channel('bookings-realtime')
-    .on('postgres_changes',
-      { event: '*', schema: 'public', table: 'bookings' },
-      async () => {
-        const ok = await fetchAllBookings();
-        if (ok) render();
-      })
-    .subscribe(status => setConnectionStatus(status === 'SUBSCRIBED'));
+    .on('postgres_changes',{event:'*',schema:'public',table:'bookings'}, async ()=>{
+      const ok=await fetchAllBookings(); if(ok) render();
+    })
+    .subscribe(status=>setConnectionStatus(status==='SUBSCRIBED'));
 }
 
-/* =====================================================================
-   TICKET
-   ===================================================================== */
+/* ================== TICKET ================== */
 const TICKET_CSS = `
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:#eef1f6;font-family:'Mukta','Noto Sans Devanagari',sans-serif;color:#0f172a}
 body{padding:10mm;display:flex;justify-content:center}
-.ticket{width:101mm; height:143mm; background:#fff;
-  border:1px solid #0d2b4a; border-radius:5px;
-  display:flex; flex-direction:column; overflow:hidden;
-  box-shadow:0 8px 24px -10px rgba(0,0,0,.4); font-size:7pt}
-.accent-bar{height:3px;
-  background:linear-gradient(90deg,#e8a33d,#c47f1a 30%,#0d2b4a 50%,#1b5289 70%,#e8a33d)}
-.tk-header{background:linear-gradient(120deg,#08203a,#0d2b4a 50%,#1b5289);
-  color:#fff; padding:4px 7px; display:flex; align-items:center; gap:5px}
-.tk-logo-img{width:26px; height:26px; object-fit:contain; flex:0 0 auto;
-  background:#fff; border-radius:5px; padding:2px}
-.tk-head-text{flex:1; min-width:0}
-.tk-head-text h1{font-size:8.5pt; font-weight:700; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis; line-height:1.15}
-.tk-head-text p{font-size:5.5pt; color:#a9c4e0}
-.tk-ref-badge{background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3);
-  border-radius:4px; padding:2px 5px; font-size:6pt; color:#fde047;
-  font-family:ui-monospace,monospace; font-weight:700; white-space:nowrap}
-.tk-category{padding:3px 6px; font-size:7pt; font-weight:700; letter-spacing:.3px;
-  text-align:center; border-bottom:.5px solid #e2e8f0}
-.tk-category.cat-apf{background:#dbeafe; color:#1e40af}
-.tk-category.cat-ex{background:#d1fae5; color:#065f46}
-.tk-category.cat-family{background:#fed7aa; color:#9a3412}
-.tk-category .cat-tag{display:inline-block; background:#fff; padding:1px 8px;
-  border-radius:99px; border:1px solid currentColor; font-size:6.5pt}
-.tk-route{padding:4px 6px 3px; text-align:center; border-bottom:.5px solid #e2e8f0;
-  background:linear-gradient(180deg,#f8fafc,#fff)}
-.tk-route-line{display:flex; align-items:center; justify-content:center; gap:5px; margin-bottom:2px}
-.tk-city{font-size:11pt; font-weight:700; color:#0d2b4a; line-height:1.1}
+.ticket{width:101mm;height:143mm;background:#fff;border:1px solid #0d2b4a;border-radius:5px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 24px -10px rgba(0,0,0,.4);font-size:7pt}
+.accent-bar{height:3px;background:linear-gradient(90deg,#e8a33d,#c47f1a 30%,#0d2b4a 50%,#1b5289 70%,#e8a33d)}
+.tk-header{background:linear-gradient(120deg,#08203a,#0d2b4a 50%,#1b5289);color:#fff;padding:4px 7px;display:flex;align-items:center;gap:5px}
+.tk-logo-img{width:26px;height:26px;object-fit:contain;flex:0 0 auto;background:#fff;border-radius:5px;padding:2px}
+.tk-head-text{flex:1;min-width:0}
+.tk-head-text h1{font-size:8.5pt;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.15}
+.tk-head-text p{font-size:5.5pt;color:#a9c4e0}
+.tk-ref-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:4px;padding:2px 5px;font-size:6pt;color:#fde047;font-family:ui-monospace,monospace;font-weight:700;white-space:nowrap}
+.tk-category{padding:3px 6px;font-size:7pt;font-weight:700;letter-spacing:.3px;text-align:center;border-bottom:.5px solid #e2e8f0}
+.tk-category.cat-apf{background:#dbeafe;color:#1e40af}
+.tk-category.cat-ex{background:#d1fae5;color:#065f46}
+.tk-category.cat-family{background:#fed7aa;color:#9a3412}
+.tk-category .cat-tag{display:inline-block;background:#fff;padding:1px 8px;border-radius:99px;border:1px solid currentColor;font-size:6.5pt}
+.tk-route{padding:4px 6px 3px;text-align:center;border-bottom:.5px solid #e2e8f0;background:linear-gradient(180deg,#f8fafc,#fff)}
+.tk-route-line{display:flex;align-items:center;justify-content:center;gap:5px;margin-bottom:2px}
+.tk-city{font-size:11pt;font-weight:700;color:#0d2b4a;line-height:1.1}
 .tk-arrow-bus{font-size:10pt}
-.tk-route-meta{font-size:6.5pt; color:#475569}
+.tk-route-meta{font-size:6.5pt;color:#475569}
 .tk-route-meta b{color:#0d2b4a}
-.tk-dot{margin:0 4px; color:#cbd5e1}
-.tk-body{display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:4px 6px;
-  flex:1; min-height:0; overflow:hidden}
-.tk-section{min-height:0; overflow:hidden}
-.tk-section h3{font-size:6pt; font-weight:700; color:#64748b;
-  text-transform:uppercase; letter-spacing:.4px; padding-bottom:2px;
-  margin-bottom:2px; border-bottom:.5px solid #e2e8f0}
-.tk-table{width:100%; font-size:6.5pt; border-collapse:collapse}
-.tk-table tr td{padding:1px 0; vertical-align:top; line-height:1.25}
-.tk-table .lbl{color:#64748b; width:40%}
-.tk-table .val{font-weight:600; color:#0f172a; text-align:right; word-break:break-word}
-.tk-seat{display:inline-block; background:#fef9c3; color:#854d0e;
-  border:1px solid #fde047; border-radius:3px;
-  padding:0 5px; font-weight:700; font-size:8.5pt}
-.tk-guardian{margin-top:2px; padding:2px 4px; background:#fffbeb;
-  border:.5px solid #fde68a; border-radius:3px; font-size:6pt; line-height:1.3}
-.tk-guardian-title{font-weight:700; color:#92400e; font-size:5.5pt; margin-bottom:1px}
-.tk-guardian-name{font-weight:700; color:#78350f; font-size:7pt}
+.tk-dot{margin:0 4px;color:#cbd5e1}
+.tk-body{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px 6px;flex:1;min-height:0;overflow:hidden}
+.tk-section{min-height:0;overflow:hidden}
+.tk-section h3{font-size:6pt;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;padding-bottom:2px;margin-bottom:2px;border-bottom:.5px solid #e2e8f0}
+.tk-table{width:100%;font-size:6.5pt;border-collapse:collapse}
+.tk-table tr td{padding:1px 0;vertical-align:top;line-height:1.25}
+.tk-table .lbl{color:#64748b;width:40%}
+.tk-table .val{font-weight:600;color:#0f172a;text-align:right;word-break:break-word}
+.tk-seat{display:inline-block;background:#fef9c3;color:#854d0e;border:1px solid #fde047;border-radius:3px;padding:0 5px;font-weight:700;font-size:8.5pt}
+.tk-guardian{margin-top:2px;padding:2px 4px;background:#fffbeb;border:.5px solid #fde68a;border-radius:3px;font-size:6pt;line-height:1.3}
+.tk-guardian-title{font-weight:700;color:#92400e;font-size:5.5pt;margin-bottom:1px}
+.tk-guardian-name{font-weight:700;color:#78350f;font-size:7pt}
 .tk-guardian-meta{color:#92400e}
-.tk-tear{height:6px; position:relative; border-top:1px dashed #cbd5e1; margin-top:2px}
-.tk-tear-mark{position:absolute; left:50%; top:-5px; transform:translateX(-50%);
-  font-size:7pt; color:#94a3b8; background:#fff; padding:0 3px; line-height:1}
-.tk-footer{display:grid; grid-template-columns:auto 1fr; gap:5px; align-items:center;
-  padding:3px 6px; background:#f8fafc; font-size:5.5pt; color:#64748b;
-  border-top:.5px solid #e2e8f0}
-.tk-qr img{display:block; border:.5px solid #e2e8f0; border-radius:3px}
-.tk-qr-label{font-size:5pt; text-align:center; margin-top:1px}
-.tk-ref-lbl{font-size:5pt; text-transform:uppercase; margin-bottom:1px; font-weight:700}
-.tk-ref-val{font-family:ui-monospace,monospace; font-size:7.5pt; font-weight:700;
-  color:#0d2b4a; line-height:1.1}
-.tk-ref-meta{font-size:5pt; line-height:1.3; margin-top:1px}
+.tk-tear{height:6px;position:relative;border-top:1px dashed #cbd5e1;margin-top:2px}
+.tk-tear-mark{position:absolute;left:50%;top:-5px;transform:translateX(-50%);font-size:7pt;color:#94a3b8;background:#fff;padding:0 3px;line-height:1}
+.tk-footer{display:grid;grid-template-columns:auto 1fr;gap:5px;align-items:center;padding:3px 6px;background:#f8fafc;font-size:5.5pt;color:#64748b;border-top:.5px solid #e2e8f0}
+.tk-qr img{display:block;border:.5px solid #e2e8f0;border-radius:3px}
+.tk-qr-label{font-size:5pt;text-align:center;margin-top:1px}
+.tk-ref-lbl{font-size:5pt;text-transform:uppercase;margin-bottom:1px;font-weight:700}
+.tk-ref-val{font-family:ui-monospace,monospace;font-size:7.5pt;font-weight:700;color:#0d2b4a;line-height:1.1}
+.tk-ref-meta{font-size:5pt;line-height:1.3;margin-top:1px}
 .tk-ref-meta b{color:#0f172a}
-.tk-terms{padding:2px 6px; font-size:5pt; color:#64748b; text-align:center;
-  line-height:1.25; border-top:.5px solid #e2e8f0; background:#f8fafc}
+.tk-terms{padding:2px 6px;font-size:5pt;color:#64748b;text-align:center;line-height:1.25;border-top:.5px solid #e2e8f0;background:#f8fafc}
 .tk-terms b{color:#0d2b4a}
-.batch-page{width:210mm; min-height:297mm; background:#fff; padding:3mm;
-  display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr;
-  gap:2mm; margin:0 auto}
-.batch-page .ticket{width:100%; height:100%; box-shadow:none; border-radius:3px}
+.batch-page{width:210mm;min-height:297mm;background:#fff;padding:3mm;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2mm;margin:0 auto}
+.batch-page .ticket{width:100%;height:100%;box-shadow:none;border-radius:3px}
 @media print{
-  html,body{background:#fff; padding:0}
-  body{display:block; padding:0}
-  .ticket{box-shadow:none; border-radius:3px; border-width:1px}
-  .batch-page{width:auto; min-height:auto; padding:0;
-    page-break-after:always; break-after:page}
-  .batch-page:last-child{page-break-after:auto; break-after:auto}
-  @page{size:A4 portrait; margin:4mm}
-}
-`;
-
-function buildTicketDiv(trip, p, q) {
-  const isFamily = p.type === 'family';
-  const modeLabel = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य स्थान';
-  const placeName = placeDisplay(trip.route, p.quota);
-  const seat = seatLabel(p.seat);
-  const side = (p.seat >= 1 && p.seat <= 16) ? 'साईड A'
-             : (p.seat >= 17 && p.seat <= 32) ? 'साईड B' : 'पछाडिको लाइन';
-  const cat = categoryLabel(p.type);
-  const catCls = 'cat-' + p.type;
-
-  const opInitials = (p.createdBy || 'OP').slice(0, 3).toUpperCase();
-  const seatClean = String(seat).replace(/\s+/g, '');
-  const refNum = `${trip.id}-${seatClean}-${opInitials}`;
-
-  const qrLines = [
-    'APF BUS TICKET', 'Ref: ' + refNum, 'Category: ' + cat,
-    'Trip: ' + trip.id, 'Route: ' + trip.route.from + ' to ' + trip.route.to,
-    'Date: ' + trip.date + ' BS', 'Time: ' + trip.time, 'Seat: ' + seat,
-    'Passenger: ' + p.name
-  ];
-  if (isFamily && p.headName) {
-    qrLines.push('Guardian: ' + p.headName);
-    qrLines.push('Guardian Type: ' + categoryLabel(p.headType));
-    qrLines.push('Guardian ID: ' + (p.idNo || '-'));
-  } else {
-    qrLines.push('ID: ' + (p.idNo || '-'));
-  }
-  const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data=' +
-                encodeURIComponent(qrLines.join('\n'));
-
+  html,body{background:#fff;padding:0}
+  body{display:block;padding:0}
+  .ticket{box-shadow:none;border-radius:3px;border-width:1px}
+  .batch-page{width:auto;min-height:auto;padding:0;page-break-after:always;break-after:page}
+  .batch-page:last-child{page-break-after:auto;break-after:auto}
+  @page{size:A4 portrait;margin:4mm}
+}`;
+function buildTicketDiv(trip, p){
+  const isFamily=p.type==='family';
+  const modeLabel=trip.route.mode==='pickup'?'आरोहण स्थान':'गन्तव्य स्थान';
+  const placeName=placeDisplay(trip.route,p.quota);
+  const seat=seatLabel(p.seat);
+  const side=(p.seat>=1&&p.seat<=16)?'साईड A':(p.seat>=17&&p.seat<=32)?'साईड B':'पछाडिको लाइन';
+  const cat=categoryLabel(p.type); const catCls='cat-'+p.type;
+  const opInitials=(p.createdBy||'OP').slice(0,3).toUpperCase();
+  const seatClean=String(seat).replace(/\s+/g,'');
+  const refNum=`${trip.id}-${seatClean}-${opInitials}`;
+  const qrLines=['APF BUS TICKET','Ref: '+refNum,'Category: '+cat,'Trip: '+trip.id,
+    'Route: '+trip.route.from+' to '+trip.route.to,'Date: '+trip.date+' BS','Time: '+trip.time,
+    'Seat: '+seat,'Passenger: '+p.name];
+  if(isFamily&&p.headName){ qrLines.push('Guardian: '+p.headName); qrLines.push('Guardian Type: '+categoryLabel(p.headType)); qrLines.push('Guardian ID: '+(p.idNo||'-')); }
+  else { qrLines.push('ID: '+(p.idNo||'-')); }
+  const qrUrl='https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=0&data='+encodeURIComponent(qrLines.join('\n'));
   let paxRows;
-  if (isFamily) {
-    paxRows = `
-      <tr><td class="lbl">नाम</td><td class="val">${esc(p.name)}</td></tr>
+  if(isFamily){
+    paxRows=`<tr><td class="lbl">नाम</td><td class="val">${esc(p.name)}</td></tr>
       <tr><td class="lbl">श्रेणी</td><td class="val">आश्रित</td></tr>
-      <tr><td class="lbl">सम्बन्ध</td><td class="val">${esc(p.relation || '—')}</td></tr>
-      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
-      <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(p.phone || '—')}</td></tr>`;
+      <tr><td class="lbl">सम्बन्ध</td><td class="val">${esc(p.relation||'—')}</td></tr>
+      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender||'—')} / ${esc(p.age||'—')}</td></tr>
+      <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(p.phone||'—')}</td></tr>`;
   } else {
-    paxRows = `
-      <tr><td class="lbl">नाम</td><td class="val">${esc(p.name)}</td></tr>
+    paxRows=`<tr><td class="lbl">नाम</td><td class="val">${esc(p.name)}</td></tr>
       <tr><td class="lbl">श्रेणी</td><td class="val">${esc(cat)}</td></tr>
-      <tr><td class="lbl">दर्जा</td><td class="val">${esc(p.rank || '—')}</td></tr>
-      <tr><td class="lbl">ID नं.</td><td class="val">${esc(p.idNo || '—')}</td></tr>
-      <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(p.phone || '—')}</td></tr>
-      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>`;
+      <tr><td class="lbl">दर्जा</td><td class="val">${esc(p.rank||'—')}</td></tr>
+      <tr><td class="lbl">ID नं.</td><td class="val">${esc(p.idNo||'—')}</td></tr>
+      <tr><td class="lbl">सम्पर्क</td><td class="val">${esc(p.phone||'—')}</td></tr>
+      <tr><td class="lbl">लिङ्ग/उमेर</td><td class="val">${esc(p.gender||'—')} / ${esc(p.age||'—')}</td></tr>`;
   }
-
-  let guardianBlock = '';
-  if (isFamily && p.headName) {
-    const ht = p.headType === 'ex' ? 'अवकाश प्राप्त कर्मचारी' : 'बहालवाला कर्मचारी';
-    guardianBlock = `
-      <div class="tk-guardian">
-        <div class="tk-guardian-title">सम्बन्धित ${esc(ht)}</div>
-        <div class="tk-guardian-name">${esc(p.headName)}</div>
-        <div class="tk-guardian-meta">
-          ${p.rank ? `${esc(p.rank)} · ` : ''}${p.idNo ? `ID: ${esc(p.idNo)}` : ''}
-        </div>
-      </div>`;
+  let guardianBlock='';
+  if(isFamily&&p.headName){
+    const ht=p.headType==='ex'?'अवकाश प्राप्त कर्मचारी':'बहालवाला कर्मचारी';
+    guardianBlock=`<div class="tk-guardian">
+      <div class="tk-guardian-title">सम्बन्धित ${esc(ht)}</div>
+      <div class="tk-guardian-name">${esc(p.headName)}</div>
+      <div class="tk-guardian-meta">${p.rank?`${esc(p.rank)} · `:''}${p.idNo?`ID: ${esc(p.idNo)}`:''}</div>
+    </div>`;
   }
-
-  return `
-<div class="ticket">
+  return `<div class="ticket">
   <div class="accent-bar"></div>
   <div class="tk-header">
-    <img src="${APF_LOGO_URL}" alt="APF" class="tk-logo-img"
-         onerror="this.outerHTML='<div style=&quot;width:26px;height:26px;border-radius:5px;background:linear-gradient(160deg,#e8a33d,#c47f1a);display:grid;place-items:center;font-weight:800;font-size:10px;color:#0d2b4a&quot;>सप्र</div>';">
-    <div class="tk-head-text">
-      <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
-      <p>Armed Police Force, Nepal</p>
-    </div>
+    <img src="${APF_LOGO_URL}" alt="APF" class="tk-logo-img" onerror="this.outerHTML='<div style=&quot;width:26px;height:26px;border-radius:5px;background:linear-gradient(160deg,#e8a33d,#c47f1a);display:grid;place-items:center;font-weight:800;font-size:10px;color:#0d2b4a&quot;>सप्र</div>';">
+    <div class="tk-head-text"><h1>सशस्त्र प्रहरी बल, नेपाल</h1><p>Armed Police Force, Nepal</p></div>
     <div class="tk-ref-badge">${esc(refNum)}</div>
   </div>
-  <div class="tk-category ${catCls}">
-    <span class="cat-tag">${esc(cat)}</span>
-  </div>
+  <div class="tk-category ${catCls}"><span class="cat-tag">${esc(cat)}</span></div>
   <div class="tk-route">
     <div class="tk-route-line">
       <span class="tk-city">${esc(trip.route.from)}</span>
       <span class="tk-arrow-bus">🚌</span>
       <span class="tk-city">${esc(trip.route.to)}</span>
     </div>
-    <div class="tk-route-meta">
-      <b>मिति:</b> ${esc(trip.date)} (वि.सं.)
-      <span class="tk-dot">•</span>
-      <b>समय:</b> ${fmtTime(trip.time)}
-    </div>
+    <div class="tk-route-meta"><b>मिति:</b> ${esc(trip.date)} (वि.सं.) <span class="tk-dot">•</span> <b>समय:</b> ${fmtTime(trip.time)}</div>
   </div>
   <div class="tk-body">
-    <div class="tk-section">
-      <h3>यात्रुको विवरण</h3>
-      <table class="tk-table">${paxRows}</table>
-      ${guardianBlock}
-    </div>
-    <div class="tk-section">
-      <h3>यात्राको विवरण</h3>
-      <table class="tk-table">
-        <tr><td class="lbl">सिट</td><td class="val"><span class="tk-seat">${esc(seat)}</span></td></tr>
-        <tr><td class="lbl">स्थान</td><td class="val">${esc(side)}</td></tr>
-        <tr><td class="lbl">${esc(modeLabel)}</td><td class="val">${esc(placeName)}</td></tr>
-        <tr><td class="lbl">छुट्ने स्थान</td><td class="val">${esc(trip.place)}</td></tr>
-        <tr><td class="lbl">छुट्ने समय</td><td class="val">${fmtTime(trip.time)}</td></tr>
-        <tr><td class="lbl">पर्व</td><td class="val">${esc(FESTIVALS[trip.festival].name)}</td></tr>
-      </table>
-    </div>
+    <div class="tk-section"><h3>यात्रुको विवरण</h3><table class="tk-table">${paxRows}</table>${guardianBlock}</div>
+    <div class="tk-section"><h3>यात्राको विवरण</h3><table class="tk-table">
+      <tr><td class="lbl">सिट</td><td class="val"><span class="tk-seat">${esc(seat)}</span></td></tr>
+      <tr><td class="lbl">स्थान</td><td class="val">${esc(side)}</td></tr>
+      <tr><td class="lbl">${esc(modeLabel)}</td><td class="val">${esc(placeName)}</td></tr>
+      <tr><td class="lbl">छुट्ने स्थान</td><td class="val">${esc(trip.place)}</td></tr>
+      <tr><td class="lbl">छुट्ने समय</td><td class="val">${fmtTime(trip.time)}</td></tr>
+      <tr><td class="lbl">पर्व</td><td class="val">${esc(FESTIVALS[trip.festival].name)}</td></tr>
+    </table></div>
   </div>
   <div class="tk-tear"><span class="tk-tear-mark">✂</span></div>
   <div class="tk-footer">
-    <div class="tk-qr">
-      <img src="${qrUrl}" alt="QR" width="70" height="70">
-      <div class="tk-qr-label">स्क्यान</div>
-    </div>
-    <div class="tk-ref">
-      <div class="tk-ref-lbl">बुकिङ सन्दर्भ</div>
-      <div class="tk-ref-val">${esc(refNum)}</div>
-      <div class="tk-ref-meta">
-        जारी: <b>${esc(p.createdBy || state.user?.username || '—')}</b>
-        ${p.at ? ` · ${new Date(p.at).toLocaleDateString('ne-NP')}` : ''}
-        <br>हस्ताक्षर: ______________________
-      </div>
-    </div>
+    <div class="tk-qr"><img src="${qrUrl}" alt="QR" width="70" height="70"><div class="tk-qr-label">स्क्यान</div></div>
+    <div class="tk-ref"><div class="tk-ref-lbl">बुकिङ सन्दर्भ</div><div class="tk-ref-val">${esc(refNum)}</div>
+    <div class="tk-ref-meta">जारी: <b>${esc(p.createdBy||state.user?.username||'—')}</b>${p.at?` · ${new Date(p.at).toLocaleDateString('ne-NP')}`:''}<br>हस्ताक्षर: ______________________</div></div>
   </div>
-  <div class="tk-terms">
-    यात्रा गर्नुअघि परिचयपत्र साथमा राख्नुहोस् · ३० मिनेट अगाडि पुग्नुहोस्
-  </div>
+  <div class="tk-terms">यात्रा गर्नुअघि परिचयपत्र साथमा राख्नुहोस् · ३० मिनेट अगाडि पुग्नुहोस्</div>
 </div>`;
 }
-
-function buildTicketPage(trip, p, q, autoPrint) {
-  const ticketDiv = buildTicketDiv(trip, p, q);
-  const bodyTag = autoPrint
-    ? '<body onload="setTimeout(function(){window.print()},900)">'
-    : '<body>';
-  return `<!DOCTYPE html>
-<html lang="ne">
-<head>
-<meta charset="UTF-8">
-<title>बस यात्रा टिकट — ${esc(p.name)}</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+function buildTicketPage(trip, p, autoPrint){
+  const ticketDiv = buildTicketDiv(trip, p);
+  const bodyTag = autoPrint?'<body onload="setTimeout(function(){window.print()},900)">':'<body>';
+  return `<!DOCTYPE html><html lang="ne"><head><meta charset="UTF-8"><title>बस यात्रा टिकट — ${esc(p.name)}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>${TICKET_CSS}</style>
-</head>
-${bodyTag}${ticketDiv}</body>
-</html>`;
+<style>${TICKET_CSS}</style></head>${bodyTag}${ticketDiv}</body></html>`;
 }
-
-function buildBatchTicketPage(items, autoPrint) {
-  const TICKETS_PER_PAGE = 4;
-  let html = '';
-  for (let i = 0; i < items.length; i += TICKETS_PER_PAGE) {
-    const chunk = items.slice(i, i + TICKETS_PER_PAGE);
-    html += '<div class="batch-page">';
-    chunk.forEach(it => { html += buildTicketDiv(it.trip, it.p, it.q); });
-    for (let k = chunk.length; k < TICKETS_PER_PAGE; k++) {
-      html += '<div style="visibility:hidden"></div>';
-    }
-    html += '</div>';
+function buildBatchTicketPage(items, autoPrint){
+  const TICKETS_PER_PAGE=4; let html='';
+  for(let i=0;i<items.length;i+=TICKETS_PER_PAGE){
+    const chunk=items.slice(i,i+TICKETS_PER_PAGE);
+    html+='<div class="batch-page">';
+    chunk.forEach(it=>{ html+=buildTicketDiv(it.trip,it.p); });
+    for(let k=chunk.length;k<TICKETS_PER_PAGE;k++) html+='<div style="visibility:hidden"></div>';
+    html+='</div>';
   }
-  const bodyTag = autoPrint
-    ? '<body onload="setTimeout(function(){window.print()},1200)">'
-    : '<body>';
-  return `<!DOCTYPE html>
-<html lang="ne">
-<head>
-<meta charset="UTF-8">
-<title>बस यात्रा टिकट — ${items.length} tickets</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  const bodyTag=autoPrint?'<body onload="setTimeout(function(){window.print()},1200)">':'<body>';
+  return `<!DOCTYPE html><html lang="ne"><head><meta charset="UTF-8"><title>बस यात्रा टिकट — ${items.length} tickets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>${TICKET_CSS}</style>
-</head>
-${bodyTag}${html}</body>
-</html>`;
+<style>${TICKET_CSS}</style></head>${bodyTag}${html}</body></html>`;
 }
-
-function openTicket(trip, seat) {
-  const p = tripBookings(trip.id)[seat];
-  if (!p) return;
-  const q = null;
-  const html = buildTicketPage(trip, p, q, false);
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
+function openTicket(trip, seat){
+  const p=tripBookings(trip.id)[seat]; if(!p) return;
+  const html=buildTicketPage(trip,p,false);
+  const blob=new Blob([html],{type:'text/html'}); const url=URL.createObjectURL(blob);
   $('#modalBox').classList.remove('narrow');
-  $('#modalTitle').textContent = 'बस यात्रा टिकट — ' + p.name;
-  $('#modalBody').innerHTML = `
-    <iframe id="ticketFrame" src="${url}"
-            style="width:100%; height:520px; border:1px solid #e2e8f0;
-                   border-radius:10px; background:#fff;"></iframe>
-    <div class="hint" style="margin-top:8px; text-align:center">
-      A4 page मा ४ वटा ticket अटाउँछ। धेरै ticket एकैचोटि प्रिन्ट गर्न Manifest tab बाट छान्नुहोस्।
-    </div>`;
-  $('#modalFoot').innerHTML = `
-    <button class="btn" id="closeTicketBtn">बन्द गर्ने</button>
-    <button class="btn primary" id="printTicketBtn">🖨 प्रिन्ट गर्ने</button>`;
+  $('#modalTitle').textContent='बस यात्रा टिकट — '+p.name;
+  $('#modalBody').innerHTML=`<iframe id="ticketFrame" src="${url}" style="width:100%;height:520px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;"></iframe>
+    <div class="hint" style="margin-top:8px;text-align:center">A4 page मा ४ वटा ticket अटाउँछ। धेरै ticket एकैचोटि प्रिन्ट गर्न Manifest tab बाट छान्नुहोस्।</div>`;
+  $('#modalFoot').innerHTML=`<button class="btn" id="closeTicketBtn">बन्द गर्ने</button><button class="btn primary" id="printTicketBtn">🖨 प्रिन्ट गर्ने</button>`;
   $('#modalBackdrop').classList.remove('hidden');
-  $('#closeTicketBtn')?.addEventListener('click', () => {
-    URL.revokeObjectURL(url);
-    closeModal();
-  });
-  $('#printTicketBtn')?.addEventListener('click', () => {
-    const printHtml = buildTicketPage(trip, p, q, true);
-    const printBlob = new Blob([printHtml], { type: 'text/html' });
-    const printUrl = URL.createObjectURL(printBlob);
-    const w = window.open(printUrl, '_blank', 'width=1100,height=800');
-    setTimeout(() => URL.revokeObjectURL(printUrl), 30000);
-    if (!w) toast('Popup अवरोध भयो।', 'err');
+  $('#closeTicketBtn')?.addEventListener('click',()=>{ URL.revokeObjectURL(url); closeModal(); });
+  $('#printTicketBtn')?.addEventListener('click',()=>{
+    const printHtml=buildTicketPage(trip,p,true);
+    const printBlob=new Blob([printHtml],{type:'text/html'}); const printUrl=URL.createObjectURL(printBlob);
+    const w=window.open(printUrl,'_blank','width=1100,height=800');
+    setTimeout(()=>URL.revokeObjectURL(printUrl),30000);
+    if(!w) toast('Popup अवरोध भयो।','err');
   });
 }
-
-function openBatchTickets(trip, seats) {
-  const items = [];
-  seats.forEach(seat => {
-    const p = tripBookings(trip.id)[seat];
-    if (!p) return;
-    items.push({ trip, p, q: null });
-  });
-  if (!items.length) return toast('कुनै सिट छानिएको छैन।', 'err');
-  const html = buildBatchTicketPage(items, true);
-  const blob = new Blob([html], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const w = window.open(url, '_blank', 'width=1100,height=800');
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
-  if (!w) toast('Popup अवरोध भयो।', 'err');
-  else toast(`${items.length} वटा ticket — प्रिन्ट हुँदैछ...`, 'ok');
+function openBatchTickets(trip, seats){
+  const items=[]; seats.forEach(seat=>{ const p=tripBookings(trip.id)[seat]; if(!p) return; items.push({trip,p}); });
+  if(!items.length) return toast('कुनै सिट छानिएको छैन।','err');
+  const html=buildBatchTicketPage(items,true);
+  const blob=new Blob([html],{type:'text/html'}); const url=URL.createObjectURL(blob);
+  const w=window.open(url,'_blank','width=1100,height=800');
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  if(!w) toast('Popup अवरोध भयो।','err');
+  else toast(`${items.length} वटा ticket — प्रिन्ट हुँदैछ...`,'ok');
 }
 
-/* =====================================================================
-   STATS + ROUTER
-   ===================================================================== */
-function renderStats() {
-  const totalSeats = TRIPS.length * TOTAL_SEATS;
-  let apf = 0, ex = 0, family = 0;
-  TRIPS.forEach(t => Object.values(tripBookings(t.id)).forEach(p => {
-    if (p.type === 'apf') apf++;
-    else if (p.type === 'ex') ex++;
-    else if (p.type === 'family') family++;
+/* ================== STATS + ROUTER ================== */
+function renderStats(){
+  const totalSeats=TRIPS.length*TOTAL_SEATS;
+  let apf=0,ex=0,family=0;
+  TRIPS.forEach(t=>Object.values(tripBookings(t.id)).forEach(p=>{
+    if(p.type==='apf') apf++;
+    else if(p.type==='ex') ex++;
+    else if(p.type==='family') family++;
   }));
-  const booked = apf + ex + family;
-  const pct = totalSeats ? Math.round(booked / totalSeats * 100) : 0;
-  $('#stats').innerHTML = `
+  const booked=apf+ex+family;
+  const pct=totalSeats?Math.round(booked/totalSeats*100):0;
+  $('#stats').innerHTML=`
     <div class="stat"><b>${TRIPS.length}</b><span>यात्रा</span></div>
     <div class="stat"><b>${apf}</b><span>बहालवाला</span></div>
     <div class="stat"><b>${ex}</b><span>अवकाश</span></div>
     <div class="stat"><b>${family}</b><span>आश्रित</span></div>
     <div class="stat"><b>${pct}%</b><span>अकुपेन्सी</span></div>`;
 }
-
-function render() {
+function render(){
   renderStats();
-  $$('.tab').forEach(b =>
-    b.classList.toggle('active', b.dataset.tab === state.tab));
-  const view = $('#view');
-  if (state.tab === 'schedule')     view.innerHTML = viewSchedule();
-  if (state.tab === 'booking')      view.innerHTML = viewBooking();
-  if (state.tab === 'manifest')     view.innerHTML = viewManifest();
-  if (state.tab === 'quota')        view.innerHTML = viewQuota();
-  if (state.tab === 'coordination') view.innerHTML = viewCoordination();
-  if (state.tab === 'users')        view.innerHTML = viewUsers();
-  if (state.tab === 'booking') bindBooking();
-  if (state.tab === 'manifest') bindManifest();
-  if (state.tab === 'schedule') bindSchedule();
-  if (state.tab === 'users') bindUsers();
+  $$('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));
+  const view=$('#view');
+  if(state.tab==='schedule') view.innerHTML=viewSchedule();
+  if(state.tab==='booking') view.innerHTML=viewBooking();
+  if(state.tab==='manifest') view.innerHTML=viewManifest();
+  if(state.tab==='quota') view.innerHTML=viewQuota();
+  if(state.tab==='coordination') view.innerHTML=viewCoordination();
+  if(state.tab==='users') view.innerHTML=viewUsers();
+  if(state.tab==='booking') bindBooking();
+  if(state.tab==='manifest') bindManifest();
+  if(state.tab==='schedule') bindSchedule();
+  if(state.tab==='users') bindUsers();
 }
 
-/* =====================================================================
-   SCHEDULE
-   ===================================================================== */
-function viewSchedule() {
-  const groups = ['dashain', 'tihar'].map(f => {
-    const list = TRIPS.filter(t => t.festival === f);
-    if (!list.length) return '';
-    const rows = list.map((t, i) => {
-      const booked = bookedCount(t.id);
-      const free = TOTAL_SEATS - booked;
-      const badge = free === 0
-        ? '<span class="badge danger">भरिएको</span>'
-        : free <= 8
-          ? `<span class="badge warn">${free} सिट बाँकी</span>`
-          : `<span class="badge ok">${free} सिट बाँकी</span>`;
+/* ================== SCHEDULE ================== */
+function viewSchedule(){
+  const groups=['dashain','tihar'].map(f=>{
+    const list=TRIPS.filter(t=>t.festival===f);
+    if(!list.length) return '';
+    const rows=list.map((t,i)=>{
+      const booked=bookedCount(t.id);
+      const free=TOTAL_SEATS-booked;
+      const badge=free===0?'<span class="badge danger">भरिएको</span>':
+        free<=8?`<span class="badge warn">${free} सिट बाँकी</span>`:
+        `<span class="badge ok">${free} सिट बाँकी</span>`;
       return `<tr>
-        <td class="num">${i + 1}</td>
+        <td class="num">${i+1}</td>
         <td><b>${t.date}</b></td>
         <td>${esc(t.route.from)} → ${esc(t.route.to)}</td>
         <td>${esc(t.place)}</td>
@@ -1235,112 +768,310 @@ function viewSchedule() {
         <td><button class="btn sm primary" data-book="${t.id}">आरक्षण</button></td>
       </tr>`;
     }).join('');
-    return `
-      <div class="panel">
-        <div class="panel-head">
-          <h2><span class="badge ${FESTIVALS[f].cls}">${FESTIVALS[f].name}</span>
-            <small>बस संचालन हुने समय तालिका</small></h2>
-          <span class="hint">${list.length} यात्रा</span>
-        </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th class="num">सि.नं.</th><th>मिति (वि.सं.)</th><th>रुट</th>
-              <th>बस छुट्ने स्थान</th><th>छुट्ने समय</th><th>अवस्था</th><th></th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </div>`;
+    return `<div class="panel">
+      <div class="panel-head">
+        <h2><span class="badge ${FESTIVALS[f].cls}">${FESTIVALS[f].name}</span>
+          <small>बस संचालन हुने समय तालिका</small></h2>
+        <span class="hint">${list.length} यात्रा</span>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th class="num">सि.नं.</th><th>मिति (वि.सं.)</th><th>रुट</th>
+          <th>बस छुट्ने स्थान</th><th>छुट्ने समय</th><th>अवस्था</th><th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>`;
   }).join('');
   return `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px">
+      <button class="btn primary" id="summaryBtn">📊 सबै यात्राको सारांश + नामावली</button>
+      <button class="btn" id="summaryCsvBtn">⬇ नामावली CSV</button>
+      <button class="btn" id="summaryPrintBtn">🖨 प्रिन्ट</button>
+    </div>
     <div class="note">
       📌 सबै मिति <b>वि.सं.</b> मा छन्। प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>
-      (A1–A16, B1–B16, क–ङ)। लगइन: <b>${esc(state.user?.full_name || '')}</b>
+      (A1–A16, B1–B16, क–ङ)। लगइन: <b>${esc(state.user?.full_name||'')}</b>
     </div>${groups}`;
 }
-
-function bindSchedule() {
-  $$('[data-book]').forEach(b => {
-    b.addEventListener('click', () => {
-      state.activeTrip = b.dataset.book;
-      state.selectedSeat = null;
-      state.newBookingType = 'apf';
-      state.tab = 'booking';
+function bindSchedule(){
+  $$('[data-book]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      state.activeTrip=b.dataset.book;
+      state.selectedSeat=null;
+      state.newBookingType='apf';
+      state.tab='booking';
       render();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({top:0,behavior:'smooth'});
     });
   });
+  $('#summaryBtn')?.addEventListener('click',openTripSummary);
+  $('#summaryCsvBtn')?.addEventListener('click',exportTripSummaryCSV);
+  $('#summaryPrintBtn')?.addEventListener('click',printTripSummary);
 }
 
-/* =====================================================================
-   BOOKING
-   ===================================================================== */
-function seatBtn(num, bookings, trip) {
-  const p = bookings[num];
-  const sel = state.selectedSeat === num;
-  const cls = ['seat'];
-  if (p) { cls.push('booked'); cls.push(PASSENGER_TYPES[p.type]?.seatCls || 'type-apf'); }
-  if (sel) cls.push('selected');
-  const label = seatLabel(num);
-  const mode = placeModeLabel(trip);
-  let title = `सिट ${label} — खाली`;
-  let tag = '';
-  if (p) {
-    const placeName = placeDisplay(trip.route, p.quota);
-    if (p.type === 'family') {
-      title = `सिट ${label} — ${p.name} (${p.relation})\n` +
-              `सम्बन्धित: ${p.headName || '—'}\n` +
-              `${mode}: ${placeName}`;
-    } else {
-      title = `सिट ${label} — ${p.name} (${p.rank || '—'}${p.idNo ? ' / ID ' + p.idNo : ''})\n` +
-              `${mode}: ${placeName}`;
+/* ================== TRIP SUMMARY + ROSTER ================== */
+function buildTripSummaryData(){
+  return TRIPS.map(t=>{
+    const b=tripBookings(t.id);
+    const list=Object.values(b).sort((a,c)=>a.seat-c.seat);
+    let apf=0,ex=0,fam=0;
+    list.forEach(p=>{ if(p.type==='apf') apf++; else if(p.type==='ex') ex++; else fam++; });
+    const total=apf+ex+fam;
+    return { trip:t, list, apf, ex, fam, total, free:TOTAL_SEATS-total, pct:Math.round(total/TOTAL_SEATS*100) };
+  });
+}
+function openTripSummary(){
+  const data=buildTripSummaryData();
+  const overviewRows=data.map((d,i)=>`<tr>
+    <td class="num">${i+1}</td>
+    <td><span class="badge ${FESTIVALS[d.trip.festival].cls}">${FESTIVALS[d.trip.festival].name}</span></td>
+    <td><b>${d.trip.date}</b></td>
+    <td>${esc(d.trip.route.from)} → ${esc(d.trip.route.to)}</td>
+    <td>${fmtTime(d.trip.time)}</td>
+    <td style="text-align:center">${d.apf}</td>
+    <td style="text-align:center">${d.ex}</td>
+    <td style="text-align:center">${d.fam}</td>
+    <td style="text-align:center"><b>${d.total}</b></td>
+    <td style="text-align:center">${d.free}</td>
+    <td style="text-align:center">${d.pct}%</td>
+  </tr>`).join('');
+  const tApf=data.reduce((s,d)=>s+d.apf,0);
+  const tEx =data.reduce((s,d)=>s+d.ex,0);
+  const tFam=data.reduce((s,d)=>s+d.fam,0);
+  const tBook=tApf+tEx+tFam;
+  const tSeats=TRIPS.length*TOTAL_SEATS;
+  const rosterBlocks=data.map(d=>{
+    if(!d.list.length){
+      return `<div style="margin-bottom:16px;padding:10px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px">
+        <div style="font-weight:700;color:#0d2b4a;margin-bottom:4px">
+          ${esc(d.trip.route.from)} → ${esc(d.trip.route.to)} · ${d.trip.date} · ${fmtTime(d.trip.time)}
+        </div>
+        <div class="hint">कुनै यात्रु छैनन्।</div>
+      </div>`;
     }
-    tag = shortPlaceLabel(placeName);
-  }
-  return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">
-    ${label}${tag ? `<span class="seat-tag">${esc(tag)}</span>` : ''}
-  </button>`;
+    const rows=d.list.map((p,i)=>{
+      const pt=PASSENGER_TYPES[p.type];
+      const placeName=placeDisplay(d.trip.route,p.quota);
+      const headInfo=p.type==='family'
+        ?`<div class="hint" style="margin:0">सम्बन्धित: ${esc(p.headName||'—')}${p.idNo?' · ID '+esc(p.idNo):''}</div>`
+        :(p.rank?`<div class="hint" style="margin:0">${esc(p.rank)}${p.idNo?' · ID '+esc(p.idNo):''}</div>`:'');
+      return `<tr>
+        <td class="num">${i+1}</td>
+        <td><b>${seatLabel(p.seat)}</b></td>
+        <td><b>${esc(p.name)}</b>${headInfo}</td>
+        <td><span class="badge ${pt.cls}">${pt.short}</span></td>
+        <td>${p.type==='family'?esc(p.relation||'—'):'—'}</td>
+        <td>${esc(p.phone||'—')}</td>
+        <td><span class="badge route-badge">${esc(placeName)}</span></td>
+      </tr>`;
+    }).join('');
+    return `<div style="margin-bottom:18px;padding:12px;background:#fff;border:1px solid #e2e8f0;border-radius:10px">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+        <div>
+          <div style="font-weight:700;color:#0d2b4a">
+            <span class="badge ${FESTIVALS[d.trip.festival].cls}">${FESTIVALS[d.trip.festival].name}</span>
+            ${esc(d.trip.route.from)} → ${esc(d.trip.route.to)}
+          </div>
+          <div class="hint" style="margin-top:2px">${d.trip.date} (वि.सं.) · ${fmtTime(d.trip.time)}</div>
+        </div>
+        <div class="hint" style="margin:0">
+          जम्मा <b>${d.total}</b> · बहाल <b>${d.apf}</b> · अवकाश <b>${d.ex}</b> · आश्रित <b>${d.fam}</b>
+        </div>
+      </div>
+      <div class="tbl-wrap"><table style="font-size:13px">
+        <thead><tr>
+          <th class="num">क्र.</th><th>सिट</th><th>नाम थर</th><th>प्रकार</th>
+          <th>सम्बन्ध</th><th>सम्पर्क</th><th>स्थान</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>`;
+  }).join('');
+  $('#modalBox').classList.remove('narrow');
+  $('#modalTitle').textContent='सबै यात्राको सारांश तथा नामावली';
+  $('#modalBody').innerHTML=`
+    <h3 style="font-size:14px;color:#0d2b4a;margin-bottom:10px">१. एक नजरमा</h3>
+    <div class="tbl-wrap" style="margin-bottom:20px"><table>
+      <thead><tr>
+        <th>क्र.</th><th>पर्व</th><th>मिति</th><th>रुट</th><th>समय</th>
+        <th style="text-align:center">बहालवाला</th><th style="text-align:center">अवकाश</th>
+        <th style="text-align:center">आश्रित</th><th style="text-align:center">जम्मा</th>
+        <th style="text-align:center">खाली</th><th style="text-align:center">%</th>
+      </tr></thead>
+      <tbody>${overviewRows}</tbody>
+      <tfoot><tr style="background:#f1f5f9;font-weight:700">
+        <td colspan="5" style="text-align:right">जम्मा</td>
+        <td style="text-align:center">${tApf}</td>
+        <td style="text-align:center">${tEx}</td>
+        <td style="text-align:center">${tFam}</td>
+        <td style="text-align:center">${tBook}</td>
+        <td style="text-align:center">${tSeats-tBook}</td>
+        <td style="text-align:center">${Math.round(tBook/tSeats*100)}%</td>
+      </tr></tfoot>
+    </table></div>
+    <h3 style="font-size:14px;color:#0d2b4a;margin-bottom:10px">२. यात्रागत नामावली</h3>
+    ${rosterBlocks}`;
+  $('#modalFoot').innerHTML=`
+    <button class="btn" id="closeSummary">बन्द गर्ने</button>
+    <button class="btn" id="printSummaryBtn2">🖨 प्रिन्ट</button>
+    <button class="btn primary" id="csvSummaryBtn2">⬇ CSV</button>`;
+  $('#modalBackdrop').classList.remove('hidden');
+  $('#closeSummary')?.addEventListener('click',closeModal);
+  $('#printSummaryBtn2')?.addEventListener('click',printTripSummary);
+  $('#csvSummaryBtn2')?.addEventListener('click',exportTripSummaryCSV);
+}
+function exportTripSummaryCSV(){
+  const data=buildTripSummaryData();
+  const head=['पर्व','मिति','रुट','समय','सिट','नाम थर','प्रकार','सम्बन्ध',
+              'सम्बन्धित कर्मचारी','कर्मचारी प्रकार','दर्जा','ID नं.','सम्पर्क','स्थान'];
+  const rows=[];
+  data.forEach(d=>{
+    if(!d.list.length){
+      rows.push([FESTIVALS[d.trip.festival].name,d.trip.date,`${d.trip.route.from} → ${d.trip.route.to}`,
+        d.trip.time,'','(कुनै यात्रु छैन)','','','','','','','','']);
+      return;
+    }
+    d.list.forEach(p=>{
+      const pt=PASSENGER_TYPES[p.type];
+      const placeName=placeDisplay(d.trip.route,p.quota);
+      rows.push([FESTIVALS[d.trip.festival].name,d.trip.date,`${d.trip.route.from} → ${d.trip.route.to}`,
+        d.trip.time,seatLabel(p.seat),p.name,pt.label,p.relation||'',
+        p.type==='family'?(p.headName||''):'',
+        p.type==='family'?(p.headType==='ex'?'अवकाश':'बहालवाला'):'',
+        p.rank||'',p.idNo||'',p.phone||'',placeName]);
+    });
+  });
+  const csv='\uFEFF'+[head,...rows].map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`trip_summary_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('नामावली CSV डाउनलोड भयो।','ok');
+}
+function printTripSummary(){
+  const data=buildTripSummaryData();
+  const overviewRows=data.map((d,i)=>`<tr>
+    <td>${i+1}</td><td>${FESTIVALS[d.trip.festival].name}</td><td>${d.trip.date}</td>
+    <td>${esc(d.trip.route.from)} → ${esc(d.trip.route.to)}</td><td>${d.trip.time}</td>
+    <td style="text-align:center">${d.apf}</td><td style="text-align:center">${d.ex}</td>
+    <td style="text-align:center">${d.fam}</td><td style="text-align:center"><b>${d.total}</b></td>
+    <td style="text-align:center">${d.free}</td><td style="text-align:center">${d.pct}%</td>
+  </tr>`).join('');
+  const tApf=data.reduce((s,d)=>s+d.apf,0);
+  const tEx=data.reduce((s,d)=>s+d.ex,0);
+  const tFam=data.reduce((s,d)=>s+d.fam,0);
+  const tBook=tApf+tEx+tFam;
+  const tSeats=TRIPS.length*TOTAL_SEATS;
+  const rosterBlocks=data.map(d=>{
+    if(!d.list.length){
+      return `<div style="margin:8px 0;padding:6px 8px;border:1px solid #ccc;font-size:10px">
+        <b>${esc(d.trip.route.from)} → ${esc(d.trip.route.to)} · ${d.trip.date} · ${d.trip.time}</b> — कुनै यात्रु छैनन्।
+      </div>`;
+    }
+    const rows=d.list.map((p,i)=>{
+      const pt=PASSENGER_TYPES[p.type];
+      const placeName=placeDisplay(d.trip.route,p.quota);
+      return `<tr>
+        <td>${i+1}</td><td>${seatLabel(p.seat)}</td><td>${esc(p.name)}</td>
+        <td>${esc(pt.short)}</td>
+        <td>${p.type==='family'?esc(p.relation||''):(p.rank||'')}</td>
+        <td>${p.type==='family'?esc(p.headName||''):''}</td>
+        <td>${esc(p.idNo||'')}</td><td>${esc(p.phone||'')}</td>
+        <td>${esc(placeName)}</td>
+      </tr>`;
+    }).join('');
+    return `<div style="margin-top:10px;page-break-inside:avoid">
+      <div style="background:#0d2b4a;color:#fff;padding:5px 8px;font-size:10.5px;font-weight:700">
+        ${esc(d.trip.route.from)} → ${esc(d.trip.route.to)} · ${d.trip.date} (वि.सं.) · ${d.trip.time} ·
+        जम्मा ${d.total} (बहाल ${d.apf} · अवकाश ${d.ex} · आश्रित ${d.fam})
+      </div>
+      <table>
+        <thead><tr>
+          <th>क्र.</th><th>सिट</th><th>नाम</th><th>प्रकार</th>
+          <th>सम्बन्ध / दर्जा</th><th>सम्बन्धित</th><th>ID</th><th>सम्पर्क</th><th>स्थान</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+  $('#printRoot').innerHTML=`
+    <div style="text-align:center;margin-bottom:8px">
+      <img src="${APF_LOGO_URL}" alt="APF" style="width:50px;height:50px;object-fit:contain" onerror="this.style.display='none'">
+    </div>
+    <h1>सशस्त्र प्रहरी बल, नेपाल</h1>
+    <h2>सारांश तथा यात्रागत नामावली — बस आरक्षण</h2>
+    <h3 style="font-size:11px;margin:12px 0 6px">१. एक नजरमा</h3>
+    <table>
+      <thead><tr>
+        <th>क्र.</th><th>पर्व</th><th>मिति</th><th>रुट</th><th>समय</th>
+        <th>बहाल</th><th>अवकाश</th><th>आश्रित</th><th>जम्मा</th><th>खाली</th><th>%</th>
+      </tr></thead>
+      <tbody>${overviewRows}</tbody>
+      <tfoot><tr style="background:#eee;font-weight:700">
+        <td colspan="5" style="text-align:right">जम्मा</td>
+        <td>${tApf}</td><td>${tEx}</td><td>${tFam}</td>
+        <td>${tBook}</td><td>${tSeats-tBook}</td>
+        <td>${Math.round(tBook/tSeats*100)}%</td>
+      </tr></tfoot>
+    </table>
+    <h3 style="font-size:11px;margin:16px 0 6px;page-break-before:always">२. यात्रागत नामावली</h3>
+    ${rosterBlocks}
+    <div class="sign" style="margin-top:20px">
+      <div>.................................<br>प्रस्तुत गर्ने</div>
+      <div>.................................<br>समन्वय अधिकृत</div>
+    </div>`;
+  window.print();
 }
 
-function renderBusMap(bookings, trip) {
-  let html = '<div class="bus-cabin">';
-  SEAT_LAYOUT.frontCabin.forEach(s => {
-    html += `<div class="cabin-seat ${s.cls}">${esc(s.label)}</div>`;
+/* ================== BOOKING ================== */
+function seatBtn(num, bookings, trip){
+  const p=bookings[num]; const sel=state.selectedSeat===num; const cls=['seat'];
+  if(p){ cls.push('booked'); cls.push(PASSENGER_TYPES[p.type]?.seatCls||'type-apf'); }
+  if(sel) cls.push('selected');
+  const label=seatLabel(num); const mode=placeModeLabel(trip);
+  let title=`सिट ${label} — खाली`; let tag='';
+  if(p){
+    const placeName=placeDisplay(trip.route,p.quota);
+    if(p.type==='family'){
+      title=`सिट ${label} — ${p.name} (${p.relation})\nसम्बन्धित: ${p.headName||'—'}\n${mode}: ${placeName}`;
+    } else {
+      title=`सिट ${label} — ${p.name} (${p.rank||'—'}${p.idNo?' / ID '+p.idNo:''})\n${mode}: ${placeName}`;
+    }
+    tag=shortPlaceLabel(placeName);
+  }
+  return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">${label}${tag?`<span class="seat-tag">${esc(tag)}</span>`:''}</button>`;
+}
+function renderBusMap(bookings, trip){
+  let html='<div class="bus-cabin">';
+  SEAT_LAYOUT.frontCabin.forEach(s=>{ html+=`<div class="cabin-seat ${s.cls}">${esc(s.label)}</div>`; });
+  html+='</div>';
+  html+=`<div class="side-headers"><span class="label-a">साईड A</span><span class="label-b">साईड B</span></div>`;
+  SEAT_LAYOUT.rows.forEach(row=>{
+    html+='<div class="seat-row">';
+    row.a.forEach(n=>{ html+=seatBtn(n,bookings,trip); });
+    html+=`<div class="aisle">${row.door?'<span class="door-icon" title="ढोका">🚪</span>':''}</div>`;
+    row.b.forEach(n=>{ html+=seatBtn(n,bookings,trip); });
+    html+='</div>';
   });
-  html += '</div>';
-  html += `<div class="side-headers">
-    <span class="label-a">साईड A</span><span class="label-b">साईड B</span>
-  </div>`;
-  SEAT_LAYOUT.rows.forEach(row => {
-    html += '<div class="seat-row">';
-    row.a.forEach(n => { html += seatBtn(n, bookings, trip); });
-    html += `<div class="aisle">${row.door ? '<span class="door-icon" title="ढोका">🚪</span>' : ''}</div>`;
-    row.b.forEach(n => { html += seatBtn(n, bookings, trip); });
-    html += '</div>';
-  });
-  html += '<div class="back-label">पछाडिको लाइन — क · ख · ग · घ · ङ</div>';
-  html += '<div class="seat-row back">';
-  SEAT_LAYOUT.backRow.forEach(s => { html += seatBtn(s.num, bookings, trip); });
-  html += '</div>';
+  html+='<div class="back-label">पछाडिको लाइन — क · ख · ग · घ · ङ</div>';
+  html+='<div class="seat-row back">';
+  SEAT_LAYOUT.backRow.forEach(s=>{ html+=seatBtn(s.num,bookings,trip); });
+  html+='</div>';
   return html;
 }
-
-/* Place groups now grouped by segment with used/left */
-function renderPlaceGroups(trip, bookings) {
-  const mode = trip.route.mode;
-  const modeText = mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-  const segs = trip.route.quotas.map(seg => {
-    const used = segmentCount(trip.id, seg.key);
-    return { seg, used };
+function renderPlaceGroups(trip, bookings){
+  const mode=trip.route.mode;
+  const modeText=mode==='pickup'?'आरोहण स्थान (चढ्ने)':'गन्तव्य (झर्ने)';
+  const segs=trip.route.quotas.map(seg=>{
+    const used=segmentCount(trip.id,seg.key);
+    return {seg,used};
   });
-
-  const items = segs.map(({seg, used}) => {
-    const left = seg.seats - used;
-    const empty = used === 0;
-    const full = left <= 0;
-    const bg = empty ? '#cbd5e1' : (full ? '#dc2626' : '#1b5289');
-    const placeList = seg.places.join(', ');
+  const items=segs.map(({seg,used})=>{
+    const left=seg.seats-used;
+    const empty=used===0; const full=left<=0;
+    const bg=empty?'#cbd5e1':(full?'#dc2626':'#1b5289');
+    const placeList=seg.places.join(', ');
     return `<div class="place-item" title="${esc(placeList)}">
       <span class="place-name">
         <span class="place-dot" style="background:${bg}"></span>
@@ -1350,706 +1081,522 @@ function renderPlaceGroups(trip, bookings) {
       <span class="place-count" style="background:${bg}">${used}/${seg.seats}</span>
     </div>`;
   }).join('');
-
   return `<div class="place-groups">
-    <h4>🗺️ ${esc(modeText)} अनुसार <span class="mode">${mode === 'pickup' ? 'चढ्ने' : 'झर्ने'}</span></h4>
+    <h4>🗺️ ${esc(modeText)} अनुसार <span class="mode">${mode==='pickup'?'चढ्ने':'झर्ने'}</span></h4>
     ${items}
   </div>`;
 }
-
-function viewBooking() {
-  const trip = getTrip(state.activeTrip);
-  const b = tripBookings(trip.id);
-  const tripOptions = ['dashain','tihar'].map(f => {
-    const opts = TRIPS.filter(t => t.festival === f)
-      .map(t => `<option value="${t.id}" ${t.id === trip.id ? 'selected' : ''}>${tripLabel(t)}</option>`)
-      .join('');
+function viewBooking(){
+  const trip=getTrip(state.activeTrip); const b=tripBookings(trip.id);
+  const tripOptions=['dashain','tihar'].map(f=>{
+    const opts=TRIPS.filter(t=>t.festival===f).map(t=>`<option value="${t.id}" ${t.id===trip.id?'selected':''}>${tripLabel(t)}</option>`).join('');
     return `<optgroup label="${FESTIVALS[f].name}">${opts}</optgroup>`;
   }).join('');
-
-  let apfC = 0, exC = 0, famC = 0;
-  Object.values(b).forEach(p => {
-    if (p.type === 'apf') apfC++;
-    else if (p.type === 'ex') exC++;
-    else if (p.type === 'family') famC++;
+  let apfC=0,exC=0,famC=0;
+  Object.values(b).forEach(p=>{
+    if(p.type==='apf') apfC++; else if(p.type==='ex') exC++; else if(p.type==='family') famC++;
   });
-  const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-
-  return `
-    <div class="panel">
-      <div class="panel-head">
-        <h2>यात्रा छान्नुहोस् <small>आरक्षण गर्न यात्रा र सिट चयन गर्नुहोस्</small></h2>
-        <select class="trip-select" id="tripSelect">${tripOptions}</select>
-      </div>
-      <div class="panel-body">
-        <div class="booking-grid">
-          <div>
-            <div class="bus">${renderBusMap(b, trip)}</div>
-            <div class="legend">
-              <span><i class="lg-empty"></i>खाली</span>
-              <span><i class="lg-apf"></i>बहालवाला</span>
-              <span><i class="lg-ex"></i>अवकाश</span>
-              <span><i class="lg-family"></i>आश्रित</span>
-              <span><i class="lg-sel"></i>चयनित</span>
-              <span><i class="lg-cabin"></i>चालक</span>
-            </div>
-            <div class="hint" style="text-align:center;margin-top:8px">
-              कुल ${TOTAL_SEATS} · बहालवाला <b>${apfC}</b> · अवकाश <b>${exC}</b> · आश्रित <b>${famC}</b>
-            </div>
-            ${renderPlaceGroups(trip, b)}
+  const modeText=trip.route.mode==='pickup'?'आरोहण स्थान (चढ्ने)':'गन्तव्य (झर्ने)';
+  return `<div class="panel">
+    <div class="panel-head">
+      <h2>यात्रा छान्नुहोस् <small>आरक्षण गर्न यात्रा र सिट चयन गर्नुहोस्</small></h2>
+      <select class="trip-select" id="tripSelect">${tripOptions}</select>
+    </div>
+    <div class="panel-body">
+      <div class="booking-grid">
+        <div>
+          <div class="bus">${renderBusMap(b,trip)}</div>
+          <div class="legend">
+            <span><i class="lg-empty"></i>खाली</span>
+            <span><i class="lg-apf"></i>बहालवाला</span>
+            <span><i class="lg-ex"></i>अवकाश</span>
+            <span><i class="lg-family"></i>आश्रित</span>
+            <span><i class="lg-sel"></i>चयनित</span>
+            <span><i class="lg-cabin"></i>चालक</span>
           </div>
-
-          <div>
-            <div class="panel" style="margin-bottom:16px">
-              <div class="panel-head"><h2>यात्रा विवरण</h2></div>
-              <div class="panel-body" style="padding:14px 18px">
-                <div class="trip-detail">
-                  <div class="td-item"><span class="lbl">मिति</span><span class="val">${trip.date} (वि.सं.)</span></div>
-                  <div class="td-item"><span class="lbl">रुट</span><span class="val">${esc(trip.route.from)} → ${esc(trip.route.to)}</span></div>
-                  <div class="td-item"><span class="lbl">बस छुट्ने स्थान</span><span class="val">${esc(trip.place)}</span></div>
-                  <div class="td-item"><span class="lbl">छुट्ने समय</span><span class="val">${fmtTime(trip.time)}</span></div>
-                  <div class="td-item" style="grid-column:1/-1;background:#fef9c3;border-color:#fde047">
-                    <span class="lbl">यस यात्राको ${esc(modeText)}</span>
-                    <span class="val" style="font-size:12.5px">${trip.route.quotas.length} वटा कोटा क्षेत्र</span>
-                  </div>
+          <div class="hint" style="text-align:center;margin-top:8px">
+            कुल ${TOTAL_SEATS} · बहालवाला <b>${apfC}</b> · अवकाश <b>${exC}</b> · आश्रित <b>${famC}</b>
+          </div>
+          ${renderPlaceGroups(trip,b)}
+        </div>
+        <div>
+          <div class="panel" style="margin-bottom:16px">
+            <div class="panel-head"><h2>यात्रा विवरण</h2></div>
+            <div class="panel-body" style="padding:14px 18px">
+              <div class="trip-detail">
+                <div class="td-item"><span class="lbl">मिति</span><span class="val">${trip.date} (वि.सं.)</span></div>
+                <div class="td-item"><span class="lbl">रुट</span><span class="val">${esc(trip.route.from)} → ${esc(trip.route.to)}</span></div>
+                <div class="td-item"><span class="lbl">बस छुट्ने स्थान</span><span class="val">${esc(trip.place)}</span></div>
+                <div class="td-item"><span class="lbl">छुट्ने समय</span><span class="val">${fmtTime(trip.time)}</span></div>
+                <div class="td-item" style="grid-column:1/-1;background:#fef9c3;border-color:#fde047">
+                  <span class="lbl">यस यात्राको ${esc(modeText)}</span>
+                  <span class="val" style="font-size:12.5px">${trip.route.quotas.length} वटा कोटा क्षेत्र</span>
                 </div>
               </div>
             </div>
-            <div class="panel" id="formPanel">
-              ${state.selectedSeat ? seatFormHTML(trip, state.selectedSeat) : emptySeatPrompt()}
-            </div>
+          </div>
+          <div class="panel" id="formPanel">
+            ${state.selectedSeat?seatFormHTML(trip,state.selectedSeat):emptySeatPrompt()}
           </div>
         </div>
       </div>
-    </div>`;
-}
-
-function emptySeatPrompt() {
-  return `<div class="panel-body">
-    <div class="empty">
-      <div class="big">🪑</div>
-      <b>सिट छान्नुहोस्</b>
-      <p class="hint">
-        माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
-        साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
-        <b>आश्रित परिवारले कर्मचारी नगए पनि यात्रा गर्न सक्छन्।</b>
-      </p>
     </div>
   </div>`;
 }
-
-function seatFormHTML(trip, seat) {
-  const existing = tripBookings(trip.id)[seat];
-  if (existing) return existingBookingView(trip, seat, existing);
-  return newBookingForm(trip, seat);
+function emptySeatPrompt(){
+  return `<div class="panel-body"><div class="empty">
+    <div class="big">🪑</div><b>सिट छान्नुहोस्</b>
+    <p class="hint">
+      माथिको सिट नक्साबाट कुनै खाली सिटमा क्लिक गर्नुहोस्।<br>
+      साईड A = A1–A16 · साईड B = B1–B16 · पछाडि = क, ख, ग, घ, ङ<br>
+      <b>आश्रित परिवारले कर्मचारी नगए पनि यात्रा गर्न सक्छन्।</b>
+    </p>
+  </div></div>`;
 }
-
-function existingBookingView(trip, seat, p) {
-  const label = seatLabel(seat);
-  const pt = PASSENGER_TYPES[p.type];
-  const placeName = placeDisplay(trip.route, p.quota);
-  const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-
-  let headBlock = '';
-  if (p.type === 'family') {
-    const ht = p.headType === 'ex' ? 'अवकाश प्राप्त कर्मचारी' : 'बहालवाला कर्मचारी';
-    headBlock = `
-      <tr><td style="color:#64748b">सम्बन्ध</td><td><b>${esc(p.relation || '—')}</b></td></tr>
+function seatFormHTML(trip,seat){
+  const existing=tripBookings(trip.id)[seat];
+  if(existing) return existingBookingView(trip,seat,existing);
+  return newBookingForm(trip,seat);
+}
+function existingBookingView(trip,seat,p){
+  const label=seatLabel(seat); const pt=PASSENGER_TYPES[p.type];
+  const placeName=placeDisplay(trip.route,p.quota);
+  const modeText=trip.route.mode==='pickup'?'आरोहण स्थान (चढ्ने)':'गन्तव्य (झर्ने)';
+  let headBlock='';
+  if(p.type==='family'){
+    const ht=p.headType==='ex'?'अवकाश प्राप्त कर्मचारी':'बहालवाला कर्मचारी';
+    headBlock=`<tr><td style="color:#64748b">सम्बन्ध</td><td><b>${esc(p.relation||'—')}</b></td></tr>
       <tr><td colspan="2" style="padding-top:8px">
-        <div style="background:#fef3c7; border:1px solid #fde68a; border-radius:8px; padding:10px 12px">
-          <div style="font-size:11px; font-weight:700; color:#92400e; text-transform:uppercase; margin-bottom:6px">सम्बन्धित ${esc(ht)}</div>
-          <div style="font-weight:700; color:#78350f; font-size:14px; margin-bottom:3px">${esc(p.headName || '—')}</div>
-          <div style="font-size:12.5px; color:#92400e">
-            ${p.rank ? 'दर्जा: ' + esc(p.rank) : ''} ${p.idNo ? ' · ID: ' + esc(p.idNo) : ''}
-            ${p.unit ? '<br>कार्यालय: ' + esc(p.unit) : ''}
-            ${p.phone ? '<br>सम्पर्क: ' + esc(p.phone) : ''}
+        <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:10px 12px">
+          <div style="font-size:11px;font-weight:700;color:#92400e;text-transform:uppercase;margin-bottom:6px">सम्बन्धित ${esc(ht)}</div>
+          <div style="font-weight:700;color:#78350f;font-size:14px;margin-bottom:3px">${esc(p.headName||'—')}</div>
+          <div style="font-size:12.5px;color:#92400e">
+            ${p.rank?'दर्जा: '+esc(p.rank):''} ${p.idNo?' · ID: '+esc(p.idNo):''}
+            ${p.unit?'<br>कार्यालय: '+esc(p.unit):''}
+            ${p.phone?'<br>सम्पर्क: '+esc(p.phone):''}
           </div>
         </div>
       </td></tr>`;
   }
-
-  return `
-    <div class="panel-head">
-      <h2>सिट ${label} — आरक्षित <small>${esc(p.name)}</small></h2>
-      <span class="badge ${pt.cls}">${pt.label}</span>
+  return `<div class="panel-head">
+    <h2>सिट ${label} — आरक्षित <small>${esc(p.name)}</small></h2>
+    <span class="badge ${pt.cls}">${pt.label}</span>
+  </div>
+  <div class="panel-body">
+    <div class="note info" style="margin-bottom:14px">
+      📍 <b>${esc(modeText)}:</b> <span class="place-big">${esc(placeName)}</span>
     </div>
-    <div class="panel-body">
-      <div class="note info" style="margin-bottom:14px">
-        📍 <b>${esc(modeText)}:</b>
-        <span class="place-big">${esc(placeName)}</span>
-      </div>
-      <table style="font-size:13.5px">
-        <tbody>
-          <tr><td style="color:#64748b;width:180px">नाम थर</td><td><b>${esc(p.name)}</b></td></tr>
-          <tr><td style="color:#64748b">श्रेणी</td><td><span class="badge ${pt.cls}">${pt.label}</span></td></tr>
-          ${p.type !== 'family' ? `
-            <tr><td style="color:#64748b">दर्जा</td>
-                <td><b>${esc(p.rank || '—')}</b>${p.rank ? ' <span class="hint" style="display:inline">(' + esc(rankFull(p.rank)) + ')</span>' : ''}</td></tr>
-            <tr><td style="color:#64748b">ID नं.</td>
-                <td>${p.idNo ? `<span class="id-tag">${esc(p.idNo)}</span>` : '—'}</td></tr>
-            <tr><td style="color:#64748b">कार्यालय/युनिट</td><td>${esc(p.unit || '—')}</td></tr>
-            <tr><td style="color:#64748b">सम्पर्क नं.</td><td>${esc(p.phone || '—')}</td></tr>
-          ` : headBlock}
-          <tr><td style="color:#64748b">लिङ्ग / उमेर</td>
-              <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td></tr>
-          ${p.createdBy ? `<tr><td style="color:#64748b">दर्ता गर्ने</td><td>${esc(p.createdBy)}</td></tr>` : ''}
-          ${p.note ? `<tr><td style="color:#64748b">कैफियत</td><td>${esc(p.note)}</td></tr>` : ''}
-        </tbody>
-      </table>
-      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn danger" id="cancelBooking">आरक्षण रद्द गर्ने</button>
-        <button class="btn primary" id="printTicketBtn">🎫 टिकट हेर्ने / प्रिन्ट</button>
-        <button class="btn" id="closeSeat">बन्द गर्ने</button>
-      </div>
-    </div>`;
+    <table style="font-size:13.5px"><tbody>
+      <tr><td style="color:#64748b;width:180px">नाम थर</td><td><b>${esc(p.name)}</b></td></tr>
+      <tr><td style="color:#64748b">श्रेणी</td><td><span class="badge ${pt.cls}">${pt.label}</span></td></tr>
+      ${p.type!=='family'?`
+        <tr><td style="color:#64748b">दर्जा</td><td><b>${esc(p.rank||'—')}</b>${p.rank?' <span class="hint" style="display:inline">('+esc(rankFull(p.rank))+')</span>':''}</td></tr>
+        <tr><td style="color:#64748b">ID नं.</td><td>${p.idNo?`<span class="id-tag">${esc(p.idNo)}</span>`:'—'}</td></tr>
+        <tr><td style="color:#64748b">कार्यालय/युनिट</td><td>${esc(p.unit||'—')}</td></tr>
+        <tr><td style="color:#64748b">सम्पर्क नं.</td><td>${esc(p.phone||'—')}</td></tr>
+      `:headBlock}
+      <tr><td style="color:#64748b">लिङ्ग / उमेर</td><td>${esc(p.gender||'—')} / ${esc(p.age||'—')}</td></tr>
+      ${p.createdBy?`<tr><td style="color:#64748b">दर्ता गर्ने</td><td>${esc(p.createdBy)}</td></tr>`:''}
+      ${p.note?`<tr><td style="color:#64748b">कैफियत</td><td>${esc(p.note)}</td></tr>`:''}
+    </tbody></table>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn danger" id="cancelBooking">आरक्षण रद्द गर्ने</button>
+      <button class="btn primary" id="printTicketBtn">🎫 टिकट हेर्ने / प्रिन्ट</button>
+      <button class="btn" id="closeSeat">बन्द गर्ने</button>
+    </div>
+  </div>`;
 }
-
-function newBookingForm(trip, seat) {
-  const type = state.newBookingType || 'apf';
-  const label = seatLabel(seat);
-
-  const typeRadio = `
-    <div class="field">
-      <label>यात्रुको श्रेणी *</label>
-      <div class="type-radio">
-        ${['apf','ex','family'].map(t => `
-          <label class="radio-chip ${type === t ? 'active' : ''}">
-            <input type="radio" name="fType" value="${t}" ${type === t ? 'checked' : ''}>
-            ${PASSENGER_TYPES[t].label}
-          </label>
-        `).join('')}
-      </div>
-      <div class="hint">
-        ${type === 'family'
-          ? 'आश्रित परिवार — सम्बन्धित कर्मचारी (बहालवाला/अवकाश) को विवरण म्यानुअल भर्नुहोस्।'
-          : `प्रत्येक कर्मचारीको बढीमा ${MAX_FAMILY_PER_HEAD} जना आश्रित परिवार।`}
-      </div>
-    </div>`;
-
-  if (type === 'family') return familyFormFields(trip, seat, label, typeRadio);
-  return personnelFormFields(trip, seat, label, type, typeRadio);
+function newBookingForm(trip,seat){
+  const type=state.newBookingType||'apf'; const label=seatLabel(seat);
+  const typeRadio=`<div class="field">
+    <label>यात्रुको श्रेणी *</label>
+    <div class="type-radio">
+      ${['apf','ex','family'].map(t=>`<label class="radio-chip ${type===t?'active':''}">
+        <input type="radio" name="fType" value="${t}" ${type===t?'checked':''}>
+        ${PASSENGER_TYPES[t].label}
+      </label>`).join('')}
+    </div>
+    <div class="hint">
+      ${type==='family'?'आश्रित परिवार — सम्बन्धित कर्मचारीको विवरण म्यानुअल भर्नुहोस्।':`प्रत्येक कर्मचारीको बढीमा ${MAX_FAMILY_PER_HEAD} जना आश्रित परिवार।`}
+    </div>
+  </div>`;
+  if(type==='family') return familyFormFields(trip,seat,label,typeRadio);
+  return personnelFormFields(trip,seat,label,type,typeRadio);
 }
-
-/* Build the place dropdown with optgroups by segment */
-function buildPlaceOptions(trip, existingBookings) {
-  return trip.route.quotas.map(seg => {
-    const used = segmentCount(trip.id, seg.key);
-    const left = seg.seats - used;
-    const disabled = left <= 0 ? 'disabled' : '';
-    const groupLabel = `${seg.label} — बाँकी ${left}/${seg.seats}${left <= 0 ? ' (भरिएको)' : ''}`;
-    const opts = seg.places.map(pl =>
-      `<option value="${esc(pl)}" ${disabled}>${esc(pl)}</option>`
-    ).join('');
+function buildPlaceOptions(trip){
+  return trip.route.quotas.map(seg=>{
+    const used=segmentCount(trip.id,seg.key);
+    const left=seg.seats-used;
+    const disabled=left<=0?'disabled':'';
+    const groupLabel=`${seg.label} — बाँकी ${left}/${seg.seats}${left<=0?' (भरिएको)':''}`;
+    const opts=seg.places.map(pl=>`<option value="${esc(pl)}" ${disabled}>${esc(pl)}</option>`).join('');
     return `<optgroup label="${esc(groupLabel)}">${opts}</optgroup>`;
   }).join('');
 }
-
-function personnelFormFields(trip, seat, label, type, typeRadio) {
-  const b = tripBookings(trip.id);
-  const isPickup = trip.route.mode === 'pickup';
-  const modeText = isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)';
-  const pt = PASSENGER_TYPES[type];
-
-  const placeOptions = buildPlaceOptions(trip, b);
-
-  const rankOptions = ['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
-    RANKS.map(r => `<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
+function personnelFormFields(trip,seat,label,type,typeRadio){
+  const b=tripBookings(trip.id);
+  const isPickup=trip.route.mode==='pickup';
+  const modeText=isPickup?'आरोहण स्थान (चढ्ने ठाउँ)':'गन्तव्य (झर्ने ठाउँ)';
+  const pt=PASSENGER_TYPES[type];
+  const placeOptions=buildPlaceOptions(trip);
+  const rankOptions=['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
+    RANKS.map(r=>`<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
   ).join('');
-
-  return `
-    <div class="panel-head">
-      <h2>सिट ${label} — नयाँ आरक्षण <small>${pt.label}को विवरण भर्नुहोस्</small></h2>
-      <span class="badge ${pt.cls}">${pt.label}</span>
-    </div>
-    <div class="panel-body">
-      <form id="bookingForm" autocomplete="off">
-        <input type="hidden" id="fSeat" value="${seat}">
-        ${typeRadio}
-        <div class="field">
-          <label>नाम थर *</label>
-          <input type="text" id="fName" required placeholder="जस्तै: राम बहादुर थापा">
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>दर्जा *</label>
-            <select id="fRank" required>${rankOptions}</select>
-          </div>
-          <div class="field">
-            <label>ID नं. *</label>
-            <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace">
-          </div>
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>सम्पर्क नं. *</label>
-            <input type="tel" id="fPhone" required placeholder="98XXXXXXXX" pattern="[0-9+\- ]{7,15}">
-          </div>
-          <div class="field">
-            <label>कार्यालय / युनिट</label>
-            <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन">
-          </div>
-        </div>
-        <div class="field">
-          <label>${esc(modeText)} *</label>
-          <select id="fQuota" required>
-            <option value="">— स्थान छान्नुहोस् —</option>
-            ${placeOptions}
-          </select>
-          <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>लिङ्ग</label>
-            <select id="fGender">
-              <option value="पुरुष">पुरुष</option>
-              <option value="महिला">महिला</option>
-              <option value="अन्य">अन्य</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>उमेर</label>
-            <input type="number" id="fAge" min="1" max="120" placeholder="३५">
-          </div>
-        </div>
-        <div class="field">
-          <label>कैफियत</label>
-          <input type="text" id="fNote" placeholder="वैकल्पिक">
-        </div>
-        <div style="display:flex;gap:10px;margin-top:6px">
-          <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
-          <button type="button" class="btn" id="closeSeat">रद्द</button>
-        </div>
-      </form>
-    </div>`;
+  return `<div class="panel-head">
+    <h2>सिट ${label} — नयाँ आरक्षण <small>${pt.label}को विवरण भर्नुहोस्</small></h2>
+    <span class="badge ${pt.cls}">${pt.label}</span>
+  </div>
+  <div class="panel-body">
+    <form id="bookingForm" autocomplete="off">
+      <input type="hidden" id="fSeat" value="${seat}">
+      ${typeRadio}
+      <div class="field"><label>नाम थर *</label>
+        <input type="text" id="fName" required placeholder="जस्तै: राम बहादुर थापा"></div>
+      <div class="grid2">
+        <div class="field"><label>दर्जा *</label>
+          <select id="fRank" required>${rankOptions}</select></div>
+        <div class="field"><label>ID नं. *</label>
+          <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>सम्पर्क नं. *</label>
+          <input type="tel" id="fPhone" required placeholder="98XXXXXXXX" pattern="[0-9+\\- ]{7,15}"></div>
+        <div class="field"><label>कार्यालय / युनिट</label>
+          <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन"></div>
+      </div>
+      <div class="field"><label>${esc(modeText)} *</label>
+        <select id="fQuota" required>
+          <option value="">— स्थान छान्नुहोस् —</option>
+          ${placeOptions}
+        </select>
+        <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>लिङ्ग</label>
+          <select id="fGender"><option value="पुरुष">पुरुष</option><option value="महिला">महिला</option><option value="अन्य">अन्य</option></select></div>
+        <div class="field"><label>उमेर</label>
+          <input type="number" id="fAge" min="1" max="120" placeholder="३५"></div>
+      </div>
+      <div class="field"><label>कैफियत</label>
+        <input type="text" id="fNote" placeholder="वैकल्पिक"></div>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
+        <button type="button" class="btn" id="closeSeat">रद्द</button>
+      </div>
+    </form>
+  </div>`;
 }
-
-function familyFormFields(trip, seat, label, typeRadio) {
-  const b = tripBookings(trip.id);
-  const isPickup = trip.route.mode === 'pickup';
-  const modeText = isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)';
-  const pt = PASSENGER_TYPES.family;
-
-  const placeOptions = buildPlaceOptions(trip, b);
-
-  const rankOptions = ['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
-    RANKS.map(r => `<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
+function familyFormFields(trip,seat,label,typeRadio){
+  const b=tripBookings(trip.id);
+  const isPickup=trip.route.mode==='pickup';
+  const modeText=isPickup?'आरोहण स्थान (चढ्ने ठाउँ)':'गन्तव्य (झर्ने ठाउँ)';
+  const pt=PASSENGER_TYPES.family;
+  const placeOptions=buildPlaceOptions(trip);
+  const rankOptions=['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
+    RANKS.map(r=>`<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
   ).join('');
-
-  const relOpts = RELATIONS.map(r => `<option value="${r}">${esc(r)}</option>`).join('');
-
-  return `
-    <div class="panel-head">
-      <h2>सिट ${label} — आश्रित परिवार <small>कर्मचारी नगए पनि आश्रित जान सक्छन्</small></h2>
-      <span class="badge ${pt.cls}">${pt.label}</span>
-    </div>
-    <div class="panel-body">
-      <form id="bookingForm" autocomplete="off">
-        <input type="hidden" id="fSeat" value="${seat}">
-        ${typeRadio}
-        <div class="note info" style="margin-bottom:14px">
-          📌 यात्रु आश्रित परिवारको सदस्य हो। सम्बन्धित कर्मचारी (बहालवाला/अवकाश) यो यात्रामा नगए पनि आश्रितले यात्रा गर्न सक्छन्।
-        </div>
-        <div class="field">
-          <label>आश्रित सदस्यको नाम थर *</label>
-          <input type="text" id="fName" required placeholder="जस्तै: सीता थापा">
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>सम्बन्ध *</label>
-            <select id="fRelation" required>
-              <option value="">— सम्बन्ध छान्नुहोस् —</option>
-              ${relOpts}
-            </select>
-          </div>
-          <div class="field">
-            <label>लिङ्ग</label>
-            <select id="fGender">
-              <option value="पुरुष">पुरुष</option>
-              <option value="महिला">महिला</option>
-              <option value="अन्य">अन्य</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label>उमेर</label>
-          <input type="number" id="fAge" min="1" max="120">
-        </div>
-        <div style="font-size:12px; font-weight:700; color:#9a3412; background:#fef3c7; padding:8px 12px; border-radius:8px; margin:16px 0 12px">
-          सम्बन्धित कर्मचारीको विवरण (बहालवाला/अवकाश)
-        </div>
-        <div class="field">
-          <label>कर्मचारीको प्रकार *</label>
-          <select id="fHeadType" required>
-            <option value="apf">बहालवाला सशस्त्र प्रहरी</option>
-            <option value="ex">अवकाश प्राप्त सशस्त्र प्रहरी</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>कर्मचारीको नाम थर *</label>
-          <input type="text" id="fHeadName" required placeholder="जस्तै: राम बहादुर थापा">
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>कर्मचारीको दर्जा *</label>
-            <select id="fRank" required>${rankOptions}</select>
-          </div>
-          <div class="field">
-            <label>कर्मचारीको ID नं. *</label>
-            <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace">
-          </div>
-        </div>
-        <div class="grid2">
-          <div class="field">
-            <label>सम्पर्क नं. *</label>
-            <input type="tel" id="fPhone" required placeholder="98XXXXXXXX" pattern="[0-9+\- ]{7,15}">
-          </div>
-          <div class="field">
-            <label>कार्यालय / युनिट</label>
-            <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन">
-          </div>
-        </div>
-        <div class="field">
-          <label>${esc(modeText)} *</label>
-          <select id="fQuota" required>
-            <option value="">— स्थान छान्नुहोस् —</option>
-            ${placeOptions}
-          </select>
-          <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
-        </div>
-        <div class="field">
-          <label>कैफियत</label>
-          <input type="text" id="fNote" placeholder="वैकल्पिक">
-        </div>
-        <div style="display:flex;gap:10px;margin-top:6px">
-          <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
-          <button type="button" class="btn" id="closeSeat">रद्द</button>
-        </div>
-      </form>
-    </div>`;
+  const relOpts=RELATIONS.map(r=>`<option value="${r}">${esc(r)}</option>`).join('');
+  return `<div class="panel-head">
+    <h2>सिट ${label} — आश्रित परिवार <small>कर्मचारी नगए पनि आश्रित जान सक्छन्</small></h2>
+    <span class="badge ${pt.cls}">${pt.label}</span>
+  </div>
+  <div class="panel-body">
+    <form id="bookingForm" autocomplete="off">
+      <input type="hidden" id="fSeat" value="${seat}">
+      ${typeRadio}
+      <div class="note info" style="margin-bottom:14px">
+        📌 यात्रु आश्रित परिवारको सदस्य हो। सम्बन्धित कर्मचारी (बहालवाला/अवकाश) यो यात्रामा नगए पनि आश्रितले यात्रा गर्न सक्छन्।
+      </div>
+      <div class="field"><label>आश्रित सदस्यको नाम थर *</label>
+        <input type="text" id="fName" required placeholder="जस्तै: सीता थापा"></div>
+      <div class="grid2">
+        <div class="field"><label>सम्बन्ध *</label>
+          <select id="fRelation" required>
+            <option value="">— सम्बन्ध छान्नुहोस् —</option>
+            ${relOpts}
+          </select></div>
+        <div class="field"><label>लिङ्ग</label>
+          <select id="fGender"><option value="पुरुष">पुरुष</option><option value="महिला">महिला</option><option value="अन्य">अन्य</option></select></div>
+      </div>
+      <div class="field"><label>उमेर</label>
+        <input type="number" id="fAge" min="1" max="120"></div>
+      <div style="font-size:12px;font-weight:700;color:#9a3412;background:#fef3c7;padding:8px 12px;border-radius:8px;margin:16px 0 12px">
+        सम्बन्धित कर्मचारीको विवरण (बहालवाला/अवकाश)
+      </div>
+      <div class="field"><label>कर्मचारीको प्रकार *</label>
+        <select id="fHeadType" required>
+          <option value="apf">बहालवाला सशस्त्र प्रहरी</option>
+          <option value="ex">अवकाश प्राप्त सशस्त्र प्रहरी</option>
+        </select></div>
+      <div class="field"><label>कर्मचारीको नाम थर *</label>
+        <input type="text" id="fHeadName" required placeholder="जस्तै: राम बहादुर थापा"></div>
+      <div class="grid2">
+        <div class="field"><label>कर्मचारीको दर्जा *</label>
+          <select id="fRank" required>${rankOptions}</select></div>
+        <div class="field"><label>कर्मचारीको ID नं. *</label>
+          <input type="text" id="fId" required placeholder="जस्तै: 20750" style="font-family:ui-monospace,Menlo,monospace"></div>
+      </div>
+      <div class="grid2">
+        <div class="field"><label>सम्पर्क नं. *</label>
+          <input type="tel" id="fPhone" required placeholder="98XXXXXXXX" pattern="[0-9+\\- ]{7,15}"></div>
+        <div class="field"><label>कार्यालय / युनिट</label>
+          <input type="text" id="fUnit" placeholder="जस्तै: नं. 17 गण हेक्वा चितवन"></div>
+      </div>
+      <div class="field"><label>${esc(modeText)} *</label>
+        <select id="fQuota" required>
+          <option value="">— स्थान छान्नुहोस् —</option>
+          ${placeOptions}
+        </select>
+        <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
+      </div>
+      <div class="field"><label>कैफियत</label>
+        <input type="text" id="fNote" placeholder="वैकल्पिक"></div>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button type="submit" class="btn primary">✔ आरक्षण पुष्टि गर्ने</button>
+        <button type="button" class="btn" id="closeSeat">रद्द</button>
+      </div>
+    </form>
+  </div>`;
 }
-
-function bindBooking() {
-  const trip = getTrip(state.activeTrip);
-  $('#tripSelect')?.addEventListener('change', e => {
-    state.activeTrip = e.target.value;
-    state.selectedSeat = null;
-    state.newBookingType = 'apf';
-    render();
+function bindBooking(){
+  const trip=getTrip(state.activeTrip);
+  $('#tripSelect')?.addEventListener('change',e=>{
+    state.activeTrip=e.target.value; state.selectedSeat=null; state.newBookingType='apf'; render();
   });
-  $$('[data-seat]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      state.selectedSeat = Number(btn.dataset.seat);
-      state.newBookingType = 'apf';
-      render();
-    });
+  $$('[data-seat]').forEach(btn=>{
+    btn.addEventListener('click',()=>{ state.selectedSeat=Number(btn.dataset.seat); state.newBookingType='apf'; render(); });
   });
-  $('#closeSeat')?.addEventListener('click', () => { state.selectedSeat = null; render(); });
-  $('#cancelBooking')?.addEventListener('click', async () => {
-    const seat = state.selectedSeat;
-    const b = tripBookings(trip.id);
-    const p = b[seat];
-    if (!p) return;
-    if (!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण रद्द गर्ने?`)) return;
-    if (!await deleteBooking(trip.id, seat)) return;
-    state.selectedSeat = null;
-    toast('आरक्षण रद्द गरियो।', 'ok');
-    await fetchAllBookings();
-    render();
+  $('#closeSeat')?.addEventListener('click',()=>{ state.selectedSeat=null; render(); });
+  $('#cancelBooking')?.addEventListener('click',async()=>{
+    const seat=state.selectedSeat; const b=tripBookings(trip.id); const p=b[seat];
+    if(!p) return;
+    if(!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण रद्द गर्ने?`)) return;
+    if(!await deleteBooking(trip.id,seat)) return;
+    state.selectedSeat=null;
+    toast('आरक्षण रद्द गरियो।','ok');
+    await fetchAllBookings(); render();
   });
-  $('#printTicketBtn')?.addEventListener('click', () => {
-    openTicket(trip, state.selectedSeat);
+  $('#printTicketBtn')?.addEventListener('click',()=>{ openTicket(trip,state.selectedSeat); });
+  $$('input[name="fType"]').forEach(r=>{
+    r.addEventListener('change',e=>{ state.newBookingType=e.target.value; render(); });
   });
-  $$('input[name="fType"]').forEach(r => {
-    r.addEventListener('change', e => {
-      state.newBookingType = e.target.value;
-      render();
-    });
-  });
-  $('#bookingForm')?.addEventListener('submit', e => {
-    e.preventDefault();
-    submitBooking(trip);
-  });
+  $('#bookingForm')?.addEventListener('submit',e=>{ e.preventDefault(); submitBooking(trip); });
 }
-
-async function submitBooking(trip) {
-  const seat = Number($('#fSeat').value);
-  const typeEl = document.querySelector('input[name="fType"]:checked');
-  if (!typeEl) return toast('यात्रुको श्रेणी छान्नुहोस्।', 'err');
-  const type = typeEl.value;
-  const name = $('#fName').value.trim();
-  if (!name) return toast('नाम थर अनिवार्य छ।', 'err');
-
-  const b = tripBookings(trip.id);
-  if (b[seat]) return toast('यो सिट पहिले नै आरक्षित छ।', 'err');
-
+async function submitBooking(trip){
+  const seat=Number($('#fSeat').value);
+  const typeEl=document.querySelector('input[name="fType"]:checked');
+  if(!typeEl) return toast('यात्रुको श्रेणी छान्नुहोस्।','err');
+  const type=typeEl.value;
+  const name=$('#fName').value.trim();
+  if(!name) return toast('नाम थर अनिवार्य छ।','err');
+  const b=tripBookings(trip.id);
+  if(b[seat]) return toast('यो सिट पहिले नै आरक्षित छ।','err');
   let bookingData;
-
-  if (type === 'family') {
-    const relation = $('#fRelation').value;
-    const headType = $('#fHeadType').value;
-    const headName = $('#fHeadName').value.trim();
-    const rank = $('#fRank').value;
-    const idNo = $('#fId').value.trim();
-    const phone = $('#fPhone').value.trim();
-    const place = $('#fQuota').value;
-
-    if (!relation) return toast('सम्बन्ध अनिवार्य छ।', 'err');
-    if (!headName) return toast('कर्मचारीको नाम अनिवार्य छ।', 'err');
-    if (!rank) return toast('कर्मचारीको दर्जा छान्नुहोस्।', 'err');
-    if (!idNo) return toast('कर्मचारीको ID अनिवार्य छ।', 'err');
-    if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
-    if (!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
-
-    const seg = findSegment(trip.route, place);
-    if (!seg) return toast('स्थान पहिचान भएन।', 'err');
-    const used = segmentCount(trip.id, seg.key);
-    if (used >= seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`, 'err');
-
-    bookingData = {
-      seat, type: 'family', name, relation,
-      headName, headType,
-      rank, idNo,
-      unit: $('#fUnit').value.trim(),
-      phone, quota: place,
-      gender: $('#fGender').value,
-      age: $('#fAge').value.trim(),
-      note: $('#fNote').value.trim()
-    };
+  if(type==='family'){
+    const relation=$('#fRelation').value;
+    const headType=$('#fHeadType').value;
+    const headName=$('#fHeadName').value.trim();
+    const rank=$('#fRank').value;
+    const idNo=$('#fId').value.trim();
+    const phone=$('#fPhone').value.trim();
+    const place=$('#fQuota').value;
+    if(!relation) return toast('सम्बन्ध अनिवार्य छ।','err');
+    if(!headName) return toast('कर्मचारीको नाम अनिवार्य छ।','err');
+    if(!rank) return toast('कर्मचारीको दर्जा छान्नुहोस्।','err');
+    if(!idNo) return toast('कर्मचारीको ID अनिवार्य छ।','err');
+    if(!phone) return toast('सम्पर्क नं. अनिवार्य छ।','err');
+    if(!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।','err');
+    const seg=findSegment(trip.route,place);
+    if(!seg) return toast('स्थान पहिचान भएन।','err');
+    const used=segmentCount(trip.id,seg.key);
+    if(used>=seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`,'err');
+    bookingData={ seat, type:'family', name, relation, headName, headType,
+      rank, idNo, unit:$('#fUnit').value.trim(), phone, quota:place,
+      gender:$('#fGender').value, age:$('#fAge').value.trim(), note:$('#fNote').value.trim() };
   } else {
-    const rank = $('#fRank').value;
-    const idNo = $('#fId').value.trim();
-    const phone = $('#fPhone').value.trim();
-    const place = $('#fQuota').value;
-    if (!rank) return toast('दर्जा छान्नुहोस्।', 'err');
-    if (!idNo) return toast('ID नं. अनिवार्य छ।', 'err');
-    if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
-    if (!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
-    const dupId = Object.values(b).find(p => p.idNo && p.idNo.toLowerCase() === idNo.toLowerCase());
-    if (dupId) return toast(`ID "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा छ।`, 'err');
-    const seg = findSegment(trip.route, place);
-    if (!seg) return toast('स्थान पहिचान भएन।', 'err');
-    const used = segmentCount(trip.id, seg.key);
-    if (used >= seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`, 'err');
-    bookingData = {
-      seat, type, name, rank, idNo,
-      unit: $('#fUnit').value.trim(), phone, quota: place,
-      gender: $('#fGender').value, age: $('#fAge').value.trim(),
-      note: $('#fNote').value.trim()
-    };
+    const rank=$('#fRank').value;
+    const idNo=$('#fId').value.trim();
+    const phone=$('#fPhone').value.trim();
+    const place=$('#fQuota').value;
+    if(!rank) return toast('दर्जा छान्नुहोस्।','err');
+    if(!idNo) return toast('ID नं. अनिवार्य छ।','err');
+    if(!phone) return toast('सम्पर्क नं. अनिवार्य छ।','err');
+    if(!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।','err');
+    const dupId=Object.values(b).find(p=>p.idNo&&p.idNo.toLowerCase()===idNo.toLowerCase());
+    if(dupId) return toast(`ID "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा छ।`,'err');
+    const seg=findSegment(trip.route,place);
+    if(!seg) return toast('स्थान पहिचान भएन।','err');
+    const used=segmentCount(trip.id,seg.key);
+    if(used>=seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`,'err');
+    bookingData={ seat, type, name, rank, idNo, unit:$('#fUnit').value.trim(),
+      phone, quota:place, gender:$('#fGender').value, age:$('#fAge').value.trim(),
+      note:$('#fNote').value.trim() };
   }
-
-  const btn = $('#bookingForm button[type="submit"]');
-  if (btn) { btn.disabled = true; btn.textContent = '⏳ सेभ गर्दै...'; }
-
-  if (!await insertBooking(trip.id, bookingData)) {
-    if (btn) { btn.disabled = false; btn.textContent = '✔ आरक्षण पुष्टि गर्ने'; }
+  const btn=$('#bookingForm button[type="submit"]');
+  if(btn){ btn.disabled=true; btn.textContent='⏳ सेभ गर्दै...'; }
+  if(!await insertBooking(trip.id,bookingData)){
+    if(btn){ btn.disabled=false; btn.textContent='✔ आरक्षण पुष्टि गर्ने'; }
     return;
   }
-
-  toast(`सिट ${seatLabel(seat)} — ${name} आरक्षित भयो।`, 'ok');
-  state.selectedSeat = null;
-  state.newBookingType = 'apf';
-  await fetchAllBookings();
-  render();
+  toast(`सिट ${seatLabel(seat)} — ${name} आरक्षित भयो।`,'ok');
+  state.selectedSeat=null; state.newBookingType='apf';
+  await fetchAllBookings(); render();
 }
 
-/* =====================================================================
-   MANIFEST
-   ===================================================================== */
-function viewManifest() {
-  const trip = getTrip(state.manifestTrip);
-  const b = tripBookings(trip.id);
-  const list = Object.values(b).sort((a, c) => a.seat - c.seat);
-
-  const q = state.search.trim().toLowerCase();
-  const filtered = q ? list.filter(p => {
-    return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation,
-            p.headName, p.quota].join(' ').toLowerCase().includes(q);
-  }) : list;
-
-  const tripOptions = ['dashain','tihar'].map(f => {
-    const opts = TRIPS.filter(t => t.festival === f)
-      .map(t => `<option value="${t.id}" ${t.id === trip.id ? 'selected' : ''}>${tripLabel(t)}</option>`).join('');
+/* ================== MANIFEST ================== */
+function viewManifest(){
+  const trip=getTrip(state.manifestTrip);
+  const b=tripBookings(trip.id);
+  const list=Object.values(b).sort((a,c)=>a.seat-c.seat);
+  const q=state.search.trim().toLowerCase();
+  const filtered=q?list.filter(p=>[p.name,p.rank,p.idNo,p.unit,p.phone,p.relation,p.headName,p.quota].join(' ').toLowerCase().includes(q)):list;
+  const tripOptions=['dashain','tihar'].map(f=>{
+    const opts=TRIPS.filter(t=>t.festival===f).map(t=>`<option value="${t.id}" ${t.id===trip.id?'selected':''}>${tripLabel(t)}</option>`).join('');
     return `<optgroup label="${FESTIVALS[f].name}">${opts}</optgroup>`;
   }).join('');
-
-  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-
-  const rows = filtered.length ? filtered.map(p => {
-    const pt = PASSENGER_TYPES[p.type];
-    const isChecked = state.ticketSelection.has(p.seat);
-    const placeName = placeDisplay(trip.route, p.quota);
-    const rankCell = p.type === 'family'
-      ? `<b>${esc(p.relation || '—')}</b>
-         <div class="hint" style="margin:0">सम्बन्धित: ${esc(p.headName || '—')}</div>`
-      : esc(p.rank || '—');
-    const idCell = p.idNo ? `<span class="id-tag">${esc(p.idNo)}</span>` : '—';
+  const modeHeader=trip.route.mode==='pickup'?'आरोहण स्थान (चढ्ने)':'गन्तव्य (झर्ने)';
+  const rows=filtered.length?filtered.map(p=>{
+    const pt=PASSENGER_TYPES[p.type];
+    const isChecked=state.ticketSelection.has(p.seat);
+    const placeName=placeDisplay(trip.route,p.quota);
+    const rankCell=p.type==='family'
+      ?`<b>${esc(p.relation||'—')}</b><div class="hint" style="margin:0">सम्बन्धित: ${esc(p.headName||'—')}</div>`
+      :esc(p.rank||'—');
+    const idCell=p.idNo?`<span class="id-tag">${esc(p.idNo)}</span>`:'—';
     return `<tr>
-      <td style="width:36px; text-align:center">
-        <input type="checkbox" class="tkt-check" data-seat="${p.seat}"
-               ${isChecked ? 'checked' : ''}
-               style="width:18px; height:18px; cursor:pointer; accent-color:#1b5289;">
+      <td style="width:36px;text-align:center">
+        <input type="checkbox" class="tkt-check" data-seat="${p.seat}" ${isChecked?'checked':''}
+               style="width:18px;height:18px;cursor:pointer;accent-color:#1b5289;">
       </td>
       <td class="num"><b>${seatLabel(p.seat)}</b></td>
       <td><b>${esc(p.name)}</b></td>
       <td><span class="badge ${pt.cls}">${pt.short}</span></td>
       <td>${rankCell}</td>
       <td>${idCell}</td>
-      <td>${esc(p.unit || '—')}</td>
-      <td>${esc(p.phone || '—')}</td>
+      <td>${esc(p.unit||'—')}</td>
+      <td>${esc(p.phone||'—')}</td>
       <td><span class="badge route-badge">${esc(placeName)}</span></td>
-      <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td>
+      <td>${esc(p.gender||'—')} / ${esc(p.age||'—')}</td>
       <td style="white-space:nowrap">
         <button class="btn sm primary" data-ticket="${p.seat}">🎫 टिकट</button>
         <button class="btn sm danger" data-del="${p.seat}">हटाउने</button>
       </td>
     </tr>`;
-  }).join('') : `<tr><td colspan="11"><div class="empty"><div class="big">📋</div>कुनै आरक्षण भेटिएन।</div></td></tr>`;
-
-  let apfC = 0, exC = 0, famC = 0;
-  list.forEach(p => {
-    if (p.type === 'apf') apfC++;
-    else if (p.type === 'ex') exC++;
-    else famC++;
-  });
-
-  const selCount = state.ticketSelection.size;
-  const allSelected = list.length > 0 && selCount === list.length;
-
-  return `
-    <div class="panel">
-      <div class="panel-head">
-        <h2>यात्री सूची <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date} · ${fmtTime(trip.time)}</small></h2>
-        <div class="toolbar">
-          <select class="trip-select" id="manifestSelect">${tripOptions}</select>
-          <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / स्थान / फोन" value="${esc(state.search)}">
-          <button class="btn" id="printBtn">🖨 सूची प्रिन्ट</button>
-          <button class="btn" id="csvBtn">⬇ CSV</button>
-        </div>
+  }).join(''):`<tr><td colspan="11"><div class="empty"><div class="big">📋</div>कुनै आरक्षण भेटिएन।</div></td></tr>`;
+  let apfC=0,exC=0,famC=0;
+  list.forEach(p=>{ if(p.type==='apf') apfC++; else if(p.type==='ex') exC++; else famC++; });
+  const selCount=state.ticketSelection.size;
+  const allSelected=list.length>0&&selCount===list.length;
+  return `<div class="panel">
+    <div class="panel-head">
+      <h2>यात्री सूची <small>${esc(trip.route.from)} → ${esc(trip.route.to)} · ${trip.date} · ${fmtTime(trip.time)}</small></h2>
+      <div class="toolbar">
+        <select class="trip-select" id="manifestSelect">${tripOptions}</select>
+        <input type="search" id="manifestSearch" placeholder="🔍 नाम / ID / स्थान / फोन" value="${esc(state.search)}">
+        <button class="btn" id="printBtn">🖨 सूची प्रिन्ट</button>
+        <button class="btn" id="csvBtn">⬇ CSV</button>
       </div>
-      <div class="panel-head" style="background:#f0f9ff;border-bottom:1px solid #bfdbfe">
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap">
-          <button class="btn sm" id="selectAllBtn">${allSelected ? '☑ सबै हटाउने' : '☐ सबै छान्नुहोस्'}</button>
-          <span class="hint" style="margin:0">
-            छानिएको: <b>${selCount}</b> वटा ticket
-            ${selCount > 0 ? `· ${Math.ceil(selCount / 4)} A4 page` : ''}
-          </span>
-        </div>
-        <button class="btn primary" id="printBatchBtn" ${selCount === 0 ? 'disabled' : ''}>
-          🎫 छानिएका ${selCount > 0 ? selCount + ' वटा' : ''} ticket प्रिन्ट
-        </button>
+    </div>
+    <div class="panel-head" style="background:#f0f9ff;border-bottom:1px solid #bfdbfe">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn sm" id="selectAllBtn">${allSelected?'☑ सबै हटाउने':'☐ सबै छान्नुहोस्'}</button>
+        <span class="hint" style="margin:0">छानिएको: <b>${selCount}</b> वटा ticket ${selCount>0?`· ${Math.ceil(selCount/4)} A4 page`:''}</span>
       </div>
-      <div class="panel-body" style="padding:0">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th style="width:36px"></th>
-              <th class="num">सिट</th><th>नाम थर</th><th>श्रेणी</th>
-              <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय/सम्बन्धित</th>
-              <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
-              <th>लिङ्ग/उमेर</th><th></th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </div>
-      <div class="panel-head" style="border-top:1px solid var(--line);border-bottom:none">
-        <span class="hint">
-          जम्मा: <b>${list.length}</b> / ${TOTAL_SEATS} ·
-          बहालवाला <b>${apfC}</b> · अवकाश <b>${exC}</b> · आश्रित <b>${famC}</b> ·
-          खाली <b>${TOTAL_SEATS - list.length}</b>
-        </span>
-      </div>
-    </div>`;
+      <button class="btn primary" id="printBatchBtn" ${selCount===0?'disabled':''}>
+        🎫 छानिएका ${selCount>0?selCount+' वटा':''} ticket प्रिन्ट
+      </button>
+    </div>
+    <div class="panel-body" style="padding:0">
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th style="width:36px"></th>
+          <th class="num">सिट</th><th>नाम थर</th><th>श्रेणी</th>
+          <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय/सम्बन्धित</th>
+          <th>सम्पर्क</th><th>${esc(modeHeader)}</th>
+          <th>लिङ्ग/उमेर</th><th></th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>
+    <div class="panel-head" style="border-top:1px solid var(--line);border-bottom:none">
+      <span class="hint">
+        जम्मा: <b>${list.length}</b> / ${TOTAL_SEATS} ·
+        बहालवाला <b>${apfC}</b> · अवकाश <b>${exC}</b> · आश्रित <b>${famC}</b> ·
+        खाली <b>${TOTAL_SEATS-list.length}</b>
+      </span>
+    </div>
+  </div>`;
 }
-
-function bindManifest() {
-  $('#manifestSelect')?.addEventListener('change', e => {
-    state.manifestTrip = e.target.value;
-    state.search = '';
-    state.ticketSelection.clear();
-    render();
+function bindManifest(){
+  $('#manifestSelect')?.addEventListener('change',e=>{
+    state.manifestTrip=e.target.value; state.search=''; state.ticketSelection.clear(); render();
   });
-  const search = $('#manifestSearch');
-  if (search) {
-    search.addEventListener('input', e => {
-      state.search = e.target.value;
-      const pos = e.target.selectionStart;
+  const search=$('#manifestSearch');
+  if(search){
+    search.addEventListener('input',e=>{
+      state.search=e.target.value;
+      const pos=e.target.selectionStart;
       render();
-      const s2 = $('#manifestSearch');
-      if (s2) { s2.focus(); s2.setSelectionRange(pos, pos); }
+      const s2=$('#manifestSearch'); if(s2){ s2.focus(); s2.setSelectionRange(pos,pos); }
     });
   }
-  $$('.tkt-check').forEach(cb => {
-    cb.addEventListener('change', e => {
-      const seat = Number(e.target.dataset.seat);
-      if (e.target.checked) state.ticketSelection.add(seat);
-      else state.ticketSelection.delete(seat);
+  $$('.tkt-check').forEach(cb=>{
+    cb.addEventListener('change',e=>{
+      const seat=Number(e.target.dataset.seat);
+      if(e.target.checked) state.ticketSelection.add(seat); else state.ticketSelection.delete(seat);
       render();
     });
   });
-  $('#selectAllBtn')?.addEventListener('click', () => {
-    const trip = getTrip(state.manifestTrip);
-    const allSeats = Object.keys(tripBookings(trip.id)).map(Number);
-    if (state.ticketSelection.size === allSeats.length) {
-      state.ticketSelection.clear();
-    } else {
-      state.ticketSelection = new Set(allSeats);
-    }
+  $('#selectAllBtn')?.addEventListener('click',()=>{
+    const trip=getTrip(state.manifestTrip);
+    const allSeats=Object.keys(tripBookings(trip.id)).map(Number);
+    if(state.ticketSelection.size===allSeats.length) state.ticketSelection.clear();
+    else state.ticketSelection=new Set(allSeats);
     render();
   });
-  $('#printBatchBtn')?.addEventListener('click', () => {
-    const trip = getTrip(state.manifestTrip);
-    const seats = Array.from(state.ticketSelection).sort((a, b) => a - b);
-    if (!seats.length) return toast('कुनै सिट छानिएको छैन।', 'err');
-    openBatchTickets(trip, seats);
+  $('#printBatchBtn')?.addEventListener('click',()=>{
+    const trip=getTrip(state.manifestTrip);
+    const seats=Array.from(state.ticketSelection).sort((a,b)=>a-b);
+    if(!seats.length) return toast('कुनै सिट छानिएको छैन।','err');
+    openBatchTickets(trip,seats);
   });
-  $$('[data-ticket]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const seat = Number(btn.dataset.ticket);
-      const trip = getTrip(state.manifestTrip);
-      openTicket(trip, seat);
+  $$('[data-ticket]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const seat=Number(btn.dataset.ticket); const trip=getTrip(state.manifestTrip);
+      openTicket(trip,seat);
     });
   });
-  $$('[data-del]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const seat = Number(btn.dataset.del);
-      const trip = getTrip(state.manifestTrip);
-      const b = tripBookings(trip.id);
-      const p = b[seat];
-      if (!p) return;
-      if (!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण हटाउने?`)) return;
-      if (!await deleteBooking(trip.id, seat)) return;
+  $$('[data-del]').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      const seat=Number(btn.dataset.del); const trip=getTrip(state.manifestTrip);
+      const b=tripBookings(trip.id); const p=b[seat]; if(!p) return;
+      if(!confirm(`सिट ${seatLabel(seat)} (${p.name}) को आरक्षण हटाउने?`)) return;
+      if(!await deleteBooking(trip.id,seat)) return;
       state.ticketSelection.delete(seat);
-      toast('आरक्षण हटाइयो।', 'ok');
-      await fetchAllBookings();
-      render();
+      toast('आरक्षण हटाइयो।','ok');
+      await fetchAllBookings(); render();
     });
   });
-  $('#printBtn')?.addEventListener('click', printManifest);
-  $('#csvBtn')?.addEventListener('click', exportCSV);
+  $('#printBtn')?.addEventListener('click',printManifest);
+  $('#csvBtn')?.addEventListener('click',exportCSV);
 }
-
-function printManifest() {
-  const trip = getTrip(state.manifestTrip);
-  const b = tripBookings(trip.id);
-  const list = Object.values(b).sort((a, c) => a.seat - c.seat);
-  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण (चढ्ने)' : 'गन्तव्य (झर्ने)';
-  const rows = list.map((p, i) => {
-    const pt = PASSENGER_TYPES[p.type];
-    const placeName = placeDisplay(trip.route, p.quota);
-    const rankCell = p.type === 'family'
-      ? `${p.relation || ''} / ${p.headName || ''}`
-      : (p.rank || '');
+function printManifest(){
+  const trip=getTrip(state.manifestTrip);
+  const b=tripBookings(trip.id);
+  const list=Object.values(b).sort((a,c)=>a.seat-c.seat);
+  const modeHeader=trip.route.mode==='pickup'?'आरोहण (चढ्ने)':'गन्तव्य (झर्ने)';
+  const rows=list.map((p,i)=>{
+    const pt=PASSENGER_TYPES[p.type];
+    const placeName=placeDisplay(trip.route,p.quota);
+    const rankCell=p.type==='family'?`${p.relation||''} / ${p.headName||''}`:(p.rank||'');
     return `<tr>
-      <td>${i + 1}</td><td>${seatLabel(p.seat)}</td><td>${esc(p.name)}</td>
-      <td>${esc(pt.short)}</td><td>${esc(rankCell)}</td><td>${esc(p.idNo || '')}</td>
-      <td>${esc(p.unit || '')}</td>
-      <td>${esc(p.phone || '')}</td>
+      <td>${i+1}</td><td>${seatLabel(p.seat)}</td><td>${esc(p.name)}</td>
+      <td>${esc(pt.short)}</td><td>${esc(rankCell)}</td><td>${esc(p.idNo||'')}</td>
+      <td>${esc(p.unit||'')}</td><td>${esc(p.phone||'')}</td>
       <td>${esc(placeName)}</td><td></td>
     </tr>`;
   }).join('');
-  $('#printRoot').innerHTML = `
+  $('#printRoot').innerHTML=`
     <div style="text-align:center;margin-bottom:12px">
       <img src="${APF_LOGO_URL}" alt="APF" style="width:60px;height:60px;object-fit:contain" onerror="this.style.display='none'">
     </div>
@@ -2067,11 +1614,11 @@ function printManifest() {
         <th>दर्जा / सम्बन्ध</th><th>ID नं.</th><th>कार्यालय</th>
         <th>सम्पर्क</th><th>${esc(modeHeader)}</th><th>दस्तखत</th>
       </tr></thead>
-      <tbody>${rows || '<tr><td colspan="10" style="text-align:center">कुनै आरक्षण छैन</td></tr>'}</tbody>
+      <tbody>${rows||'<tr><td colspan="10" style="text-align:center">कुनै आरक्षण छैन</td></tr>'}</tbody>
     </table>
     <div class="meta" style="margin-top:10px">
       <b>जम्मा यात्री:</b> ${list.length} &nbsp;
-      <b>खाली सिट:</b> ${TOTAL_SEATS - list.length} &nbsp;
+      <b>खाली सिट:</b> ${TOTAL_SEATS-list.length} &nbsp;
       <b>कुल सिट:</b> ${TOTAL_SEATS}
     </div>
     <div class="sign">
@@ -2080,66 +1627,46 @@ function printManifest() {
     </div>`;
   window.print();
 }
-
-function exportCSV() {
-  const trip = getTrip(state.manifestTrip);
-  const b = tripBookings(trip.id);
-  const list = Object.values(b).sort((a, c) => a.seat - c.seat);
-  if (!list.length) return toast('निर्यात गर्न कुनै डाटा छैन।', 'err');
-  const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य';
-  const head = ['सिट','नाम थर','श्रेणी','दर्जा','ID नं.','सम्बन्ध',
-                'सम्बन्धित कर्मचारी','कर्मचारीको प्रकार','कार्यालय/युनिट','सम्पर्क',
-                modeHeader,'लिङ्ग','उमेर','कैफियत'];
-  const rows = list.map(p => {
-    const pt = PASSENGER_TYPES[p.type];
-    const placeName = placeDisplay(trip.route, p.quota);
-    return [
-      seatLabel(p.seat), p.name, pt.label,
-      p.rank || '', p.idNo || '', p.relation || '',
-      p.type === 'family' ? (p.headName || '') : '',
-      p.type === 'family' ? (p.headType === 'ex' ? 'अवकाश' : 'बहालवाला') : '',
-      p.unit || '', p.phone || '',
-      placeName, p.gender || '', p.age || '', p.note || ''
-    ];
+function exportCSV(){
+  const trip=getTrip(state.manifestTrip);
+  const b=tripBookings(trip.id);
+  const list=Object.values(b).sort((a,c)=>a.seat-c.seat);
+  if(!list.length) return toast('निर्यात गर्न कुनै डाटा छैन।','err');
+  const modeHeader=trip.route.mode==='pickup'?'आरोहण स्थान':'गन्तव्य';
+  const head=['सिट','नाम थर','श्रेणी','दर्जा','ID नं.','सम्बन्ध','सम्बन्धित कर्मचारी','कर्मचारीको प्रकार','कार्यालय/युनिट','सम्पर्क',modeHeader,'लिङ्ग','उमेर','कैफियत'];
+  const rows=list.map(p=>{
+    const pt=PASSENGER_TYPES[p.type];
+    const placeName=placeDisplay(trip.route,p.quota);
+    return [seatLabel(p.seat),p.name,pt.label,p.rank||'',p.idNo||'',p.relation||'',
+      p.type==='family'?(p.headName||''):'',p.type==='family'?(p.headType==='ex'?'अवकाश':'बहालवाला'):'',
+      p.unit||'',p.phone||'',placeName,p.gender||'',p.age||'',p.note||''];
   });
-  const csv = '\uFEFF' + [head, ...rows]
-    .map(r => r.map(c => `"${String(c ?? '').replace(/"/g, '""')}"`).join(','))
-    .join('\r\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `manifest_${trip.date.replace(/\//g, '-')}_${trip.routeId}.csv`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  toast('CSV डाउनलोड भयो।', 'ok');
+  const csv='\uFEFF'+[head,...rows].map(r=>r.map(c=>`"${String(c??'').replace(/"/g,'""')}"`).join(',')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download=`manifest_${trip.date.replace(/\//g,'-')}_${trip.routeId}.csv`;
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('CSV डाउनलोड भयो।','ok');
 }
 
-/* =====================================================================
-   QUOTA
-   ===================================================================== */
-function viewQuota() {
-  const blocks = ['KTM-KAK','KTM-GAD','KAK-KTM','GAD-KTM'].map(rid => {
-    const r = ROUTES[rid];
-    const total = r.quotas.reduce((s, q) => s + q.seats, 0);
-    const trips = TRIPS.filter(t => t.routeId === rid);
-    const usage = {};
-    r.quotas.forEach(q => usage[q.key] = 0);
-    trips.forEach(t => Object.values(tripBookings(t.id))
-      .forEach(p => {
-        const seg = findSegment(r, p.quota);
-        if (seg && usage[seg.key] !== undefined) usage[seg.key]++;
-      }));
-    const capacity = r.quotas.reduce((acc, q) => { acc[q.key] = q.seats * trips.length; return acc; }, {});
-
-    const rows = r.quotas.map(q => {
-      const used = usage[q.key];
-      const cap = capacity[q.key];
-      const pct = cap ? Math.round(used / cap * 100) : 0;
-      const placeList = q.places.join(', ');
+/* ================== QUOTA ================== */
+function viewQuota(){
+  const blocks=['KTM-KAK','KTM-GAD','KAK-KTM','GAD-KTM'].map(rid=>{
+    const r=ROUTES[rid];
+    const total=r.quotas.reduce((s,q)=>s+q.seats,0);
+    const trips=TRIPS.filter(t=>t.routeId===rid);
+    const usage={}; r.quotas.forEach(q=>usage[q.key]=0);
+    trips.forEach(t=>Object.values(tripBookings(t.id)).forEach(p=>{
+      const seg=findSegment(r,p.quota);
+      if(seg&&usage[seg.key]!==undefined) usage[seg.key]++;
+    }));
+    const capacity=r.quotas.reduce((acc,q)=>{ acc[q.key]=q.seats*trips.length; return acc; },{});
+    const rows=r.quotas.map(q=>{
+      const used=usage[q.key]; const cap=capacity[q.key];
+      const pct=cap?Math.round(used/cap*100):0;
+      const placeList=q.places.join(', ');
       return `<tr>
-        <td><b>${esc(q.label)}</b>
-          <div class="hint" style="margin:0; font-size:11px">${esc(placeList)}</div>
-        </td>
+        <td><b>${esc(q.label)}</b><div class="hint" style="margin:0;font-size:11px">${esc(placeList)}</div></td>
         <td><b>${q.seats}</b></td>
         <td>${trips.length}</td>
         <td>${cap}</td>
@@ -2152,285 +1679,198 @@ function viewQuota() {
         <td>${pct}%</td>
       </tr>`;
     }).join('');
-    return `
-      <div class="panel">
-        <div class="panel-head">
-          <h2>${esc(r.from)} → ${esc(r.to)}
-            <small>प्रति बस ${total} सिट · कुल ${trips.length} यात्रा</small></h2>
-          <span class="badge">${r.mode === 'pickup' ? 'चढ्ने स्थान' : 'झर्ने स्थान'}</span>
-        </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>${r.mode === 'pickup' ? 'आरोहण क्षेत्र' : 'गन्तव्य क्षेत्र'}</th>
-              <th>सिट/बस</th><th>यात्रा</th>
-              <th>कुल क्षमता</th><th>आरक्षित</th><th>प्रगति</th><th>%</th>
-            </tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      </div>`;
+    return `<div class="panel">
+      <div class="panel-head">
+        <h2>${esc(r.from)} → ${esc(r.to)} <small>प्रति बस ${total} सिट · कुल ${trips.length} यात्रा</small></h2>
+        <span class="badge">${r.mode==='pickup'?'चढ्ने स्थान':'झर्ने स्थान'}</span>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th>${r.mode==='pickup'?'आरोहण क्षेत्र':'गन्तव्य क्षेत्र'}</th>
+          <th>सिट/बस</th><th>यात्रा</th>
+          <th>कुल क्षमता</th><th>आरक्षित</th><th>प्रगति</th><th>%</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table></div>
+    </div>`;
   }).join('');
-  return `<div class="note">
-    📊 <b>कोटा क्षेत्र अनुसार</b> — प्रत्येक क्षेत्रको सिट संख्या उही छ, तर क्षेत्र भित्र धेरै ठाउँहरू छन्।
-    प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
-  </div>${blocks}`;
+  return `<div class="note">📊 <b>कोटा क्षेत्र अनुसार</b> — प्रत्येक क्षेत्रको सिट संख्या उही छ, तर क्षेत्र भित्र धेरै ठाउँहरू छन्। प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।</div>${blocks}`;
 }
 
-/* =====================================================================
-   COORDINATION
-   ===================================================================== */
-function viewCoordination() {
-  const hqRows = COORD_HQ.map((o, i) => `
-    <tr>
-      <td class="num">${i + 1}</td>
-      <td>${esc(o.rank)}</td>
-      <td><b>${esc(o.name)}</b></td>
-      <td>${esc(o.unit)}</td>
-      <td>${o.phone !== '—' ? `<a href="tel:${o.phone}">${o.phone}</a>` : '—'}</td>
-    </tr>`).join('');
-  const unitRows = COORD_UNITS.map((u, i) => `
-    <tr>
-      <td class="num">${i + 1}</td>
-      <td>${esc(u)}</td>
-      <td>—</td><td>—</td><td>—</td>
-    </tr>`).join('');
-  return `
-    <div class="panel">
-      <div class="panel-head">
-        <h2>समन्वय अधिकृत — सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय</h2>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr><th class="num">सि.नं</th><th>दर्जा</th><th>नाम थर</th><th>कार्यालय</th><th>सम्पर्क नं.</th></tr></thead>
-          <tbody>${hqRows}</tbody>
-        </table>
-      </div>
+/* ================== COORDINATION ================== */
+function viewCoordination(){
+  const hqRows=COORD_HQ.map((o,i)=>`<tr>
+    <td class="num">${i+1}</td><td>${esc(o.rank)}</td><td><b>${esc(o.name)}</b></td>
+    <td>${esc(o.unit)}</td>
+    <td>${o.phone!=='—'?`<a href="tel:${o.phone}">${o.phone}</a>`:'—'}</td>
+  </tr>`).join('');
+  const unitRows=COORD_UNITS.map((u,i)=>`<tr>
+    <td class="num">${i+1}</td><td>${esc(u)}</td><td>—</td><td>—</td><td>—</td>
+  </tr>`).join('');
+  return `<div class="panel">
+    <div class="panel-head"><h2>समन्वय अधिकृत — सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय</h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="num">सि.नं</th><th>दर्जा</th><th>नाम थर</th><th>कार्यालय</th><th>सम्पर्क नं.</th></tr></thead>
+      <tbody>${hqRows}</tbody>
+    </table></div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h2>काठमाडौँ देखी काँकडभिट्टा रुट <small>निम्न युनिटहरूले १/१ जना समन्वय अधिकृत खटाउनु पर्ने</small></h2></div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="num">सि.नं</th><th>कार्यालयको नाम</th><th>दर्जा</th><th>नाम थर</th><th>सम्पर्क नं.</th></tr></thead>
+      <tbody>${unitRows}</tbody>
+    </table></div>
+  </div>`;
+}
+
+/* ================== USERS ================== */
+function viewUsers(){
+  return `<div class="panel">
+    <div class="panel-head">
+      <h2>प्रयोगकर्ता व्यवस्थापन <small>एडमिनले मात्र हेर्न सकिने</small></h2>
+      <button class="btn primary" id="newUserBtn">➕ नयाँ प्रयोगकर्ता</button>
     </div>
-    <div class="panel">
-      <div class="panel-head">
-        <h2>काठमाडौँ देखी काँकडभिट्टा रुट
-          <small>निम्न युनिटहरूले १/१ जना समन्वय अधिकृत खटाउनु पर्ने</small></h2>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr>
-            <th class="num">सि.नं</th><th>कार्यालयको नाम</th>
-            <th>दर्जा</th><th>नाम थर</th><th>सम्पर्क नं.</th>
-          </tr></thead>
-          <tbody>${unitRows}</tbody>
-        </table>
-      </div>
-    </div>`;
-}
-
-/* =====================================================================
-   USERS
-   ===================================================================== */
-function viewUsers() {
-  return `
-    <div class="panel">
-      <div class="panel-head">
-        <h2>प्रयोगकर्ता व्यवस्थापन <small>एडमिनले मात्र हेर्न सकिने</small></h2>
-        <button class="btn primary" id="newUserBtn">➕ नयाँ प्रयोगकर्ता</button>
-      </div>
-      <div class="panel-body" style="padding:0">
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th class="num">क्र.</th><th>प्रयोगकर्ता नाम</th><th>पूरा नाम</th>
-              <th>भूमिका</th><th>अवस्था</th><th>बनाइएको</th><th></th>
-            </tr></thead>
-            <tbody id="usersTableBody">
-              <tr><td colspan="7"><div class="empty">लोड हुँदै...</div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="panel-body" style="padding:0">
+      <div class="tbl-wrap"><table>
+        <thead><tr>
+          <th class="num">क्र.</th><th>प्रयोगकर्ता नाम</th><th>पूरा नाम</th>
+          <th>भूमिका</th><th>अवस्था</th><th>बनाइएको</th><th></th>
+        </tr></thead>
+        <tbody id="usersTableBody">
+          <tr><td colspan="7"><div class="empty">लोड हुँदै...</div></td></tr>
+        </tbody>
+      </table></div>
     </div>
-    <div class="panel">
-      <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
-      <div class="panel-body">
-        <form id="changePwForm" style="max-width:400px">
-          <div class="field">
-            <label>पुरानो पासवर्ड</label>
-            <input type="password" id="oldPw" required>
-          </div>
-          <div class="field">
-            <label>नयाँ पासवर्ड</label>
-            <input type="password" id="newPw" required minlength="4">
-          </div>
-          <button type="submit" class="btn primary">पासवर्ड परिवर्तन</button>
-        </form>
-      </div>
-    </div>`;
+  </div>
+  <div class="panel">
+    <div class="panel-head"><h2>आफ्नो पासवर्ड परिवर्तन</h2></div>
+    <div class="panel-body">
+      <form id="changePwForm" style="max-width:400px">
+        <div class="field"><label>पुरानो पासवर्ड</label>
+          <input type="password" id="oldPw" required></div>
+        <div class="field"><label>नयाँ पासवर्ड</label>
+          <input type="password" id="newPw" required minlength="4"></div>
+        <button type="submit" class="btn primary">पासवर्ड परिवर्तन</button>
+      </form>
+    </div>
+  </div>`;
 }
-
-function bindUsers() {
+function bindUsers(){
   loadUsersTable();
-  $('#newUserBtn')?.addEventListener('click', openNewUserModal);
-  $('#changePwForm')?.addEventListener('submit', async e => {
+  $('#newUserBtn')?.addEventListener('click',openNewUserModal);
+  $('#changePwForm')?.addEventListener('submit',async e=>{
     e.preventDefault();
-    const oldPw = $('#oldPw').value;
-    const newPw = $('#newPw').value;
-    const { error } = await sb.rpc('change_password', {
-      p_token: state.user.token, p_old: oldPw, p_new: newPw
-    });
-    if (error) {
-      toast(error.message.includes('Wrong password')
-        ? 'पुरानो पासवर्ड मिलेन।'
-        : 'परिवर्तन गर्न सकिएन: ' + error.message, 'err');
+    const oldPw=$('#oldPw').value; const newPw=$('#newPw').value;
+    const {error}=await sb.rpc('change_password',{p_token:state.user.token,p_old:oldPw,p_new:newPw});
+    if(error){
+      toast(error.message.includes('Wrong password')?'पुरानो पासवर्ड मिलेन।':'परिवर्तन गर्न सकिएन: '+error.message,'err');
       return;
     }
-    toast('पासवर्ड परिवर्तन भयो।', 'ok');
-    e.target.reset();
+    toast('पासवर्ड परिवर्तन भयो।','ok'); e.target.reset();
   });
 }
-
-async function loadUsersTable() {
-  const tbody = $('#usersTableBody');
-  const { data, error } = await sb.rpc('admin_list_users', { p_token: state.user.token });
-  if (error) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">लोड गर्न सकिएन: ${esc(error.message)}</div></td></tr>`;
-    return;
-  }
-  if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = data.map((u, i) => {
-    const isMe = u.id === state.user.id;
+async function loadUsersTable(){
+  const tbody=$('#usersTableBody');
+  const {data,error}=await sb.rpc('admin_list_users',{p_token:state.user.token});
+  if(error){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty">लोड गर्न सकिएन: ${esc(error.message)}</div></td></tr>`; return; }
+  if(!data.length){ tbody.innerHTML=`<tr><td colspan="7"><div class="empty">कुनै प्रयोगकर्ता छैन।</div></td></tr>`; return; }
+  tbody.innerHTML=data.map((u,i)=>{
+    const isMe=u.id===state.user.id;
     return `<tr>
-      <td class="num">${i + 1}</td>
-      <td><b>${esc(u.username)}</b>${isMe ? ' <span class="badge ok">तपाईं</span>' : ''}</td>
+      <td class="num">${i+1}</td>
+      <td><b>${esc(u.username)}</b>${isMe?' <span class="badge ok">तपाईं</span>':''}</td>
       <td>${esc(u.full_name)}</td>
-      <td>
-        <span class="badge ${u.role === 'admin' ? 'badge-admin' : 'badge-operator'}">
-          ${u.role === 'admin' ? 'प्रशासक' : 'सञ्चालक'}
-        </span>
-      </td>
-      <td>${u.active ? '<span class="badge ok">सक्रिय</span>' : '<span class="badge danger">निष्क्रिय</span>'}</td>
+      <td><span class="badge ${u.role==='admin'?'badge-admin':'badge-operator'}">${u.role==='admin'?'प्रशासक':'सञ्चालक'}</span></td>
+      <td>${u.active?'<span class="badge ok">सक्रिय</span>':'<span class="badge danger">निष्क्रिय</span>'}</td>
       <td>${new Date(u.created_at).toLocaleDateString('ne-NP')}</td>
-      <td>
-        ${!isMe ? `<button class="btn sm danger" data-del-user="${u.id}" data-name="${esc(u.username)}">हटाउने</button>` : '—'}
-      </td>
+      <td>${!isMe?`<button class="btn sm danger" data-del-user="${u.id}" data-name="${esc(u.username)}">हटाउने</button>`:'—'}</td>
     </tr>`;
   }).join('');
-  $$('[data-del-user]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const uid = Number(btn.dataset.delUser);
-      const uname = btn.dataset.name;
-      if (!confirm(`प्रयोगकर्ता "${uname}" हटाउने?`)) return;
-      const { error } = await sb.rpc('admin_delete_user', {
-        p_token: state.user.token, p_user_id: uid
-      });
-      if (error) { toast('हटाउन सकिएन: ' + error.message, 'err'); return; }
-      toast('प्रयोगकर्ता हटाइयो।', 'ok');
-      loadUsersTable();
+  $$('[data-del-user]').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      const uid=Number(btn.dataset.delUser); const uname=btn.dataset.name;
+      if(!confirm(`प्रयोगकर्ता "${uname}" हटाउने?`)) return;
+      const {error}=await sb.rpc('admin_delete_user',{p_token:state.user.token,p_user_id:uid});
+      if(error){ toast('हटाउन सकिएन: '+error.message,'err'); return; }
+      toast('प्रयोगकर्ता हटाइयो।','ok'); loadUsersTable();
     });
   });
 }
-
-function openNewUserModal() {
+function openNewUserModal(){
   $('#modalBox').classList.add('narrow');
-  $('#modalTitle').textContent = 'नयाँ प्रयोगकर्ता थप्नुहोस्';
-  $('#modalBody').innerHTML = `
+  $('#modalTitle').textContent='नयाँ प्रयोगकर्ता थप्नुहोस्';
+  $('#modalBody').innerHTML=`
     <form id="newUserForm">
-      <div class="field">
-        <label>प्रयोगकर्ता नाम *</label>
-        <input type="text" id="nu_username" required placeholder="जस्तै: operator1">
-      </div>
-      <div class="field">
-        <label>पूरा नाम *</label>
-        <input type="text" id="nu_fullname" required placeholder="जस्तै: राम बहादुर थापा">
-      </div>
-      <div class="field">
-        <label>भूमिका *</label>
+      <div class="field"><label>प्रयोगकर्ता नाम *</label>
+        <input type="text" id="nu_username" required placeholder="जस्तै: operator1"></div>
+      <div class="field"><label>पूरा नाम *</label>
+        <input type="text" id="nu_fullname" required placeholder="जस्तै: राम बहादुर थापा"></div>
+      <div class="field"><label>भूमिका *</label>
         <select id="nu_role" required>
           <option value="operator">सञ्चालक (Operator)</option>
           <option value="admin">प्रशासक (Admin)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>पासवर्ड * (कम्तीमा ४ अक्षर)</label>
-        <input type="password" id="nu_password" required minlength="4">
-      </div>
+        </select></div>
+      <div class="field"><label>पासवर्ड * (कम्तीमा ४ अक्षर)</label>
+        <input type="password" id="nu_password" required minlength="4"></div>
     </form>`;
-  $('#modalFoot').innerHTML = `
-    <button class="btn" id="modalCancel">रद्द</button>
-    <button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
+  $('#modalFoot').innerHTML=`<button class="btn" id="modalCancel">रद्द</button><button class="btn primary" id="modalCreate">सिर्जना गर्ने</button>`;
   $('#modalBackdrop').classList.remove('hidden');
-  setTimeout(() => $('#nu_username')?.focus(), 100);
-  $('#modalCancel').addEventListener('click', closeModal);
-  $('#modalCreate').addEventListener('click', async () => {
-    const username = $('#nu_username').value.trim().toLowerCase();
-    const fullname = $('#nu_fullname').value.trim();
-    const role = $('#nu_role').value;
-    const password = $('#nu_password').value;
-    if (!username || !fullname || !password) { toast('सबै फाँट भर्नुहोस्।', 'err'); return; }
-    if (username.length < 3) { toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।', 'err'); return; }
-    if (password.length < 4) { toast('पासवर्ड कम्तीमा ४ अक्षर।', 'err'); return; }
-    const btn = $('#modalCreate');
-    btn.disabled = true; btn.textContent = '⏳ सिर्जना गर्दै...';
-    const { error } = await sb.rpc('admin_create_user', {
-      p_token: state.user.token,
-      p_username: username,
-      p_password: password,
-      p_full_name: fullname,
-      p_role: role
+  setTimeout(()=>$('#nu_username')?.focus(),100);
+  $('#modalCancel').addEventListener('click',closeModal);
+  $('#modalCreate').addEventListener('click',async()=>{
+    const username=$('#nu_username').value.trim().toLowerCase();
+    const fullname=$('#nu_fullname').value.trim();
+    const role=$('#nu_role').value;
+    const password=$('#nu_password').value;
+    if(!username||!fullname||!password){ toast('सबै फाँट भर्नुहोस्।','err'); return; }
+    if(username.length<3){ toast('प्रयोगकर्ता नाम कम्तीमा ३ अक्षर।','err'); return; }
+    if(password.length<4){ toast('पासवर्ड कम्तीमा ४ अक्षर।','err'); return; }
+    const btn=$('#modalCreate'); btn.disabled=true; btn.textContent='⏳ सिर्जना गर्दै...';
+    const {error}=await sb.rpc('admin_create_user',{
+      p_token:state.user.token, p_username:username, p_password:password,
+      p_full_name:fullname, p_role:role
     });
-    btn.disabled = false; btn.textContent = 'सिर्जना गर्ने';
-    if (error) {
-      if (error.message.includes('duplicate')) toast('यो प्रयोगकर्ता नाम पहिले नै छ।', 'err');
-      else toast('सिर्जना गर्न सकिएन: ' + error.message, 'err');
+    btn.disabled=false; btn.textContent='सिर्जना गर्ने';
+    if(error){
+      if(error.message.includes('duplicate')) toast('यो प्रयोगकर्ता नाम पहिले नै छ।','err');
+      else toast('सिर्जना गर्न सकिएन: '+error.message,'err');
       return;
     }
-    toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`, 'ok');
-    closeModal();
-    loadUsersTable();
+    toast(`प्रयोगकर्ता "${username}" सिर्जना भयो।`,'ok');
+    closeModal(); loadUsersTable();
   });
 }
+function closeModal(){ $('#modalBackdrop').classList.add('hidden'); }
 
-function closeModal() {
-  $('#modalBackdrop').classList.add('hidden');
-}
-
-/* =====================================================================
-   INIT
-   ===================================================================== */
-$$('.tab').forEach(btn => {
-  btn.addEventListener('click', () => {
-    state.tab = btn.dataset.tab;
-    if (state.tab === 'manifest') state.manifestTrip = state.activeTrip;
+/* ================== INIT ================== */
+$$('.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    state.tab=btn.dataset.tab;
+    if(state.tab==='manifest') state.manifestTrip=state.activeTrip;
     render();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({top:0,behavior:'smooth'});
   });
 });
-$('#logoutBtn')?.addEventListener('click', async () => {
-  if (!confirm('लगआउट गर्ने?')) return;
-  await doLogout();
-  showLoginScreen();
+$('#logoutBtn')?.addEventListener('click',async()=>{
+  if(!confirm('लगआउट गर्ने?')) return;
+  await doLogout(); showLoginScreen();
 });
-$('#modalClose')?.addEventListener('click', closeModal);
-$('#modalBackdrop')?.addEventListener('click', e => {
-  if (e.target === $('#modalBackdrop')) closeModal();
+$('#modalClose')?.addEventListener('click',closeModal);
+$('#modalBackdrop')?.addEventListener('click',e=>{
+  if(e.target===$('#modalBackdrop')) closeModal();
 });
-async function startApp() {
+async function startApp(){
   showMainApp();
-  const ok = await fetchAllBookings();
-  if (!ok) toast('डाटा लोड गर्न सकिएन।', 'err');
+  const ok=await fetchAllBookings();
+  if(!ok) toast('डाटा लोड गर्न सकिएन।','err');
   render();
   setupRealtime();
 }
-async function init() {
+async function init(){
   bindLogin();
-  const restored = await restoreSession();
+  const restored=await restoreSession();
   $('#loadingOverlay').classList.add('hidden');
-  if (restored) {
-    await startApp();
-  } else {
-    showLoginScreen();
-  }
+  if(restored){ await startApp(); } else { showLoginScreen(); }
 }
 init();
 </script>
