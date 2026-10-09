@@ -359,7 +359,7 @@ const APF_LOGO_URL = new URL('logo.png', window.location.href).href;
    ===================================================================== */
 const PLACES = {
   HQ:  'सशस्त्र प्रहरी बल, नेपाल प्रधान कार्यालय',
-  KAK: 'सीमा सुरक्षा गुल्म, काँकडभिट्टा',
+  KAK: 'सीमा सुरक्षा गुल्म, काँकरभिट्टा',
   GAD: 'सीमा सुरक्षा गुल्म, गड्डाचौकी'
 };
 
@@ -386,106 +386,75 @@ const RANKS = [
   { code: 'सप्रप', full: 'सशस्त्र प्रहरी परिचर' }
 ];
 
-/* ============ पूर्व र पश्चिम route — २०-२० stops ============ */
+/* =====================================================================
+   ROUTES — Same 5 quota segments per route (same seats), but each
+   segment now lists multiple places. Seat count is per SEGMENT.
+   ===================================================================== */
 const ROUTES = {
-  'KTM-GAD': {
-    from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff',
-    quotas: [
-      { key:'narayanghat',   label:'नारायणगढ',                seats:3 },
-      { key:'gaindakot',     label:'गैँडाकोट',                seats:2 },
-      { key:'kawasoti',      label:'कावासोती',                seats:2 },
-      { key:'bardaghat',     label:'बर्दघाट',                 seats:2 },
-      { key:'sunwal',        label:'सुनवल',                    seats:2 },
-      { key:'butwal',        label:'बुटवल',                    seats:3 },
-      { key:'jitpur',        label:'जीतपुर (कपिलवस्तु)',      seats:1 },
-      { key:'gorusinge',     label:'गोरुसिङ्गे',              seats:2 },
-      { key:'chandrauta',    label:'चन्द्रौटा',               seats:2 },
-      { key:'bhalubang',     label:'भालुवाङ',                 seats:1 },
-      { key:'lamhi',         label:'लम्ही',                    seats:1 },
-      { key:'amelia',        label:'अमेलिया',                 seats:1 },
-      { key:'kohalpur',      label:'कोहलपुर',                 seats:3 },
-      { key:'bhurigaun',     label:'भुरिगाउँ',               seats:1 },
-      { key:'chisapani',     label:'चिसापानी (कर्णाली)',      seats:2 },
-      { key:'lamki',         label:'लम्की',                    seats:2 },
-      { key:'sukhhad',       label:'सुखड (घोडाघोडी)',        seats:1 },
-      { key:'attariya',      label:'अत्तरिया',                seats:2 },
-      { key:'mahendranagar', label:'महेन्द्रनगर (भीमदत्त)',  seats:1 },
-      { key:'gaddachowki',   label:'गड्डाचौकी',               seats:3 }
-    ]
-  },
-  'GAD-KTM': {
-    from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup',
-    quotas: [
-      { key:'gaddachowki',   label:'गड्डाचौकी',               seats:3 },
-      { key:'mahendranagar', label:'महेन्द्रनगर (भीमदत्त)',  seats:1 },
-      { key:'attariya',      label:'अत्तरिया',                seats:2 },
-      { key:'sukhhad',       label:'सुखड (घोडाघोडी)',        seats:1 },
-      { key:'lamki',         label:'लम्की',                    seats:2 },
-      { key:'chisapani',     label:'चिसापानी (कर्णाली)',      seats:2 },
-      { key:'bhurigaun',     label:'भुरिगाउँ',               seats:1 },
-      { key:'kohalpur',      label:'कोहलपुर',                 seats:3 },
-      { key:'amelia',        label:'अमेलिया',                 seats:1 },
-      { key:'lamhi',         label:'लम्ही',                    seats:1 },
-      { key:'bhalubang',     label:'भालुवाङ',                 seats:1 },
-      { key:'chandrauta',    label:'चन्द्रौटा',               seats:2 },
-      { key:'gorusinge',     label:'गोरुसिङ्गे',              seats:2 },
-      { key:'jitpur',        label:'जीतपुर (कपिलवस्तु)',      seats:1 },
-      { key:'butwal',        label:'बुटवल',                    seats:3 },
-      { key:'sunwal',        label:'सुनवल',                    seats:2 },
-      { key:'bardaghat',     label:'बर्दघाट',                 seats:2 },
-      { key:'kawasoti',      label:'कावासोती',                seats:2 },
-      { key:'gaindakot',     label:'गैँडाकोट',                seats:2 },
-      { key:'narayanghat',   label:'नारायणगढ',                seats:3 }
-    ]
-  },
   'KTM-KAK': {
     from: 'काठमाडौँ', to: 'काँकरभिट्टा', mode: 'dropoff',
     quotas: [
-      { key:'narayanghat',   label:'नारायणगढ',                seats:3 },
-      { key:'ratnanagar',    label:'रत्ननगर (टाँडी)',          seats:1 },
-      { key:'bhandara',      label:'भण्डारा',                  seats:1 },
-      { key:'manahari',      label:'मनहरी',                    seats:1 },
-      { key:'hetauda',       label:'हेटौँडा',                  seats:2 },
-      { key:'nijgadh',       label:'निजगढ',                    seats:1 },
-      { key:'chandranigahapur', label:'चन्द्रनिगाहपुर (चपुर)', seats:2 },
-      { key:'bardibas',      label:'बर्दिबास',                 seats:3 },
-      { key:'dhalkebar',     label:'ढल्केबर',                  seats:2 },
-      { key:'lahan',         label:'लाहान',                    seats:3 },
-      { key:'kanchanpur',    label:'कञ्चनपुर',                seats:1 },
-      { key:'bhardah',       label:'भारदह',                    seats:2 },
-      { key:'inaruwa',       label:'इनरुवा',                   seats:2 },
-      { key:'itahari',       label:'इटहरी',                    seats:3 },
-      { key:'biratchowk',    label:'विराटचोक',                seats:2 },
-      { key:'pathari',       label:'पथरी',                     seats:1 },
-      { key:'damak',         label:'दमक',                      seats:2 },
-      { key:'birtamod',      label:'बिर्तामोड',                seats:2 },
-      { key:'charali',       label:'चारआली',                   seats:1 },
-      { key:'kakarbhitta',   label:'काँकरभिट्टा',             seats:2 }
+      { key:'narayanghat', label:'नारायणगढ', seats:2,
+        places:['नारायणगढ'] },
+      { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:6,
+        places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ',
+                'चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
+      { key:'saptari', label:'सप्तरी क्षेत्र', seats:6,
+        places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
+      { key:'itahari', label:'इटहरी', seats:7,
+        places:['इटहरी'] },
+      { key:'east', label:'सुदूर पूर्व', seats:16,
+        places:['विराटचोक','पथरी','दमक','बिर्तामोड','चारआली','काँकरभिट्टा'] }
+    ]
+  },
+  'KTM-GAD': {
+    from: 'काठमाडौँ', to: 'गड्डाचौकी', mode: 'dropoff',
+    quotas: [
+      { key:'narayanghat', label:'नारायणगढ', seats:2,
+        places:['नारायणगढ'] },
+      { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
+        places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल',
+                'जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
+      { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
+        places:['भालुवाङ','लम्ही','अमेलिया'] },
+      { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:8,
+        places:['कोहलपुर','भुरिगाउँ'] },
+      { key:'karnali', label:'कर्णाली पश्चिम क्षेत्र', seats:16,
+        places:['चिसापानी (कर्णाली)','लम्की','सुखड (घोडाघोडी)','अत्तरिया',
+                'महेन्द्रनगर (भीमदत्त)','गड्डाचौकी'] }
     ]
   },
   'KAK-KTM': {
     from: 'काँकरभिट्टा', to: 'काठमाडौँ', mode: 'pickup',
     quotas: [
-      { key:'kakarbhitta',   label:'काँकरभिट्टा',             seats:2 },
-      { key:'charali',       label:'चारआली',                   seats:1 },
-      { key:'birtamod',      label:'बिर्तामोड',                seats:2 },
-      { key:'damak',         label:'दमक',                      seats:2 },
-      { key:'pathari',       label:'पथरी',                     seats:1 },
-      { key:'biratchowk',    label:'विराटचोक',                seats:2 },
-      { key:'itahari',       label:'इटहरी',                    seats:3 },
-      { key:'inaruwa',       label:'इनरुवा',                   seats:2 },
-      { key:'bhardah',       label:'भारदह',                    seats:2 },
-      { key:'kanchanpur',    label:'कञ्चनपुर',                seats:1 },
-      { key:'lahan',         label:'लाहान',                    seats:3 },
-      { key:'dhalkebar',     label:'ढल्केबर',                  seats:2 },
-      { key:'bardibas',      label:'बर्दिबास',                 seats:3 },
-      { key:'chandranigahapur', label:'चन्द्रनिगाहपुर (चपुर)', seats:2 },
-      { key:'nijgadh',       label:'निजगढ',                    seats:1 },
-      { key:'hetauda',       label:'हेटौँडा',                  seats:2 },
-      { key:'manahari',      label:'मनहरी',                    seats:1 },
-      { key:'bhandara',      label:'भण्डारा',                  seats:1 },
-      { key:'ratnanagar',    label:'रत्ननगर (टाँडी)',          seats:1 },
-      { key:'narayanghat',   label:'नारायणगढ',                seats:3 }
+      { key:'kakarbhitta', label:'काँकरभिट्टा क्षेत्र', seats:20,
+        places:['काँकरभिट्टा','चारआली','बिर्तामोड','दमक','पथरी','विराटचोक'] },
+      { key:'narayanghat', label:'नारायणगढ', seats:7,
+        places:['नारायणगढ'] },
+      { key:'bardibas', label:'बर्दिबास क्षेत्र', seats:5,
+        places:['रत्ननगर (टाँडी)','भण्डारा','मनहरी','हेटौँडा','निजगढ',
+                'चन्द्रनिगाहपुर (चपुर)','बर्दिबास','ढल्केबर'] },
+      { key:'saptari', label:'सप्तरी क्षेत्र', seats:3,
+        places:['लाहान','कञ्चनपुर','भारदह','इनरुवा'] },
+      { key:'itahari', label:'इटहरी', seats:2,
+        places:['इटहरी'] }
+    ]
+  },
+  'GAD-KTM': {
+    from: 'गड्डाचौकी', to: 'काठमाडौँ', mode: 'pickup',
+    quotas: [
+      { key:'gaddachowki', label:'गड्डाचौकी क्षेत्र', seats:16,
+        places:['गड्डाचौकी','महेन्द्रनगर (भीमदत्त)','अत्तरिया','सुखड (घोडाघोडी)',
+                'लम्की','चिसापानी (कर्णाली)'] },
+      { key:'narayanghat', label:'नारायणगढ', seats:8,
+        places:['नारायणगढ'] },
+      { key:'butwal', label:'बुटवल क्षेत्र', seats:8,
+        places:['गैँडाकोट','कावासोती','बर्दघाट','सुनवल','बुटवल',
+                'जीतपुर (कपिलवस्तु)','गोरुसिङ्गे','चन्द्रौटा'] },
+      { key:'bhalubang', label:'भालुवाङ क्षेत्र', seats:3,
+        places:['भालुवाङ','लम्ही','अमेलिया'] },
+      { key:'kohalpur', label:'कोहलपुर क्षेत्र', seats:2,
+        places:['कोहलपुर','भुरिगाउँ'] }
     ]
   }
 };
@@ -534,7 +503,6 @@ function seatLabel(n) {
 function shortPlaceLabel(label) {
   if (!label) return '?';
   const map = {
-    /* पश्चिम */
     'नारायणगढ': 'नारा', 'गैँडाकोट': 'गैँ', 'कावासोती': 'कावा',
     'बर्दघाट': 'बर्द', 'सुनवल': 'सुन', 'बुटवल': 'बुट',
     'जीतपुर (कपिलवस्तु)': 'जीत', 'गोरुसिङ्गे': 'गोरु',
@@ -543,7 +511,6 @@ function shortPlaceLabel(label) {
     'चिसापानी (कर्णाली)': 'चिसा', 'लम्की': 'लम्की',
     'सुखड (घोडाघोडी)': 'सुख', 'अत्तरिया': 'अत्तर',
     'महेन्द्रनगर (भीमदत्त)': 'महेन्द्र', 'गड्डाचौकी': 'गड्डा',
-    /* पूर्व */
     'रत्ननगर (टाँडी)': 'रत्न', 'भण्डारा': 'भण्डा', 'मनहरी': 'मन',
     'हेटौँडा': 'हेटौ', 'निजगढ': 'निज',
     'चन्द्रनिगाहपुर (चपुर)': 'चपुर', 'बर्दिबास': 'बर्दि',
@@ -566,6 +533,25 @@ function headTypeLabel(type) {
   if (type === 'apf') return 'बहालवाला कर्मचारी';
   if (type === 'ex')  return 'अवकाश प्राप्त कर्मचारी';
   return '—';
+}
+
+/* Find which quota segment contains a given place (or segment key for backward compat) */
+function findSegment(route, placeOrKey) {
+  if (!placeOrKey) return null;
+  for (const q of route.quotas) {
+    if (q.key === placeOrKey) return q;
+    if (q.places && q.places.includes(placeOrKey)) return q;
+  }
+  return null;
+}
+
+/* Display name for a stored quota value */
+function placeDisplay(route, quota) {
+  if (!quota) return '—';
+  const seg = findSegment(route, quota);
+  if (!seg) return quota;
+  if (seg.key === quota) return seg.label;  // old booking had segment key
+  return quota;  // actual place name
 }
 
 const TRIP_RAW = [
@@ -625,7 +611,7 @@ const COORD_UNITS = [
    ===================================================================== */
 let BOOKINGS_CACHE = {};
 let REALTIME_CHANNEL = null;
-const SESSION_KEY = 'apf_bus_session_v3';
+const SESSION_KEY = 'apf_bus_session_v4';
 
 const state = {
   user: null,
@@ -649,7 +635,16 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c =>
 const getTrip = id => TRIPS.find(t => t.id === id) || TRIPS[0];
 const tripBookings = id => BOOKINGS_CACHE[id] || {};
 const bookedCount = id => Object.keys(tripBookings(id)).length;
-const quotaOf = (route, key) => route.quotas.find(q => q.key === key);
+
+/* Count bookings in a specific segment */
+function segmentCount(tripId, segKey) {
+  const b = BOOKINGS_CACHE[tripId] || {};
+  return Object.values(b).filter(p => {
+    const trip = getTrip(tripId);
+    const seg = findSegment(trip.route, p.quota);
+    return seg && seg.key === segKey;
+  }).length;
+}
 
 function rankFull(code) {
   const r = RANKS.find(x => x.code === code);
@@ -771,11 +766,9 @@ function bindLogin() {
   const form = $('#loginForm');
   const errEl = $('#loginError');
   const btn = $('#loginBtn');
-
   form.addEventListener('submit', async e => {
     e.preventDefault();
     errEl.classList.remove('show');
-
     const username = $('#loginUsername').value.trim();
     const password = $('#loginPassword').value;
     if (!username || !password) {
@@ -783,19 +776,16 @@ function bindLogin() {
       errEl.classList.add('show');
       return;
     }
-
     btn.disabled = true;
     btn.textContent = '⏳ लगइन हुँदै...';
     const res = await doLogin(username, password);
     btn.disabled = false;
     btn.textContent = '🔐 लगइन गर्नुहोस्';
-
     if (!res.ok) {
       errEl.textContent = res.msg;
       errEl.classList.add('show');
       return;
     }
-
     state.user = res.user;
     saveSession();
     $('#loginPassword').value = '';
@@ -958,7 +948,7 @@ body{padding:10mm;display:flex;justify-content:center}
 function buildTicketDiv(trip, p, q) {
   const isFamily = p.type === 'family';
   const modeLabel = trip.route.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य स्थान';
-  const placeName = q ? q.label : '—';
+  const placeName = placeDisplay(trip.route, p.quota);
   const seat = seatLabel(p.seat);
   const side = (p.seat >= 1 && p.seat <= 16) ? 'साईड A'
              : (p.seat >= 17 && p.seat <= 32) ? 'साईड B' : 'पछाडिको लाइन';
@@ -1114,7 +1104,6 @@ function buildBatchTicketPage(items, autoPrint) {
     }
     html += '</div>';
   }
-
   const bodyTag = autoPrint
     ? '<body onload="setTimeout(function(){window.print()},1200)">'
     : '<body>';
@@ -1135,11 +1124,10 @@ ${bodyTag}${html}</body>
 function openTicket(trip, seat) {
   const p = tripBookings(trip.id)[seat];
   if (!p) return;
-  const q = quotaOf(trip.route, p.quota);
+  const q = null;
   const html = buildTicketPage(trip, p, q, false);
   const blob = new Blob([html], { type: 'text/html' });
   const url = URL.createObjectURL(blob);
-
   $('#modalBox').classList.remove('narrow');
   $('#modalTitle').textContent = 'बस यात्रा टिकट — ' + p.name;
   $('#modalBody').innerHTML = `
@@ -1153,12 +1141,10 @@ function openTicket(trip, seat) {
     <button class="btn" id="closeTicketBtn">बन्द गर्ने</button>
     <button class="btn primary" id="printTicketBtn">🖨 प्रिन्ट गर्ने</button>`;
   $('#modalBackdrop').classList.remove('hidden');
-
   $('#closeTicketBtn')?.addEventListener('click', () => {
     URL.revokeObjectURL(url);
     closeModal();
   });
-
   $('#printTicketBtn')?.addEventListener('click', () => {
     const printHtml = buildTicketPage(trip, p, q, true);
     const printBlob = new Blob([printHtml], { type: 'text/html' });
@@ -1174,8 +1160,7 @@ function openBatchTickets(trip, seats) {
   seats.forEach(seat => {
     const p = tripBookings(trip.id)[seat];
     if (!p) return;
-    const q = quotaOf(trip.route, p.quota);
-    items.push({ trip, p, q });
+    items.push({ trip, p, q: null });
   });
   if (!items.length) return toast('कुनै सिट छानिएको छैन।', 'err');
   const html = buildBatchTicketPage(items, true);
@@ -1297,14 +1282,12 @@ function seatBtn(num, bookings, trip) {
   const cls = ['seat'];
   if (p) { cls.push('booked'); cls.push(PASSENGER_TYPES[p.type]?.seatCls || 'type-apf'); }
   if (sel) cls.push('selected');
-
   const label = seatLabel(num);
   const mode = placeModeLabel(trip);
   let title = `सिट ${label} — खाली`;
   let tag = '';
   if (p) {
-    const q = quotaOf(trip.route, p.quota);
-    const placeName = q ? q.label : '—';
+    const placeName = placeDisplay(trip.route, p.quota);
     if (p.type === 'family') {
       title = `सिट ${label} — ${p.name} (${p.relation})\n` +
               `सम्बन्धित: ${p.headName || '—'}\n` +
@@ -1315,7 +1298,6 @@ function seatBtn(num, bookings, trip) {
     }
     tag = shortPlaceLabel(placeName);
   }
-
   return `<button class="${cls.join(' ')}" data-seat="${num}" title="${esc(title)}">
     ${label}${tag ? `<span class="seat-tag">${esc(tag)}</span>` : ''}
   </button>`;
@@ -1344,26 +1326,28 @@ function renderBusMap(bookings, trip) {
   return html;
 }
 
+/* Place groups now grouped by segment with used/left */
 function renderPlaceGroups(trip, bookings) {
   const mode = trip.route.mode;
   const modeText = mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
-  const groups = {};
-  trip.route.quotas.forEach(q => { groups[q.key] = { label: q.label, seats: [], total: q.seats }; });
-  Object.values(bookings).forEach(p => { if (groups[p.quota]) groups[p.quota].seats.push(p.seat); });
+  const segs = trip.route.quotas.map(seg => {
+    const used = segmentCount(trip.id, seg.key);
+    return { seg, used };
+  });
 
-  const items = Object.values(groups).map(g => {
-    const count = g.seats.length;
-    const seatList = g.seats.sort((a, b) => a - b).map(seatLabel).join(', ');
-    const empty = count === 0;
-    const full = count >= g.total;
+  const items = segs.map(({seg, used}) => {
+    const left = seg.seats - used;
+    const empty = used === 0;
+    const full = left <= 0;
     const bg = empty ? '#cbd5e1' : (full ? '#dc2626' : '#1b5289');
-    return `<div class="place-item">
+    const placeList = seg.places.join(', ');
+    return `<div class="place-item" title="${esc(placeList)}">
       <span class="place-name">
         <span class="place-dot" style="background:${bg}"></span>
-        ${esc(g.label)}
-        ${seatList ? `<span class="place-seats">${esc(seatList)}</span>` : ''}
+        <span>${esc(seg.label)}</span>
+        <span class="place-seats">${esc(placeList)}</span>
       </span>
-      <span class="place-count" style="background:${bg}">${count}/${g.total}</span>
+      <span class="place-count" style="background:${bg}">${used}/${seg.seats}</span>
     </div>`;
   }).join('');
 
@@ -1376,7 +1360,6 @@ function renderPlaceGroups(trip, bookings) {
 function viewBooking() {
   const trip = getTrip(state.activeTrip);
   const b = tripBookings(trip.id);
-
   const tripOptions = ['dashain','tihar'].map(f => {
     const opts = TRIPS.filter(t => t.festival === f)
       .map(t => `<option value="${t.id}" ${t.id === trip.id ? 'selected' : ''}>${tripLabel(t)}</option>`)
@@ -1427,7 +1410,7 @@ function viewBooking() {
                   <div class="td-item"><span class="lbl">छुट्ने समय</span><span class="val">${fmtTime(trip.time)}</span></div>
                   <div class="td-item" style="grid-column:1/-1;background:#fef9c3;border-color:#fde047">
                     <span class="lbl">यस यात्राको ${esc(modeText)}</span>
-                    <span class="val" style="font-size:12.5px">${trip.route.quotas.length} वटा स्थान उपलब्ध</span>
+                    <span class="val" style="font-size:12.5px">${trip.route.quotas.length} वटा कोटा क्षेत्र</span>
                   </div>
                 </div>
               </div>
@@ -1464,7 +1447,7 @@ function seatFormHTML(trip, seat) {
 function existingBookingView(trip, seat, p) {
   const label = seatLabel(seat);
   const pt = PASSENGER_TYPES[p.type];
-  const q = quotaOf(trip.route, p.quota);
+  const placeName = placeDisplay(trip.route, p.quota);
   const modeText = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   let headBlock = '';
@@ -1493,7 +1476,7 @@ function existingBookingView(trip, seat, p) {
     <div class="panel-body">
       <div class="note info" style="margin-bottom:14px">
         📍 <b>${esc(modeText)}:</b>
-        <span class="place-big">${esc(q ? q.label : '—')}</span>
+        <span class="place-big">${esc(placeName)}</span>
       </div>
       <table style="font-size:13.5px">
         <tbody>
@@ -1547,19 +1530,27 @@ function newBookingForm(trip, seat) {
   return personnelFormFields(trip, seat, label, type, typeRadio);
 }
 
+/* Build the place dropdown with optgroups by segment */
+function buildPlaceOptions(trip, existingBookings) {
+  return trip.route.quotas.map(seg => {
+    const used = segmentCount(trip.id, seg.key);
+    const left = seg.seats - used;
+    const disabled = left <= 0 ? 'disabled' : '';
+    const groupLabel = `${seg.label} — बाँकी ${left}/${seg.seats}${left <= 0 ? ' (भरिएको)' : ''}`;
+    const opts = seg.places.map(pl =>
+      `<option value="${esc(pl)}" ${disabled}>${esc(pl)}</option>`
+    ).join('');
+    return `<optgroup label="${esc(groupLabel)}">${opts}</optgroup>`;
+  }).join('');
+}
+
 function personnelFormFields(trip, seat, label, type, typeRadio) {
   const b = tripBookings(trip.id);
   const isPickup = trip.route.mode === 'pickup';
   const modeText = isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)';
   const pt = PASSENGER_TYPES[type];
 
-  const quotaOptions = trip.route.quotas.map(q => {
-    const used = Object.values(b).filter(p => p.quota === q.key).length;
-    const left = q.seats - used;
-    return `<option value="${q.key}" ${left <= 0 ? 'disabled' : ''}>
-      ${esc(q.label)} — बाँकी ${left}/${q.seats}${left <= 0 ? ' (भरिएको)' : ''}
-    </option>`;
-  }).join('');
+  const placeOptions = buildPlaceOptions(trip, b);
 
   const rankOptions = ['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
     RANKS.map(r => `<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
@@ -1601,9 +1592,10 @@ function personnelFormFields(trip, seat, label, type, typeRadio) {
         <div class="field">
           <label>${esc(modeText)} *</label>
           <select id="fQuota" required>
-            <option value="">— छान्नुहोस् —</option>
-            ${quotaOptions}
+            <option value="">— स्थान छान्नुहोस् —</option>
+            ${placeOptions}
           </select>
+          <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
         </div>
         <div class="grid2">
           <div class="field">
@@ -1637,13 +1629,7 @@ function familyFormFields(trip, seat, label, typeRadio) {
   const modeText = isPickup ? 'आरोहण स्थान (चढ्ने ठाउँ)' : 'गन्तव्य (झर्ने ठाउँ)';
   const pt = PASSENGER_TYPES.family;
 
-  const quotaOptions = trip.route.quotas.map(q => {
-    const used = Object.values(b).filter(p => p.quota === q.key).length;
-    const left = q.seats - used;
-    return `<option value="${q.key}" ${left <= 0 ? 'disabled' : ''}>
-      ${esc(q.label)} — बाँकी ${left}/${q.seats}${left <= 0 ? ' (भरिएको)' : ''}
-    </option>`;
-  }).join('');
+  const placeOptions = buildPlaceOptions(trip, b);
 
   const rankOptions = ['<option value="">— दर्जा छान्नुहोस् —</option>'].concat(
     RANKS.map(r => `<option value="${esc(r.code)}">${esc(r.code)} — ${esc(r.full)}</option>`)
@@ -1725,9 +1711,10 @@ function familyFormFields(trip, seat, label, typeRadio) {
         <div class="field">
           <label>${esc(modeText)} *</label>
           <select id="fQuota" required>
-            <option value="">— छान्नुहोस् —</option>
-            ${quotaOptions}
+            <option value="">— स्थान छान्नुहोस् —</option>
+            ${placeOptions}
           </select>
+          <div class="hint">प्रत्येक कोटा क्षेत्रको आफ्नै सिट संख्या छ।</div>
         </div>
         <div class="field">
           <label>कैफियत</label>
@@ -1804,25 +1791,26 @@ async function submitBooking(trip) {
     const rank = $('#fRank').value;
     const idNo = $('#fId').value.trim();
     const phone = $('#fPhone').value.trim();
-    const quota = $('#fQuota').value;
+    const place = $('#fQuota').value;
 
     if (!relation) return toast('सम्बन्ध अनिवार्य छ।', 'err');
     if (!headName) return toast('कर्मचारीको नाम अनिवार्य छ।', 'err');
     if (!rank) return toast('कर्मचारीको दर्जा छान्नुहोस्।', 'err');
     if (!idNo) return toast('कर्मचारीको ID अनिवार्य छ।', 'err');
     if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
-    if (!quota) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
+    if (!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
 
-    const q = quotaOf(trip.route, quota);
-    const used = Object.values(b).filter(p => p.quota === quota).length;
-    if (used >= q.seats) return toast(`"${q.label}" कोटा भरिएको छ।`, 'err');
+    const seg = findSegment(trip.route, place);
+    if (!seg) return toast('स्थान पहिचान भएन।', 'err');
+    const used = segmentCount(trip.id, seg.key);
+    if (used >= seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`, 'err');
 
     bookingData = {
       seat, type: 'family', name, relation,
       headName, headType,
       rank, idNo,
       unit: $('#fUnit').value.trim(),
-      phone, quota,
+      phone, quota: place,
       gender: $('#fGender').value,
       age: $('#fAge').value.trim(),
       note: $('#fNote').value.trim()
@@ -1831,19 +1819,20 @@ async function submitBooking(trip) {
     const rank = $('#fRank').value;
     const idNo = $('#fId').value.trim();
     const phone = $('#fPhone').value.trim();
-    const quota = $('#fQuota').value;
+    const place = $('#fQuota').value;
     if (!rank) return toast('दर्जा छान्नुहोस्।', 'err');
     if (!idNo) return toast('ID नं. अनिवार्य छ।', 'err');
     if (!phone) return toast('सम्पर्क नं. अनिवार्य छ।', 'err');
-    if (!quota) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
+    if (!place) return toast('आरोहण / गन्तव्य स्थान छान्नुहोस्।', 'err');
     const dupId = Object.values(b).find(p => p.idNo && p.idNo.toLowerCase() === idNo.toLowerCase());
     if (dupId) return toast(`ID "${idNo}" पहिले नै सिट ${seatLabel(dupId.seat)} मा छ।`, 'err');
-    const q = quotaOf(trip.route, quota);
-    const used = Object.values(b).filter(p => p.quota === quota).length;
-    if (used >= q.seats) return toast(`"${q.label}" कोटा भरिएको छ।`, 'err');
+    const seg = findSegment(trip.route, place);
+    if (!seg) return toast('स्थान पहिचान भएन।', 'err');
+    const used = segmentCount(trip.id, seg.key);
+    if (used >= seg.seats) return toast(`"${seg.label}" कोटा भरिएको छ।`, 'err');
     bookingData = {
       seat, type, name, rank, idNo,
-      unit: $('#fUnit').value.trim(), phone, quota,
+      unit: $('#fUnit').value.trim(), phone, quota: place,
       gender: $('#fGender').value, age: $('#fAge').value.trim(),
       note: $('#fNote').value.trim()
     };
@@ -1874,9 +1863,8 @@ function viewManifest() {
 
   const q = state.search.trim().toLowerCase();
   const filtered = q ? list.filter(p => {
-    const qq = quotaOf(trip.route, p.quota);
     return [p.name, p.rank, p.idNo, p.unit, p.phone, p.relation,
-            p.headName, qq?.label].join(' ').toLowerCase().includes(q);
+            p.headName, p.quota].join(' ').toLowerCase().includes(q);
   }) : list;
 
   const tripOptions = ['dashain','tihar'].map(f => {
@@ -1888,18 +1876,14 @@ function viewManifest() {
   const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण स्थान (चढ्ने)' : 'गन्तव्य (झर्ने)';
 
   const rows = filtered.length ? filtered.map(p => {
-    const qq = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
     const isChecked = state.ticketSelection.has(p.seat);
-
+    const placeName = placeDisplay(trip.route, p.quota);
     const rankCell = p.type === 'family'
       ? `<b>${esc(p.relation || '—')}</b>
          <div class="hint" style="margin:0">सम्बन्धित: ${esc(p.headName || '—')}</div>`
       : esc(p.rank || '—');
     const idCell = p.idNo ? `<span class="id-tag">${esc(p.idNo)}</span>` : '—';
-    const unitCell = esc(p.unit || '—');
-    const phoneCell = esc(p.phone || '—');
-
     return `<tr>
       <td style="width:36px; text-align:center">
         <input type="checkbox" class="tkt-check" data-seat="${p.seat}"
@@ -1911,9 +1895,9 @@ function viewManifest() {
       <td><span class="badge ${pt.cls}">${pt.short}</span></td>
       <td>${rankCell}</td>
       <td>${idCell}</td>
-      <td>${unitCell}</td>
-      <td>${phoneCell}</td>
-      <td><span class="badge route-badge">${esc(qq ? qq.label : '—')}</span></td>
+      <td>${esc(p.unit || '—')}</td>
+      <td>${esc(p.phone || '—')}</td>
+      <td><span class="badge route-badge">${esc(placeName)}</span></td>
       <td>${esc(p.gender || '—')} / ${esc(p.age || '—')}</td>
       <td style="white-space:nowrap">
         <button class="btn sm primary" data-ticket="${p.seat}">🎫 टिकट</button>
@@ -2052,8 +2036,8 @@ function printManifest() {
   const list = Object.values(b).sort((a, c) => a.seat - c.seat);
   const modeHeader = trip.route.mode === 'pickup' ? 'आरोहण (चढ्ने)' : 'गन्तव्य (झर्ने)';
   const rows = list.map((p, i) => {
-    const q = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
+    const placeName = placeDisplay(trip.route, p.quota);
     const rankCell = p.type === 'family'
       ? `${p.relation || ''} / ${p.headName || ''}`
       : (p.rank || '');
@@ -2062,7 +2046,7 @@ function printManifest() {
       <td>${esc(pt.short)}</td><td>${esc(rankCell)}</td><td>${esc(p.idNo || '')}</td>
       <td>${esc(p.unit || '')}</td>
       <td>${esc(p.phone || '')}</td>
-      <td>${esc(q ? q.label : '')}</td><td></td>
+      <td>${esc(placeName)}</td><td></td>
     </tr>`;
   }).join('');
   $('#printRoot').innerHTML = `
@@ -2107,18 +2091,15 @@ function exportCSV() {
                 'सम्बन्धित कर्मचारी','कर्मचारीको प्रकार','कार्यालय/युनिट','सम्पर्क',
                 modeHeader,'लिङ्ग','उमेर','कैफियत'];
   const rows = list.map(p => {
-    const q = quotaOf(trip.route, p.quota);
     const pt = PASSENGER_TYPES[p.type];
+    const placeName = placeDisplay(trip.route, p.quota);
     return [
       seatLabel(p.seat), p.name, pt.label,
-      p.rank || '',
-      p.idNo || '',
-      p.relation || '',
+      p.rank || '', p.idNo || '', p.relation || '',
       p.type === 'family' ? (p.headName || '') : '',
       p.type === 'family' ? (p.headType === 'ex' ? 'अवकाश' : 'बहालवाला') : '',
-      p.unit || '',
-      p.phone || '',
-      q ? q.label : '', p.gender || '', p.age || '', p.note || ''
+      p.unit || '', p.phone || '',
+      placeName, p.gender || '', p.age || '', p.note || ''
     ];
   });
   const csv = '\uFEFF' + [head, ...rows]
@@ -2144,15 +2125,21 @@ function viewQuota() {
     const usage = {};
     r.quotas.forEach(q => usage[q.key] = 0);
     trips.forEach(t => Object.values(tripBookings(t.id))
-      .forEach(p => { if (usage[p.quota] !== undefined) usage[p.quota]++; }));
+      .forEach(p => {
+        const seg = findSegment(r, p.quota);
+        if (seg && usage[seg.key] !== undefined) usage[seg.key]++;
+      }));
     const capacity = r.quotas.reduce((acc, q) => { acc[q.key] = q.seats * trips.length; return acc; }, {});
 
     const rows = r.quotas.map(q => {
       const used = usage[q.key];
       const cap = capacity[q.key];
       const pct = cap ? Math.round(used / cap * 100) : 0;
+      const placeList = q.places.join(', ');
       return `<tr>
-        <td><b>${esc(q.label)}</b></td>
+        <td><b>${esc(q.label)}</b>
+          <div class="hint" style="margin:0; font-size:11px">${esc(placeList)}</div>
+        </td>
         <td><b>${q.seats}</b></td>
         <td>${trips.length}</td>
         <td>${cap}</td>
@@ -2175,7 +2162,7 @@ function viewQuota() {
         <div class="tbl-wrap">
           <table>
             <thead><tr>
-              <th>${r.mode === 'pickup' ? 'आरोहण स्थान' : 'गन्तव्य स्थान'}</th>
+              <th>${r.mode === 'pickup' ? 'आरोहण क्षेत्र' : 'गन्तव्य क्षेत्र'}</th>
               <th>सिट/बस</th><th>यात्रा</th>
               <th>कुल क्षमता</th><th>आरक्षित</th><th>प्रगति</th><th>%</th>
             </tr></thead>
@@ -2185,7 +2172,8 @@ function viewQuota() {
       </div>`;
   }).join('');
   return `<div class="note">
-    📊 <b>प्रत्येक स्थान अनुसार कोटा</b> — प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
+    📊 <b>कोटा क्षेत्र अनुसार</b> — प्रत्येक क्षेत्रको सिट संख्या उही छ, तर क्षेत्र भित्र धेरै ठाउँहरू छन्।
+    प्रत्येक बसमा <b>${TOTAL_SEATS} सिट</b>।
   </div>${blocks}`;
 }
 
